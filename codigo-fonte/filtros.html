@@ -1,0 +1,756 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que envolve todo o conteúdo da página -->
+		<div class="section">
+		
+			<!-- Seção de análide de experimento com filtros -->
+			<div class="section">
+				<div class="container animacaoPagina margemInicial">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">DETERMINAÇÃO DE PARÂMETROS DE RESISTÊNCIA DA TORTA E DO MEIO FILTRANTE</p>
+							<p class="txtFormularioApresentacao">Esta seção é destinada à análise de dados experimentais, para determinação de parâmetros da filtração, a resistência da torta (&alpha;) e a resistência do meio filtrante (R<sub>m</sub>). Quando informar valores numéricos, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Modo de Operação</p>
+							</div>
+							<div class="col-md-6">
+								<select class="form-control dadosFormulario" id="listaOpPar" onchange="exibirValPar()">
+									<option value="pressaocte">Queda de Pressão Constante</option>
+									<option value="vazaocte">Vazão de Filtração Constante</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Viscosidade Dinâmica</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario vispar">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidViscPar">
+											<option value="Pa.s">Pa.s - Pascal Segundo</option>
+											<option value="P">P - Poise</option>
+											<option value="cP">cP - Centi Poise</option>
+											<option value="lbf.s/in2">lbf.s/in2 - Libra-força Segundo por Polegada Quadrada</option>
+											<option value="lbf.s/ft2">lbf.s/ft2 - Libra-força Segundo por Pé Quadrado </option>
+											<option value="lbm/ft.s">lbm/(ft.s) - Libra-massa por Pé Segundo</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<p class="text-center">Massa de Torta por Volume de Filtrado</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario cpar">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidCPar">
+											<option value="kg/m3">kg/m3 - Quilograma por Metro Cúbico</option>
+											<option value="kg/L">kg/L - Quilograma por Litro</option>
+											<option value="kg/cm3">kg/cm3 - Quilograma por Centímetro Cúbico</option>
+											<option value="lbm/ft3">lbm/ft3 - Libra-massa por Pé Cúbico</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Área de Filtração</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario apar">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidAPar">
+											<option value="m2">m2 - Metro Quadrado</option>
+											<option value="cm2">cm2 - Centímetro Quadrado</option>
+											<option value="in2">in2 - Polegada Quadrada</option>
+											<option value="ft2">ft2 - Pé Quadrado</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 visivel" id="divppar">
+								<p class="text-center">Queda de Pressão</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario qppar">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidPressPar">
+											<option value="kPa">kPa - Quilo Pascal</option>
+											<option value="psi">psi - Libra-força por Polegada Quadrada</option>
+											<option value="kgf/cm2">kgf/cm2 - Quilograma-força por Centímetro Quadrado</option>
+											<option value="Pa">Pa - Pascal</option>
+											<option value="atm">atm - Atmosfera</option>
+											<option value="bar">bar - Bar</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divvpar">
+								<p class="text-center">Vazão de Filtração</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario vazpar">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidVazPar">
+											<option value="m3/s">m3/s - Metro Cúbico por Segundo</option>
+											<option value="m3/min">m3/min - Metro Cúbico por Minuto</option>
+											<option value="m3/h">m3/h - Metro Cúbico por Hora</option>
+											<option value="L/s">L/s - Litro por Segundo</option>
+											<option value="L/min">L/min - Litro por Minuto</option>
+											<option value="L/h">L/h - Litro por Hora</option>
+											<option value="ft3/s">ft3/s - Pé Cúbico por Segundo</option>
+											<option value="ft3/min">ft3/min - Pé Cúbico por Minuto</option>
+											<option value="ft3/h">ft3/h - Pé Cúbico por Hora</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 margemInferior">
+							<p class="txtFormularioGeral">Informe os dados experimentais nos espaços abaixo, tempo na primeira coluna e volume (ou queda de pressão) na segunda coluna. Valores não numéricos ou espaços vazios fazem o programa ignorar a linha em que forem encontrados. Selecione também a unidade dos dados informados.</p>
+						</div>
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Unidade de Tempo</p>
+								<select class="form-control dadosFormulario" id="listunidtempo">
+									<option value="s">s - Segundo</option>
+									<option value="min">min - Minuto</option>
+									<option value="h">h - Hora</option>
+								</select>
+							</div>
+							<div class="col-md-6 visivel" id="divunidparpresscte">
+								<p class="text-center">Unidade de Volume</p>
+								<select class="form-control dadosFormulario" id="listunidvol">
+									<option value="m3">m3 - Metro Cúbico</option>
+									<option value="L">L - Litro</option>
+									<option value="ft3">ft3 - Pé Cúbico</option>
+									<option value="cm3">cm3 - Centímetro Cúbico</option>
+									<option value="gal">gal - Galão</option>
+								</select>
+							</div>
+							<div class="col-md-6 oculta" id="divunidvazcte">
+								<p class="text-center">Unidade de Pressão</p>
+								<select class="form-control dadosFormulario" id="listunidpress">
+									<option value="kPa">kPa - Quilo Pascal</option>
+									<option value="psi">psi - Libra-força por Polegada Quadrada</option>
+									<option value="kgf/cm2">kgf/cm2 - Quilograma-força por Centímetro Quadrado</option>
+									<option value="Pa">Pa - Pascal</option>
+									<option value="atm">atm - Atmosfera</option>
+									<option value="bar">bar - Bar</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-inline">
+							<div class="col-lg-6">
+								<div class="centralizar"><div id="dadosFiltro"></div></div>
+							</div>
+							<div class="col-lg-6 margemSuperior">
+								<div id="barra1" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<div class="centralizar"><button class="btn btnAcao btnPar margemSuperior btn25"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button></div>
+								<div class="resPar txtResposta2"><p class="res1"></p></div>
+							</div>
+						</div>
+						<div class="resParGraf margemSuperior"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção de dimensionamento de filtro prensa -->
+			<div class="section fundo2">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">DIMENSIONAMENTO DE FILTRO PRENSA</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível dimensionar um filtro prensa a partir de 5 tipos diferentes de critérios de projeto. Preencha o formulário e escolha o critério e quando informar valores numéricos, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<!-- Linha 1 do formulário -->
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Viscosidade Dinâmica</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario viscDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidViscDim">
+											<option value="Pa.s">Pa.s - Pascal Segundo</option>
+											<option value="P">P - Poise</option>
+											<option value="cP">cP - Centi Poise</option>
+											<option value="lbf.s/in2">lbf.s/in2 - Libra-força Segundo por Polegada Quadrada</option>
+											<option value="lbf.s/ft2">lbf.s/ft2 - Libra-força Segundo por Pé Quadrado </option>
+											<option value="lbm/ft.s">lbm/(ft.s) - Libra-massa por Pé Segundo</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<p class="text-center">Massa de Torta por Volume de Filtrado</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario concDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidCDim">
+											<option value="kg/m3">kg/m3 - Quilograma por Metro Cúbico</option>
+											<option value="kg/L">kg/L - Quilograma por Litro</option>
+											<option value="kg/cm3">kg/cm3 - Quilograma por Centímetro Cúbico</option>
+											<option value="lbm/ft3">lbm/ft3 - Libra-massa por Pé Cúbico</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Linha 2 do formulário -->
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Queda de Pressão</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario deltaPDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidPressDim">
+											<option value="kPa">kPa - Quilo Pascal</option>
+											<option value="psi">psi - Libra-força por Polegada Quadrada</option>
+											<option value="kgf/cm2">kgf/cm2 - Quilograma-força por Centímetro Quadrado</option>
+											<option value="Pa">Pa - Pascal</option>
+											<option value="atm">atm - Atmosfera</option>
+											<option value="bar">bar - Bar</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<p class="text-center">Volume de lavagem</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario volLavDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidVolLavDim">
+											<option value="m3">m3 - Metro Cúbico</option>
+											<option value="L">L - Litro</option>
+											<option value="ft3">ft3 - Pé Cúbico</option>
+											<option value="cm3">cm3 - Centímetro Cúbico</option>
+											<option value="gal">gal - Galão</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Linha 3 do formulário -->
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Tempo Não Operacional</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario tempNODim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidTemNODim">
+											<option value="s">s - Segundo</option>
+											<option value="min">min - Minuto</option>
+											<option value="h">h - Hora</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<p class="text-center">Área do Quadro</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario areaQuadDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidAQDim">
+											<option value="m2">m2 - Metro Quadrado</option>
+											<option value="cm2">cm2 - Centímetro Quadrado</option>
+											<option value="in2">in2 - Polegada Quadrada</option>
+											<option value="ft2">ft2 - Pé Quadrado</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Linha 4 do formulário -->
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6">
+								<p class="text-center">Resistência do Meio Filtrante (m<sup>-1</sup>)</p>
+								<input type="text" class="form-control dadosFormulario rmDim">
+							</div>
+							<div class="col-md-6">
+								<p class="text-center">Resistência Específica da Torta (m kg<sup>-1</sup>)</p>
+								<input type="text" class="form-control dadosFormulario alfaDim">
+							</div>
+						</div>
+						<div class="col-sm-12 txtFormularioGeral margemInferior">
+							<select class="form-control dadosFormulario" id="listadimensionamentos" onchange="exibirCriterioDim()">
+								<option value="">Escolha um Tipo de Dimensionamento</option>
+								<option value="quadrosporvolume">Determinar Número de Quadros para um Determinado Volume de Filtrado</option>
+								<option value="quadrosportempo">Determinar Número de Quadros para um Tempo de Operação da Filtração</option>
+								<option value="producaoportempo">Determinar a Produção do Filtro para um Determinado Tempo de Operação da Filtração</option>
+								<option value="producaoporvolume">Determinar a Produção do Filtro para um Determinado Volume de Filtrado</option>
+								<option value="otimizar">Otimizar o Volume de Filtrado e Tempo Operação da Filtração para Produção Máxima</option>
+							</select>
+						</div>
+						<!-- Linha de critérios de projeto -->
+						<div class="form-inline txtFormularioGeral margemInferior">
+							<div class="col-md-6 oculta" id="divProdDim">
+								<p class="text-center">Produção do Filtro</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario prodDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidProdDim">
+											<option value="m3/s">m3/s - Metro Cúbico por Segundo</option>
+											<option value="m3/min">m3/min - Metro Cúbico por Minuto</option>
+											<option value="m3/h">m3/h - Metro Cúbico por Hora</option>
+											<option value="L/s">L/s - Litro por Segundo</option>
+											<option value="L/min">L/min - Litro por Minuto</option>
+											<option value="L/h">L/h - Litro por Hora</option>
+											<option value="ft3/s">ft3/s - Pé Cúbico por Segundo</option>
+											<option value="ft3/min">ft3/min - Pé Cúbico por Minuto</option>
+											<option value="ft3/h">ft3/h - Pé Cúbico por Hora</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divVolDim">
+								<p class="text-center">Volume Total de Filtrado</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario volFilDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidVolFilDim">
+											<option value="m3">m3 - Metro Cúbico</option>
+											<option value="L">L - Litro</option>
+											<option value="ft3">ft3 - Pé Cúbico</option>
+											<option value="cm3">cm3 - Centímetro Cúbico</option>
+											<option value="gal">gal - Galão</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divTemDim">
+								<p class="text-center">Tempo de Operação da Filtração</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario tempTotDim">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidTemTotDim">
+											<option value="s">s - Segundo</option>
+											<option value="min">min - Minuto</option>
+											<option value="h">h - Hora</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divNumQuadDim">
+								<p class="text-center">Número Total de Quadros</p>
+								<input type="text" class="form-control dadosFormulario numQuadDim">
+							</div>
+						</div>
+						<!-- Finalização do formulário -->
+						<div class="form-inline txtResposta2">
+							<div class="col-md-6">
+								<div id="barra2" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<div class="centralizar"><button class="btn btnAcao btnDim margemSuperior btn25"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button></div>
+							</div>
+							<div class="col-md-6">
+								<div class="resDim txtResposta2"><p class="res2"></p></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo fundo2"></div>
+
+	</body>
+
+	<script>
+		// Declaração das instâncias das classes utilizadas
+		var filtro = new Filtros();
+		var grafico = new GraficoCanvas();
+
+		// Declaração da instância do Handsontable
+		var tabela = document.getElementById("dadosFiltro");
+		var dadosEntrada = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 380,
+			height: 400,
+			colWidths: 150,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["Tempo", "Volume/Pressão"],
+			columns: [0, 0],
+			minSpareRows: 15
+		});
+
+		// Botão para cálculo de dimensionamento de filtro prensa
+		$(".btnDim").click(function() {
+			// Recupera as unidades selecionadas
+			var unidVisc = $("#listaUnidViscDim").val(), unidVolLav = $("#listaUnidVolLavDim").val(), unidC = $("#listaUnidCDim").val(), unidAQ = $("#listaUnidAQDim").val(), unidDeltaP = $("#listaUnidPressDim").val(), unidProd = $("#listaUnidProdDim").val(), unidVolFil = $("#listaUnidVolFilDim").val(), unidTemNO = $("#listaUnidTemNODim").val(),unidTempTot = $("#listaUnidTemTotDim").val();
+			// Declara as variáveis e recupera os valores nos inputs
+			var visc = $(".viscDim").val(), volLav = $(".volLavDim").val(), C = $(".concDim").val(), areaQuad = $(".areaQuadDim").val(), deltaP = $(".deltaPDim").val(), prod = $(".prodDim").val(), volFilt = $(".volFilDim").val(), tempoNO = $(".tempNODim").val(), tempoTotal = $(".tempTotDim").val(), numQuad = $(".numQuadDim").val(), rm = $(".rmDim").val(), alfa = $(".alfaDim").val();
+			// Recupera o critério de projeto
+			var criterio = $("#listadimensionamentos").val();
+
+			// Estrutura de controle de erros
+			if(criterio == "") {
+				$(".res2").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resDim").append('<p class="res2 resErro">Por favor, selecione um tipo de dimensionamento e informe os devidos critérios de projetos que serão pedidos.</p>');
+				return;
+			}
+			if(visc == "" || C == "" || deltaP == "" || volLav == "" || tempoNO == "" || areaQuad == "" || rm == "" || alfa == "" || (criterio == "quadrosportempo" && (tempoTotal == "" || prod == "")) || (criterio == "quadrosporvolume" && (volFilt == "" || prod == "")) || (criterio == "producaoporvolume" && (numQuad == "" || volFilt == "")) || (criterio == "producaoportempo" && (tempoTotal == "" || numQuad == "")) || (criterio == "otimizar" && numQuad == "")) {
+				$(".res2").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resDim").append('<p class="res2 resErro">Existem dados vazios, por favor revise as informações inseridas.</p>');
+				return;
+			}
+			if(!valNumPos(visc) || !valNumPos(C) || !valNumPos(deltaP) || !valNumPos(volLav) || !valNumPos(tempoNO) || !valNumPos(areaQuad) || !valNumPos(rm) || !valNumPos(alfa) || (criterio == "quadrosportempo" && (!valNumPos(tempoTotal) || !valNumPos(prod))) || (criterio == "quadrosporvolume" && (!valNumPos(volFilt) || !valNumPos(prod))) || (criterio == "producaoporvolume" && (!valInt(numQuad) || !valNumPos(volFilt))) || (criterio == "producaoportempo" && (!valNumPos(tempoTotal) || !valInt(numQuad))) || (criterio == "otimizar" && !valInt(numQuad))) {
+				$(".res2").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resDim").append('<p class="res2 resErro">Foram encontrados parâmetros inválidos, reveja os dados informados por favor.</p>');
+				return;
+			}
+			// Conversão de string para float, com troca da vírgula pelo ponto como separador decimal; definição dos critério de forma genérica, mas de acordo com o método de dimensionamento da classe Filtros
+			var criterio1, criterio2;
+			visc = convViscDin(interpretar(visc), unidVisc, "Pa.s"); C = convConcMass(interpretar(C), unidC, "kg/m3"); deltaP = convPressao(interpretar(deltaP), unidDeltaP, "Pa"); volLav = convVolume(interpretar(volLav), unidVolLav, "m3"); tempoNO = convTempo(interpretar(tempoNO), unidTemNO, "s"); areaQuad = convArea(interpretar(areaQuad), unidAQ, "m2"); rm = interpretar(rm); alfa = interpretar(alfa);
+			switch(criterio) {
+				case "otimizar":
+					criterio1 = interpretar(numQuad);
+					criterio2 = 1;
+					break;
+				case "producaoportempo":
+					criterio1 = convTempo(interpretar(tempoTotal), unidTempTot, "s");
+					criterio2 = interpretar(numQuad);
+					break;
+				case "producaoporvolume":
+					criterio1 = convVolume(interpretar(volFilt), unidVolFil, "m3");
+					criterio2 = interpretar(numQuad);
+					break;
+				case "quadrosporvolume":
+					criterio1 = convVazVol(interpretar(prod), unidProd, "m3/s");
+					criterio2 = convVolume(interpretar(volFilt), unidVolFil, "m3");
+					break;
+				case "quadrosportempo":
+					criterio1 = convVazVol(interpretar(prod), unidVolFil, "m3");
+					criterio2 = convTempo(interpretar(tempoTotal), unidTempTot, "s");
+					break;
+			}
+			if(criterio1 == 0 || criterio2 == 0 || visc == 0 || C == 0 || deltaP == 0 || volLav == 0 || tempoNO == 0 || areaQuad == 0 || rm == 0 || alfa == 0) {
+				$(".res2").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resDim").append('<p class="res2 resErro">O programa encontrou valores nulos, não possíveis para nenhum dos parâmetros. Por favor, revise os dados inseridos.</p>');
+				return;
+			}
+
+			// Chama a animação da barra de progresso
+			animacao("barra2");
+			$('#barra2').removeClass('oculta');
+			$('#barra2').addClass('visivel text-center');
+
+			// Executa o dimensionamento por meio do objeto
+			filtro.zerarErro();
+			filtro.definirOperacao("pressaocte");
+			filtro.definirSistema(visc, C, deltaP);
+			filtro.definirParametros(rm, alfa);
+			filtro.definirFiltroPrensa(criterio, volLav, tempoNO, areaQuad, criterio1, criterio2);
+			filtro.dimensionarFiltroPrensa();
+			
+			// Verifica se ocorreu erro de convergência
+			if(filtro.erroDeCalculo) {
+				$(".res2").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resDim").append('<p class="res2 resAviso margemSuperior">Isso é embaraçoso, mas para as condições dadas não foi encontrada uma resposta, mesmo após mais de 8000 iterações.</p>');
+				return;
+			}
+
+			// Prepara a saída, de acordo com o critério de dimensionamento escolhido;
+			var str = '<div class="res2"><p class="resGeral">';
+			switch(criterio) {
+				case "otimizar":
+					str += 'Para maximizar a produção do filtro com as características informadas é preciso trabalhar com um volume de filtrado (V<sub>filtrado</sub>), tempo total de operação (t) e produção (Prod) de:</p><p class="resPrincipal"> V<sub>filtrado</sub> = ' + filtro.acessarVolume().toString().replace(".", ",") + ' m<sup>3</sup></p><p class="resPrincipal"> t = ' + filtro.acessarTempo().toFixed(5).replace(".", ",") + ' s</p><p class="resPrincipal">Prod = ' + filtro.acessarProducao().toString().replace(".", ",") + ' m<sup>3</sup> s<sup>-1</sup></p></div>';
+					break;
+				case "producaoportempo":
+					str += 'Nas condições informadas a produção do filtro (Prod) e o volume de filtrado (V<sub>filtrado</sub>) são de:</p><p class="resPrincipal">Prod = ' + filtro.acessarProducao().toString().replace(".", ",") + ' m<sup>3</sup> s<sup>-1</sup></p><p class="resPrincipal">V<sub>filtrado</sub> = ' + filtro.acessarVolume().toString().replace(".", ",") + ' m<sup>3</sup></p></div>';
+					break;
+				case "producaoporvolume":
+					str += 'Nas condições informadas a produção do filtro (Prod) e o tempo de operação (t) são de:</p><p class="resPrincipal">Prod = ' + filtro.acessarProducao().toString().replace(".", ",") + ' m<sup>3</sup> s<sup>-1</sup></p><p class="resPrincipal">t = ' + filtro.acessarTempo().toFixed(5).replace(".", ",") + ' s</p></div>';
+					break;
+				case "quadrosporvolume":
+					str += 'Para a produção informada como critério, dado um volume de filtrado também indicado, serão necessários:</p><p class="resPrincipal">Número de Quadros = ' + filtro.acessarQuadros().toFixed(3).replace(".", ",") + ' (' + Math.ceil(filtro.acessarQuadros()) + ') quadros</p><p class="resPrincipal">A<sub>quadro</sub> = ' + areaQuad.toString().replace(".", ",") + ' m<sup>2</sup></p><p class="resPrincipal">t<sub>operação</sub> = ' + filtro.acessarTempo().toFixed(5).replace(".", ",") + ' s</p></div>';
+					break;
+				case "quadrosportempo":
+					str += 'Para a produção definida como critério, dado um tempo de execução da filtração também informado, serão necessários:</p><p class="resPrincipal">Número de Quadros = ' + filtro.acessarQuadros().toFixed(3).replace(".", ",") + ' (' + Math.ceil(filtro.acessarQuadros()) + ') quadros</p><p class="resPrincipal">A<sub>quadro</sub> = ' + areaQuad.toString().replace(".", ",") + ' m<sup>2</sup></p><p class="resPrincipal">V<sub>filtrado</sub> ' + filtro.acessarVolume().toString().replace(".", ",") + ' m<sup>3</sup></p></div>';
+					break;
+			}
+			$(".res2").remove();
+			$(".resDim").append(str);
+			$('.res2').addClass('animacaoPagina');
+		});
+
+		// Botão para cálculo dos parâmetros a partir de dados experimentais
+		$(".btnPar").click(function() {
+			//Declaração de variáveis
+			var dados = [], valoresTempo = [], valoresVolPress = [], plotX = [], plotY = [];
+			var visc = $(".vispar").val();
+			var C = $(".cpar").val();
+			var A = $(".apar").val();
+			var deltaP = $(".qppar").val();
+			var vazao = $(".vazpar").val();
+			var operacao = $("#listaOpPar").val();
+			var unidVisc = $("#listaUnidViscPar").val(), unidC = $("#listaUnidCPar").val(), unidA = $("#listaUnidAPar").val(), unidPress = $("#listaUnidPressPar").val(), unidVaz = $("#listaUnidVazPar").val(), unidQP = $("#listunidpress").val(), unidTempo = $("#listunidtempo").val(), unidVol = $("#listunidvol").val();
+
+			// Estrutura de controle de erros
+			if(visc == "" || C == "" || A == "" || (deltaP == "" && operacao == "pressaocte") || (vazao == "" && operacao == "vazaocte")) {
+				$(".res1").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resPar").append('<p class="res1 resErro">Existem parâmetros vazios, por favor revise.</p>');
+				return;
+			}
+			if(!valNum(visc) || !valNum(C) || !valNum(A) || (!valNum(deltaP) && operacao == "pressaocte") || (!valNum(vazao) && operacao == "vazaocte")) {
+				$(".res1").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resPar").append('<p class="res1 resErro">Foram encontrados valores inválidos (não numéricos), por favor revise as informações inseridas.</p>');
+				return;
+			}
+			visc = convViscDin(parseFloat(visc.replace(",", ".")), unidVisc, "Pa.s");
+			C = convConcMass(parseFloat(C.replace(",", ".")), unidC, "kg/m3");
+			A = convArea(parseFloat(A.replace(",", ".")), unidA, "m2");
+			if(operacao == "pressaocte") deltaP = convPressao(parseFloat(deltaP.replace(",", ".")), unidPress, "Pa");
+			if(operacao == "vazaocte") vazao = convVazVol(parseFloat(vazao.replace(",", ".")), unidVaz, "m3/s");
+			if(!valPos(visc) || !valPos(C) || !valPos(A) || (!valPos(deltaP) && operacao == "pressaocte") || (!valPos(vazao) && operacao == "vazaocte")) {
+				$(".res1").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resPar").append('<p class="res1 resErro">Foram informados valores inválidos, revise os dados inseridos.</p>');
+				return;
+			}
+			receberDados(dados, dadosEntrada);
+			if(dados.length < 2) {
+				$(".res1").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resPar").append('<p class="res1 resErro">Não foram encontrados dados experimentais suficientes para o cálculo, por favor revise os valores informados.</p>');
+				return;
+			}
+
+			// Chama a animação da barra de progresso
+			$('#barra1').removeClass('oculta');
+			$('#barra1').addClass('visivel text-center');
+			animacao("barra1");
+
+			// Inicia os cálculos para determinação dos parâmetros, pelo ajuste dos dados inseridos
+			var dadosPlot = [];
+			for(var i = 0; i < dados.length; i++) {
+				if(operacao == "pressaocte") {
+					if(dados[i][1] != 0) {
+						plotX[i] = dados[i][1];
+						plotY[i] = dados[i][0] / dados[i][1];
+						dadosPlot.push([plotX[i], plotY[i]]);
+					}
+				}
+				if(operacao == "vazaocte") {
+					plotX[i] = dados[i][0];
+					plotY[i] = dados[i][1];
+					dadosPlot.push([plotX[i], plotY[i]]);
+				}
+				if(operacao == "pressaocte" && dados[i][1] != 0) {
+					valoresTempo[i] = convTempo(dados[i][0], unidTempo, "s");
+					valoresVolPress[i] = convVolume(dados[i][1], unidVol, "m3");
+				}
+				if(operacao == "vazaocte") {
+					valoresTempo[i] = convTempo(dados[i][0], unidTempo, "s");
+					valoresVolPress[i] = convPressao(dados[i][1], unidQP, "Pa");
+				}
+			}
+			filtro.definirOperacao(operacao);
+			filtro.definirValores(valoresTempo, valoresVolPress);
+			filtro.definirArea(A);
+			if(operacao == "pressaocte")
+				filtro.definirSistema(visc, C, deltaP);
+			if(operacao == "vazaocte")
+				filtro.definirSistema(visc, C, vazao);
+			filtro.calcularParametros();
+
+			// Prepara a exibição das respostas
+			var rm = filtro.acessarRm().toFixed(3).replace(".", ",");
+			var alfa = filtro.acessarAlfa().toFixed(3).replace(".", ",");
+			var r2 = filtro.acessarR2().toFixed(6).replace(".", ",");
+			$(".res1").remove();
+			$(".resPar").append('<div class="res1 col-sm-12"><p class="resGeral">Os resultados para resistência do meio filtrante (Rm), resistência específica da torta (&alpha;) e coeficiente de determinação da regressão linear (r<sup>2</sup>) estão na tabela abaixo.</p></div>');
+			var str = '<p class="res1 text-center">Tabela 1. Resistências do meio filtrante e da torta e coeficiente de determinação.</p><div class="res1 centralizar col-sm-12"><table class="margemElemento tabela margemTabela"><tr><th class="celula txtResposta2">Rm (m<sup>-1</sup>)</th><th class="celula txtResposta2">&alpha; (m kg<sup>-1</sup>)</th><th class="celula txtResposta2">r<sup>2</sup></th></tr>';
+			str += '<tr><td class="celula txtResposta2">' + rm + '</td><td class="celula txtResposta2">' + alfa + '</td><td class="celula txtResposta2">' + r2 + '</td></tr></table></div>';
+			$(".resPar").append(str);
+			
+			// Prepara os dados de exibição do gráfico e chama a animação das telas
+			$('.resParGraf').append('<div class="res1 centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico"></canvas></div></div>');
+			if(operacao == 'pressaocte') {
+				graficoGeral('grafico', 'Tempo por Volume versus Volume', [dadosPlot], [false], ['t/V'], ['#000000'], ['#000000'], 'Volume ('+unidVol+')', 'Tempo/Volume (' + unidTempo + '/' + unidVol + ')');
+			}
+			if(operacao == 'vazaocte') {
+				graficoGeral('grafico', 'Queda de Pressão versus Tempo', [dadosPlot], [false], ['Pressão'], ['#000000'], ['#000000'], 'Tempo ('+unidTempo+')', 'Queda de Pressao (' + unidQP + ')');
+			}
+			$('.res1').addClass('animacaoPagina');
+		});
+
+		// Funções para alterações de visibilidade de div
+		function exibirPar() {
+			var div = document.getElementById("divpar");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				$("#linkpar").text("Exibir");
+			} else {
+				div.style.display = "block";
+				$("#linkpar").text("Ocultar");
+			}
+		}
+
+		function exibirCriterioDim() {
+			var tipo = document.getElementById("listadimensionamentos").value;
+			switch(tipo) {
+				case "quadrosportempo":
+					document.getElementById("divProdDim").style.display = "block";
+					document.getElementById("divTemDim").style.display = "block";
+					document.getElementById("divVolDim").style.display = "none";
+					document.getElementById("divNumQuadDim").style.display = "none";
+					break;
+				case "quadrosporvolume":
+					document.getElementById("divProdDim").style.display = "block";
+					document.getElementById("divTemDim").style.display = "none";
+					document.getElementById("divVolDim").style.display = "block";
+					document.getElementById("divNumQuadDim").style.display = "none";
+					break;
+				case "producaoporvolume":
+					document.getElementById("divProdDim").style.display = "none";
+					document.getElementById("divTemDim").style.display = "none";
+					document.getElementById("divVolDim").style.display = "block";
+					document.getElementById("divNumQuadDim").style.display = "block";
+					break;
+				case "producaoportempo":
+					document.getElementById("divProdDim").style.display = "none";
+					document.getElementById("divTemDim").style.display = "block";
+					document.getElementById("divVolDim").style.display = "none";
+					document.getElementById("divNumQuadDim").style.display = "block";
+					break;
+				case "otimizar":
+					document.getElementById("divProdDim").style.display = "none";
+					document.getElementById("divTemDim").style.display = "none";
+					document.getElementById("divVolDim").style.display = "none";
+					document.getElementById("divNumQuadDim").style.display = "block";
+					break;
+				default:
+					document.getElementById("divProdDim").style.display = "none";
+					document.getElementById("divTemDim").style.display = "none";
+					document.getElementById("divVolDim").style.display = "none";
+					document.getElementById("divNumQuadDim").style.display = "none";
+					break;
+			}
+		}
+
+		function exibirDim() {
+			var div = document.getElementById("divdim");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				$("#linkdim").text("Exibir");
+			} else {
+				div.style.display = "block";
+				$("#linkdim").text("Ocultar");
+			}
+		}
+
+		function exibirValPar() {
+			var tipo = $("#listaOpPar").val();
+			if(tipo == "pressaocte") {
+				document.getElementById("divppar").style.display = "block";
+				document.getElementById("divvpar").style.display = "none";
+				document.getElementById("divunidparpresscte").style.display = "block";
+				document.getElementById("divunidvazcte").style.display = "none";
+			}
+			if(tipo == "vazaocte") {
+				document.getElementById("divppar").style.display = "none";
+				document.getElementById("divvpar").style.display = "block";
+				document.getElementById("divunidparpresscte").style.display = "none";
+				document.getElementById("divunidvazcte").style.display = "block";
+			}
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

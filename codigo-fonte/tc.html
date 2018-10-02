@@ -1,0 +1,647 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção de envolve todo o conteúdo da página -->
+		<div class="section">
+		
+			<!-- Seção do método diferença de temperatura média -->
+			<div class="section">
+				<div class="container margemInicial animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">MÉTODO DA DIFERENÇA DE TEMPERATURA MÉDIA</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível executar cálculos de dimensionamento de trocadores de calor através do método da diferençade temperatura média (&Delta;T<sub>ln</sub>). Utilize a vírgula como separador decimal quando informar valores numéricos.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Temperatura de Entrada do Fluido Frio (°C)</p>
+								<input type="text" class="form-control tfedtln dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Temperatura de Entrada do Fluido Quente (°C)</p>
+								<input type="text" class="form-control tqedtln dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Temperatura de Saída do Fluido Frio (°C)</p>
+								<input type="text" class="form-control tfsdtln dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Temperatura de Saída do Fluido Quente (°C)</p>
+								<input type="text" class="form-control tqsdtln dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Coeficiente Global de Troca Térmica (W m<sup>-2</sup> °C<sup>-1</sup>)</p>
+								<input type="text" class="form-control udtln dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Taxa de Troca Térmica (W)</p>
+								<input type="text" class="form-control qdtln dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Escolha um tipo de configuração</p>
+								<select class="form-control dadosFormulario" id="listaConf" onchange="exibirFT()">
+									<option value="0">Concorrente</option>
+									<option value="1">Contracorrente</option>
+									<option value="2">1-2/4/6/...</option>
+									<option value="3">2-4/8/12/...</option>
+								</select>
+							</div>
+							<div class="col-md-6 oculta" id="divft">
+								<p>Fator de Correção</p>
+								<input type="text" class="form-control ftdtln dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline paddingInferior margemSuperior">
+							<div class="col-md-6 margemInferior">
+								<div id="barra1" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao dtln margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular Área de Troca Térmica</button>
+							</div>
+							<div class="col-md-6 centralizar">
+								<div class="resDelta txtResposta2"><p class="resdtln"></p></div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção do método de efetividade -->
+			<div class="section fundo2">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">MÉTODO DA EFETIVIDADE</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível executar cálculos de dimensionamento de trocadores de calor através do método da efetividade (&epsilon;) e número de unidades de transferência (NUT). Utilize a vírgula como separador decimal quando informar valores numéricos.</p>
+						</div>
+					</div>
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Temperatura de Entrada do Fluido Frio (°C)</p>
+								<input type="text" class="form-control tfeenut dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Temperatura de Entrada do Fluido Quente (°C)</p>
+								<input type="text" class="form-control tqeenut dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Vazão de Entrada do Fluido Frio (m<sup>3</sup> s<sup>-1</sup>)</p>
+								<input type="text" class="form-control vfeenut dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Vazão de Entrada do Fluido Quente (m<sup>3</sup> s<sup>-1</sup>)</p>
+								<input type="text" class="form-control vqeenut dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Capacidade Calorífica do Fluido Frio (J kg<sup>-1</sup> °C<sup>-1</sup>)</p>
+								<input type="text" class="form-control cpfenut dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Capacidade Calorífica do Fluido Quente (J kg<sup>-1</sup> °C<sup>-1</sup>)</p>
+								<input type="text" class="form-control cpqenut dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Selecione o tipo de configuração</p>
+								<select class="form-control dadosFormulario" id="listaConfENUT">
+									<option value="paralelo">Concorrente</option>
+									<option value="contracorrente">Contracorrente</option>
+									<option value="1-2">1-2/4/6/...</option>
+									<option value="czero">Mudança de estado</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<p>Escolha o tipo de cálculo</p>
+								<select class="form-control dadosFormulario" id="listaCalc" onchange="exibirCalcENUT()">
+									<option value="">Selecione...</option>
+									<option value="temperaturas">Temperaturas de saída</option>
+									<option value="area">Área de troca térmica</option>
+								</select>
+							</div>
+						</div>
+						<div class="oculta" id="tenut">
+							<div class="form-inline txtFormularioGeral margemSuperior">
+								<div class="col-md-6">
+									<p>Coeficiente Global de Troca Térmica (W m<sup>-2</sup> °C<sup>-1</sup>)</p>
+									<input type="text" class="form-control uenut1 dadosFormulario">
+								</div>
+								<div class="col-md-6">
+									<p>Área de Troca Térmica (m<sup>2</sup>)</p>
+									<input type="text" class="form-control aenut dadosFormulario">
+								</div>
+							</div>
+						</div>
+						<div class="oculta" id="aenut">
+							<div class="form-inline txtFormularioGeral margemSuperior">
+								<div class="col-md-6">
+									<p>Coeficiente Global de Troca Térmica (W m<sup>-2</sup> °C<sup>-1</sup>)</p>
+									<input type="text" class="form-control uenut2 dadosFormulario">
+								</div>
+								<div class="col-md-6">
+									<p>Taxa de Troca Térmica (W)</p>
+									<input type="text" class="form-control qenut dadosFormulario">
+								</div>
+							</div>
+						</div>
+						<div class="form-inline paddingInferior margemSuperior">
+							<div class="col-md-6 margemInferior">
+								<div id="barra2" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao btenut margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+							</div>
+							<div class="col-md-6">
+								<div class="resNUT txtResposta2"><p class="resenut"></p></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção de avaliação de trocador de calor a placas -->
+			<div class="section">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">AVALIAÇÃO EXPERIMENTAL - TROCADOR DE CALOR DE PLACAS</p>
+							<p class="txtFormularioApresentacao">Esta seção é destinada para processamento de dados de práticas com trocadores de calor de placas, em que o objetivo é calcular o coeficiente global de transferência de calor (U). Utilize a vírgula como separador decimal quando informar valores numéricos.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Número de Placas</p>
+								<input type="text" class="form-control nptcp dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Área da Face das Placas (m<sup>2</sup>)</p>
+								<input type="text" class="form-control aptcp dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Capacidade Calorífica do Fluido Frio (J kg<sup>-1</sup> °C<sup>-1</sup>)</p>
+								<input type="text" class="form-control cpftcp dadosFormulario">
+							</div>
+							<div class="col-md-6">
+								<p>Capacidade Calorífica do Fluido Quente (J kg<sup>-1</sup> °C<sup>-1</sup>)</p>
+								<input type="text" class="form-control cpqtcp dadosFormulario">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-4">
+								<p>Modo de Operação</p>
+								<select class="form-control dadosFormulario" id="listaOpTCP">
+									<option value="paralelo">Concorrente</option>
+									<option value="contracorrente">Contracorrente</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<p>Calcular Taxa Via</p>
+								<select class="form-control dadosFormulario" id="listaTaxTCP">
+									<option value="ff">Fluido Frio</option>
+									<option value="fq">Fluido Quente</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<p>Método de Cálculo</p>
+								<select class="form-control dadosFormulario" id="listaTCP">
+									<option value="dtln">Diferença de Temperatura Média</option>
+									<option value="enut">Efetividade e NUT</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 txtFormularioGeral margemSuperior">
+							<p>Entre com os dados experimentais de temperaturas e vazão, nas unidades indicadas. Valores não numéricos ou espaços vazios fazem o programa ignorar a linha em que foram encontrados.</p>
+							<p>Legenda: Tfe: Temperatura de entrada do fluido frio, Tqe: Temperatura de entrada do fluido quente, Tfs: Temperatura de saída do fluido frio, Tqs: Temperatura de saída do fluido quente.</p>
+						</div>
+						<div class="centralizar"><div id="tabela"></div></div>
+						<div class="col-sm-12 margemSuperior paddingInferior">
+							<div id="barra3" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+							<button class="btn btnAcao bttcp margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+							<div class="margemSuperior resTab txtResposta2"><p class="restcp"></p></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+	<script>
+		// Instância da classe de Trocadores de Calor
+		var tc = new TrocadoresDeCalor();
+		var grafico = new GraficoCanvas();
+
+		// Instância do handsontable
+		var tabela = document.getElementById("tabela");
+		var entradaDados = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 6),
+			width: 890,
+			height: 260,
+			colWidths: [170, 170, 120, 120, 120, 120],
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["Vazão Frio (kg/min)", "Vazão Quente (kg/min)", "Tfe (°C)", "Tqe (°C)", "Tfs (°C)", "Tqs (°C)"],
+			columns: [0, 0, 0, 0, 0, 0],
+			minSpareRows: 10
+		});
+
+		$(".bttcp").click(function() {
+			// Declaração de variáveis
+			var tab = [];
+			var numPlacas = $(".nptcp").val();
+			var areaPlaca = $(".aptcp").val();
+			var cpf = $(".cpftcp").val();
+			var cpq = $(".cpqtcp").val();
+			var tipoCalc = $("#listaTCP").val();
+			var tipoConf = $("#listaOpTCP").val();
+			var tipoTaxa = $("#listaTaxTCP").val();
+
+			// Estrutura de controle de erros
+			if(numPlacas == "" || areaPlaca == "" || cpf == "" || cpq == "") {
+				$(".restcp").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$(".resTab").append('<p class="restcp resErro">Faltam parâmetros a serem informados, por favor revise.</p>');
+				return;
+			}
+			if(!valInt(numPlacas) || !valNum(areaPlaca) || !valNum(cpf) || !valNum(cpq)) {
+				$(".restcp").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$(".resTab").append('<p class="restcp resErro">Valor não numérico informado, por favor revise.</p>');
+				return;
+			}
+			receberDados(tab, entradaDados);
+			numPlacas = parseInt(numPlacas);
+			areaPlaca = parseFloat(areaPlaca.replace(",", "."));
+			cpf = parseFloat(cpf.replace(",", "."));
+			cpq = parseFloat(cpq.replace(",", "."));
+			if(tab.length == 0) {
+				$(".restcp").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$(".resTab").append('<p class="restcp resErro">Não foram informados dados na tabela de valores</p>');
+				return;
+			}
+			if(!valPos(areaPlaca) || !valPos(cpf) || !valPos(cpq)) {
+				$(".restcp").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$(".resTab").append('<p class="restcp resErro">Valor negativo encontrado, por favor revise os dados.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra3");
+			$('#barra3').removeClass('oculta');
+			$('#barra3').addClass('visivel text-center');
+
+			//Executa os cálculos
+			var vazf = [], vazq = [], tfe = [], tqe = [], tfs = [], tqs = [], resQ = [], resAlt = [], resU = [], seq = 1;
+			var np = tab.length;
+			for(var i = 0; i < np; i++) {
+				vazf[i] = tab[i][0] / 60;
+				vazq[i] = tab[i][1] / 60;
+				tfe[i] = tab[i][2];
+				tqe[i] = tab[i][3];
+				tfs[i] = tab[i][4];
+				tqs[i] = tab[i][5];
+			}
+			tc.definirAreaPorPlacas(numPlacas, areaPlaca);
+			tc.definirEscoamento(tipoConf);
+			tc.definirTipoDimensionamento("coeficiente");
+			for(var i = 0; i < np; i++) {
+				// Recebe temperatura em Kelvin
+				tc.definirTemperaturas(tqe[i] + 273.15, tfe[i] + 273.15, tqs[i] + 273.15, tfs[i] + 273.15);
+				tc.definirSistema(vazq[i], vazf[i], cpq, cpf);
+				if(tipoTaxa == "ff") tc.calcularTaxaPorFluidoFrio();
+				if(tipoTaxa == "fq") tc.calcularTaxaPorFluidoQuente();
+				resQ[i] = tc.taxa;
+				if(tipoCalc == "dtln") {
+					tc.dimensionarPorDeltaTln();
+					resAlt[i] = tc.difTempMedia.toFixed(2).replace(".", ",");
+				}
+				if(tipoCalc == "enut") {
+					tc.definirConfiguracao(tipoConf);
+					tc.dimensionarPorEfetividade();
+					resAlt[i] = tc.efetividade.toFixed(5).replace(".", ",");
+				}
+				resU[i] = tc.coefGlobalTC;
+			}
+
+			// Monta a tabela que será exibida para o usuário
+			var titulos = ["Sequência", "Taxa (W)", "", "Coeficiente Global (W m<sup>-2</sup> °C<sup>-1</sup>)"]
+			if(tipoCalc == "dtln") titulos[2] = "&Delta;T<sub>ln</sub> (°C)";
+			if(tipoCalc == "enut") titulos[2] = "Efetividade";
+			var str = '<div class="restcp margemSuperior"><p class="resGeral text-center">Tabela 1. Resultados do cálculo de trocador de calor de placas.</p><table class="tabela margemTabela"><tr><th class="celula">' + titulos[0] + '</th><th class="celula">' + titulos[1] + '</th><th class="celula">' + titulos[2] + '</th><th class="celula">' + titulos[3] + '</th></tr>';
+			for(var i = 0; i < np; i++) {
+				str += '<tr><td class="celula">' + seq + '</td><td class="celula">' + resQ[i].toFixed(5).replace(".", ",") + '</td><td class="celula">' + resAlt[i] + '</td><td class="celula">' + resU[i].toFixed(5).replace(".", ",") + '</td></tr>';
+				seq++;
+			}
+			str += '</table></div>';
+			$(".restcp").remove();
+			$(".resTab").append(str);
+			
+			// Prepara os dados para alimentar o Chart.js
+			var titulo1, titulo2, dadosTaxa = [], dadosU = [];
+			for(var i = 0; i < resQ.length; i++) {
+				if(tipoTaxa == "ff") {
+					dadosTaxa.push([vazf[i], resQ[i]]);
+					dadosU.push([vazf[i], resU[i]])
+				}
+				if(tipoTaxa == "fq") {
+					dadosTaxa.push([vazq[i], resQ[i]]);
+					dadosU.push([vazq[i], resU[i]])
+				}
+			}
+			if(tipoTaxa == "ff") {
+				titulo1 = 'Taxa de Transferência de Calor versus Vazão de Fluido Frio';
+				titulo2 = 'Coeficiente Global de Transferência de Calor versus Vazão de Fluido Frio';
+			}
+			if(tipoTaxa == "fq") {
+				titulo1 = 'Taxa de Transferência de Calor versus Vazão de Fluido Quente';
+				titulo2 = 'Coeficiente Global de Transferência de Calor versus Vazão de Fluido Quente';
+			}
+			
+			// Desenha o gráfico e chama a animação das respostas
+			$('.resTab').append('<div class="restcp centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico1"></canvas></div></div>');
+			$('.resTab').append('<div class="restcp centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico2"></canvas></div></div>');
+			graficoGeral('grafico1', titulo1, [dadosTaxa], [false], ['Taxa (q)'], ['#000000'], ['#000000'], 'Vazão (kg/s)', 'Taxa (W)');
+			graficoGeral('grafico2', titulo2, [dadosU], [false], ['Coeficiente (U)'], ['#000000'], ['#000000'], 'Vazão (kg/s)', 'Coeficiente Global (W/m2°C)');
+			$('.restcp').addClass('animacaoPagina');
+		});
+
+		// Cálculo pelo método de efetividade e número de unidades de transferência
+		$(".btenut").click(function() {
+			var tfe = $(".tfeenut").val();
+			var tqe = $(".tqeenut").val();
+			var cpf = $(".cpfenut").val();
+			var cpq = $(".cpqenut").val();
+			var vazq = $(".vqeenut").val();
+			var vazf = $(".vfeenut").val();
+			var tipoConf = $("#listaConfENUT").val();
+			var tipoCalc = $("#listaCalc").val();
+			var area = $(".aenut").val();
+			var taxa = $(".qenut").val();
+			var u;
+
+			// Estrutura de controle de erros
+			if(tipoCalc == "") {
+				$(".resenut").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resNUT").append('<p class="resenut resErro">Por favor, selecione um tipo de cálculo.</p>');
+				return;
+			}
+			if(tipoCalc == "temperaturas") u = $(".uenut1").val();
+			else u = $(".uenut2").val();
+			if(tfe == "" || tqe == "" || cpf == "" || cpq == "" || vazq == "" || vazf == "" || u == "" || (area == "" && tipoCalc == "temperaturas") || (taxa == "" && tipoCalc == "area")) {
+				$(".resenut").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resNUT").append('<p class="resenut resErro">Faltam dados a serem informados, por favor revise o que informou.</p>');
+				return;
+			}
+			if(!valNum(tfe) || !valNum(tqe) || !valNum(cpf) || !valNum(cpq) || !valNum(vazq) || !valNum(vazf) || !valNum(u) || (!valNum(area) && tipoCalc == "temperaturas") || (!valNum(taxa) && tipoCalc == "area")) {
+				$(".resenut").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resNUT").append('<p class="resenut resErro">Valores não numéricos, por favor revise os dados informados.</p>');
+				return;
+			}
+			tfe = parseFloat(tfe.replace(",", "."));
+			tqe = parseFloat(tqe.replace(",", "."));
+			cpf = parseFloat(cpf.replace(",", "."));
+			cpq = parseFloat(cpq.replace(",", "."));
+			vazf = parseFloat(vazf.replace(",", "."));
+			vazq = parseFloat(vazq.replace(",", "."));
+			u = parseFloat(u.replace(",", "."));
+			taxa = parseFloat(taxa.replace(",", "."));
+			area = parseFloat(area.replace(",", "."));
+			if(!valTemp(tfe) || !valTemp(tqe) || !valPos(cpf) || !valPos(cpq) || !valPos(vazq) || !valPos(vazf) || !valPos(u) || (!valPos(area) && tipoCalc == "temperaturas") || (!valPos(taxa) && tipoCalc == "area")) {
+				$(".resenut").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resNUT").append('<p class="resenut resErro">Valores numéricos não válidos, por favor revise os dados informados.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra2");
+			$('#barra2').removeClass('oculta');
+			$('#barra2').addClass('visivel text-center');
+
+			// Executa os cálculos pelo método da efetividade
+			tc.definirTemperaturasEntrada(tqe, tfe);
+			tc.definirU(u);
+			tc.definirTipoDimensionamento(tipoCalc);
+			tc.definirConfiguracao(tipoConf);
+			tc.definirSistema(vazq, vazf, cpq, cpf);
+			if(tipoCalc == "temperaturas") tc.definirArea(area);
+			if(tipoCalc == "area") tc.definirTaxa(taxa);
+			tc.dimensionarPorEfetividade();
+			var str = "";
+			if(tipoCalc == "temperaturas") {
+				str += '<p class="resenut resPrincipal">Foram encontrados os valores de ' + tc.tempSaiFrio.toFixed(2).replace(".", ",") + ' °C e ' + tc.tempSaiQuente.toFixed(2).replace(".", ",") + ' °C para as temperaturas de saída do fluido frio e de saída do fluido quente, respectivamente.</p>';
+			}
+			if(tipoCalc == "area") {
+				str += '<p class="resenut resPrincipal">A área calculada foi de ' + tc.areaDeTroca.toFixed(6).replace(".", ",") + ' m<sup>2</sup>.</p>';
+			}
+			$(".resenut").remove();
+			$(".resNUT").append('<p class="resenut">' + str + '</p>');
+			$('.resenut').addClass('animacaoPagina');
+		});
+
+		// Cálculo de área pelo método da diferença de temperatura média
+		$(".dtln").click(function() {
+			// Declaração de variáveis
+			var tqe = $(".tqedtln").val();
+			var tfe = $(".tfedtln").val();
+			var tqs = $(".tqsdtln").val();
+			var tfs = $(".tfsdtln").val();
+			var u = $(".udtln").val();
+			var q = $(".qdtln").val();
+			var ft = $(".ftdtln").val();
+			var i = $("#listaConf").val();
+
+			// Estrutura de controle de erros
+			if(tqe == "" || tfe == "" || tqs == "" || tfs == "" || u == "" || q == "" || ((i == "2" || i == "3") && ft == "")) {
+				$(".resdtln").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resDelta").append('<p class="resdtln resErro">Faltam parâmetros a serem informados, por favor reveja o que informou.</p>');
+				return;
+			}
+			if(!valNum(tqe) || !valNum(tfe) || !valNum(tqs) || !valNum(tfs) || !valNum(u) || !valNum(q) || (!valNum(ft) && (i == "2" || i == "3"))) {
+				$(".resdtln").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resDelta").append('<p class="resdtln resErro">Valores informados não são números válidos, por favor reveja os dados.</p>');
+				return;
+			}
+			tqe = parseFloat(tqe.replace(",", "."));
+			tfe = parseFloat(tfe.replace(",", "."));
+			tqs = parseFloat(tqs.replace(",", "."));
+			tfs = parseFloat(tfs.replace(",", "."));
+			u = parseFloat(u.replace(",", "."));
+			q = parseFloat(q.replace(",", "."));
+			ft = parseFloat(ft.replace(",", "."));
+			if(tqs > tqe || tfs < tfe) {
+				$(".resdtln").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resDelta").append('<p class="resdtln resErro">Ocorreu um erro porque a temperatura de saída não está condizente. Reveja os dados informados, por favor.</p>');
+				return;
+			}
+			if(!valTemp(tqe) || !valTemp(tqs) || !valTemp(tfs) || !valTemp(tfe) || !valPos(u) || !valPos(q) || ((!valPos(ft) || ft > 1) && (i == "2" || i == "3"))) {
+				$(".resdtln").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resDelta").append('<p class="resdtln resErro">Valor inválido para parâmetros, por favor reveja os dados informados.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra1");
+			$('#barra1').removeClass('oculta');
+			$('#barra1').addClass('visivel text-center');
+
+			// Executa os cálculos
+			var tipo;
+			if(i == "0") tipo = "paralelo";
+			else tipo = "contracorrente";
+			tc.definirTemperaturas(tqe, tfe, tqs, tfs);
+			tc.definirEscoamento(tipo);
+			tc.definirU(u);
+			tc.definirTaxa(q);
+			tc.definirTipoDimensionamento("area");
+			if(i != "0" && i != "1") tc.definirFatorCorrecao(ft);
+			tc.calcularDeltaTln();
+			tc.dimensionarPorDeltaTln();
+			var str = '<p class="resdtln resPrincipal">A área de troca térmica calculada é de ' + tc.areaDeTroca.toFixed(6).replace(".", ",") + ' m<sup>2</sup></p>.';
+			$(".resdtln").remove();
+			$(".resDelta").append(str);
+			$('.resdtln').addClass('animacaoPagina');
+		});
+
+		function exibirDTLN() {
+			var div = document.getElementById("divdtln");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				document.getElementById("btdtln").innerHTML = "Exibir";
+			} else {
+				div.style.display = "block";
+				document.getElementById("btdtln").innerHTML = "Ocultar";
+			}
+		}
+
+		function exibirENUT() {
+			var div = document.getElementById("divenut");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				$("#btenut").text("Exibir");
+			} else {
+				div.style.display = "block";
+				$("#btenut").text("Ocultar");
+			}
+		}
+
+		function exibirTCP() {
+			var div = document.getElementById("divtcp");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				$("#bttcp").text("Exibir");
+			} else {
+				div.style.display = "block";
+				$("#bttcp").text("Ocultar");
+			}
+		}
+
+		function exibirCalcENUT() {
+			var i = document.getElementById("listaCalc").value;
+			if(i == "temperaturas") {
+				document.getElementById("tenut").style.display = "block";
+				document.getElementById("aenut").style.display = "none";
+			} else if(i == "area") {
+				document.getElementById("tenut").style.display = "none";
+				document.getElementById("aenut").style.display = "block";
+			} else {
+				document.getElementById("tenut").style.display = "none";
+				document.getElementById("aenut").style.display = "none";
+			}
+		}
+
+		function exibirFT() {
+			var i = document.getElementById("listaConf").value;
+			if(i == "2" || i == "3")
+				document.getElementById("divft").style.display = "block";
+			else
+				document.getElementById("divft").style.display = "none";
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Conteúdo da página -->
+		<div class="container margemInicial">
+			<div class="row">
+				<div class="col-sm-12"><p class="txtTitulo1">EQUILÍBRIO LÍQUIDO-LÍQUIDO</p></div>
+			</div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+
+			<!-- Seção de definição -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Um assunto importante da termodinâmica é o equilíbrio de fases, com aplicações tecnológicas de grande interesse industrial. Por exemplo, a partir do estudo de sistemas de equilíbrio líquido-vapor foi possível o desenvolvimento de uma das mais importantes operações unitárias, a destilação. Outro caso é o Equilíbrio Líquido-Líquido (ELL), particularmente interessante para operações de extração, relacionadas muitas vezes com produtos de alto valor agregado.</p>
+					<p class="txtGeral">A definição termodinâmica para equilíbrio de fases é a isofugacidade, em que ambas as fases possuem a mesma fugacidade (SMITH, 2009). Porém, desenvolver equacionamentos a partir dessa definição é complicada e trabalhosa, pois necessita de modelos para Energia de Gibbs em Excesso, que podem ou não serem dependentes de dados experimentais de interação binários. Assim, foi desenvolvido um novo método para avaliar e predizer um sistema ELL.</p>
+					<p class="txtGeral">Esse método é o ajuste de dados experimentais de equilíbrio para um determinado sistema em uma equação característica, que representa o comportamento característico sistema ELL (HAN et al., 2014). Este é esquematizado na Figura 1, em que alfa (&alpha;) e beta (&beta;) são os componentes do sistema e os valores de concentração estão em porcentagem massa/massa.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="centralizar"><img class="margemElemento" src="figuras/grafico-ell.png" width="500px"></img></div>
+					<div class="centralizar"><p class="txtGeral">Figura 1. Esquema do gráfico de equilíbrio entre duas fases líquidas.</p></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Com essa abordagem, a problemática do desenvolvimento das equações termodinâmicas, a partir de um modelo específico, é substituída pelo ajuste de uma equação modelo, que relaciona a concentração do componente beta em função da concentração do componente alfa. Os modelos mais comuns são representados pelas Equações 1, 2 e 3 (HAN et al., 2014). Felizmente esses modelos, através de uma mudança de variáveis, pode ser alocado na forma de uma equação linear múltipla, que possui método de regressão direta (MONTGOMERY, 2012), diferente de equações não lineares, que precisam além da determinação da matriz de transformação (Jacobiana), iterações sucessivas e um bom estimador inicial, sob pena de não convergência (ROUAUD, 2017).</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/modelo1-ell.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/modelo2-ell.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/modelo3-ell.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>C<sub>&beta;</sub> = concentração mássica do componente beta;</br>C<sub>&alpha;</sub> = concentração mássica do componente alfa;</br>a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub> e a<sub>3</sub> = parâmetros dos modelos.</p>
+					<p class="txtGeral margemTitulo">Para escolher um modelo entre os três disponíveis é feita a análise da qualidade da regressão e também dos erros dos estimadores calculados. Determinado o modelo, é possível predizer a concentração das fases em equilíbrio, a partir de um sistema formado por uma quantidade x do componente alfa e y do componente beta, com a acoplagem da equação escolhida e do balanço de massa.</p>
+				</div>
+			</div>
+
+			<!-- Seção de explicação dos cálculos -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="2">2. EXTRATÉGIA DE RESOLUÇÃO UTILIZADA</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Zero possui duas áreas na seção ELL, uma destinada para ajuste dos dados experimentais em um dos modelos cadastrados e outra para predição das concentrações das fases em equilíbrio a partir de uma mistura, com a escolha de uma equação característica. Essa divisão foi realizada pelo fato de serem processos separados e independentes. Primeiro é feito a análise do ajuste dos dados experimentais, depois, com uma expressão definida, é possível executar a predição.</p>
+					<p class="txtGeral">Para ajuste, é feita a mudança de variáveis e então regressão linear múltipla. Este processo é realizado por uma rotina interna (classe Regressor), que recebe apenas os valores numéricos de y<sub>i</sub> e x<sub>n,i</sub> e calcula os parâmetros, o coeficiente de determinação, erro padrão dos estimadores e outras definições estatísticas, que não são exibidas na seção ELL para evitar poluição visual.</p>
+					<p class="txtGeral">A predição envolve uma rotina numérica iterativa, pois ao acoplar a equação do modelo escolhido com o balanço de massa é gerado um sistema de equações não lineares. Para resolução deste, Zero utiliza um algoritmo específico para aplicar o método de Newton (REF) e resolver o sistema. Tal método necessita de um estimador inicial, do cálculo da matriz Jacobiana e da resolução de um sistema linear simples para encontrar o incremento do estimador de iteração. O procedimento possui rápida convergência, mas é fortemente influenciado pela qualidade do estimador inicial. Esta aplicação utiliza como padrão estimadores iniciais que geralmente resultam na convergência do sistema, mas permite também que o usuário altere os estimadores caso deseje ou ocorra algum erro.</p>
+				</div>
+			</div>
+
+			<!-- Seção para procedimento experimental -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL POSSÍVEL</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">A seção ELL se assemelha com a DTP no caso de procedimento experimental, pois a própria concepção do processo está relacionada com dados laboratoriais. Com este norte, Zero apresenta uma interface intuitiva que resolve todas as necessidades no mesmo ambiente. Realiza o ajuste de uma equação, calcula alguns parâmetros estatísticos, gera gráficos e permite a predição de concentração no equilíbrio de fases de uma mistura.</p>
+					<p class="txtGeral">Uma forma de se obter dados de equilíbrio é a partir do teste turbidimétrico, utilizados em sistemas aquasos bifásicos (SAB), de grande interesse por serem não tóxicos e com capacidade de extração de susbstâncias com alto valor agregado (HAN et al., 2014). O procedimento é simples e necessita dos componentes do sistema, um recipiente para alocação do sistema (por exemplo, tudo de ensaio) e balança analítica para medição das massas adicionadas.</p>
+				</div>
+			</div>
+
+			<!-- Seção para explicação da utilização -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="4">4. MODO DE UTILIZAÇÃO DOS PROCEDIMENTOS DISPONÍVEIS</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">A metodologia de ajuste de dados é simples, necessita que o usuário informe os dados experimentais obtidos. É de responsabilidade do mesmo que identifique para o seu caso qual é o componente alfa (forma a fase pesada) e qual o componente beta (forma a fase leve), ou seja, em função de qual componente irá descrever o outro. Para consultar as equações dos modelos, existe um link "Exibir Equações dos Modelos", localizado na parte superior direita, logo abaixo do nome da seção, cujo clique exibe ou oculta as expressões dos modelos. A entrada de dados é semelhante aos espaços das planilhas eletrônicas, o que torna mais intuitivo e fácil a inserção deles, pois podem ser copiados diretamente de uma planilha e colados nos espaços do programa. Após informar os valores disponíveis, a resolução é informada depois após clicar no botão "Executar Cálculos", que exibirá na tela as respostas e os gráficos com os dados experimentais e as funções ajustadas.</p>
+					<p class="txtGeral">Para predição, o procedimento de inserção de dados é diferente. Primeiro é preciso escolher um modelo entre os três disponíveis e depois alocar os parâmetros dele nos espaços abaixo da lista de seleção. O próximo passo é informar a Razão de Fases, que é a razão entre a massa de fase de topo e a massa total da mistura (soma da massa das duas fases). Por fim, é preciso inserir a composição da mistura que formará duas fases (Ponto de Mistura). O usuário pode informar quantos pontos de mistura desejar, através do formulário que contêm lacunas para concentrações de alfa e beta e um botão de adição, que grava as informações digitadas e as exibe ao lado.</p>
+					<p class="txtGeral">Há também a possibilidade da alteração dos estimadores iniciais padrões do programa. Para isso é preciso clicar no link "Configurações Avançadas", que abrirá um novo espaço para que se informe os estimadores iniciais da concentração de alfa na fase superior (rica em beta) e da concentração de alfa na fase inferior (rica em alfa). O usuário pode alterar esses estimadores por vontade própria ou para consertar um erro que convergência. Quando um erro deste tipo ocorre, no lugar dos valores numéricos é exibido a mensagem "NaN".</p>
+					<p class="txtGeral">Finalizadas as inserções de dados à aplicação, clicar no botão "Executar Cálculos" dispara o processo de resolução e assim que terminado, serão exibidas mensagens no espaço abaixo do botão com as respostas da predição, juntamente com um gráfico com a linha de amarração dos pontos de mistura e a curva gerada pela equação escolhida.</p>
+				</div>
+			</div>
+
+			<!-- Seção de referências bibliográficas -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="5">5. REFERÊNCIAS</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">HAN, Juan; WANG, Yun; CHEN, Can; KANG, Wenbing; LIU, Yan; XU, Kangkang; NI, Liang. (Liquid + liquid) equilibria and extraction capacity of (imidazolium ionic liquids + potassium tartrate) aqueous two-phases systems. Journal of Molecular Liquids, 193, p. 23-28, 2014.</p>
+					<p class="txtGeral">SMITH, J. M; ABBOTT, Michael M; VAN NESS, H. C. Introdução à termodinâmica da engenharia química. Rio de Janeiro: LTC, 2007, 626 p. ISBN 9788521615538.</p>
+					<p class="txtGeral">MONTGOMERY, Douglas C.; RUNGER, George C. Estatística aplicada e probabilidade para engenheiros. Rio de Janeiro: LTC, 2012, 521 p. ISBN 9788521619024.</p>
+					<p class="txtGeral">ROUAUD, Mathieu. Probabilités, statistiques et analyses multicritères: Application aux sciences expérimentales. Version Courte. Disponível em &lt;goo.gl/dm65MA&gt;.</p>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+	
+	<script>
+	
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000; 
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+	
+	</script>
+
+</html>

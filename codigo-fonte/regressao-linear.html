@@ -1,0 +1,159 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+
+		<!-- Seção que contêm todo o texto do documento -->
+		<div class="section">
+
+			<!-- Seção para cálculo da regressão linear simples -->
+			<div class="section">
+				<div class="container animacaoPagina">
+					<div class="row margemInicial margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">REGRESSÃO LINEAR SIMPLES</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível realizar a regressão linear simples para um conjunto de dados, com uma variável independente (x) e uma variável dependente (y). A resposta do cálculo é o valor dos dois coeficientes da equação modelo da reta. Utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="col-sm-12">
+							<p class="txtFormularioGeral">No espaço abaixo, informe valores de x e y, estes na primeira coluna e aqueles na segunda coluna. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados. Ao lado está a equação de regressão utilizada neste programa.</p>
+						</div>
+						<div class="form-inline margemSuperior">
+							<div class="col-md-7 centralizar"><div id="tabreglin"></div></div>
+							<div class="col-md-5">
+								<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao btnRegLin margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+								<div class="resRegLin txtResposta2 margemSuperior"><div class="resultadoreglin"></div></div>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="resRegLinGraf margemSuperior"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+	<script>
+
+		// Declaração das instâncias utilizadas nos cálculos
+		var grafico = new GraficoCanvas();
+		var reg = new Regressor();
+
+		// Declaração da instância do handsontable para regressão linear
+		tabela = document.getElementById("tabreglin");
+		var dadosRegLin = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 400,
+			height: 400,
+			colWidths: 150,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["y", "x"],
+			columns: [0, 0],
+			minSpareRows: 12
+		});
+
+		// Ação de clique do botão de regressão linear
+		$(".btnRegLin").click(function() {
+			// Declaração das variáveis utilizadas
+			var dados = [], x = [], y = [], a0, a1, r2, dadosOriginais = [], dadosResiduos = [], dadosRegressao = [], residuos;
+			receberDados(dados, dadosRegLin);
+
+			//Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadoreglin").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resRegLin").append('<p class="resultadoreglin resErro">Não foram encontrados valores suficientes para fazer a regressão, por favor verifique as informações inseridas.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra");
+			$('#barra').addClass('visivel text-center');
+			$('#barra').removeClass('oculta');
+
+			// Execução dos cálculos
+			for(var i = 0; i < dados.length; i++) {
+				x[i] = dados[i][1];
+				y[i] = dados[i][0];
+				dadosOriginais[i] = [x[i], y[i]];
+			}
+			reg.definirValores(x, y);
+			reg.reglin();
+			a0 = padraoBr(reg.acessarEstimadores()[0], 5) + " &plusmn; " + padraoBr(reg.acessarIntervalo()[0], 5);
+			a1 = padraoBr(reg.acessarEstimadores()[1], 5) + " &plusmn; " + padraoBr(reg.acessarIntervalo()[1], 5);
+			r2 = reg.acessarR2().toFixed(6).replace(".", ",");
+			residuos = reg.acessarResiduos();
+			for(var i = 0; i < residuos.length; i++) {
+				dadosResiduos[i] = [x[i], residuos[i]];
+			}
+			var a = reg.acessarEstimadores()[1], b = reg.acessarEstimadores()[0];
+			dadosRegressao = [[x[0], b + a * x[0]], [x[x.length - 1], b + a * x[x.length - 1]]];
+
+			// Prepara as respostas para exibição
+			$(".resultadoreglin").remove();
+			$(".resRegLin").append('<div class="resultadoreglin centralizar col-sm-12"><p class="resGeral">Resultados para os estimadores da equação linear (&plusmn; erro padrão estimado) e coeficiente de determinação (r<sup>2</sup>).</p>');
+			$(".resRegLin").append('<div class="resultadoreglin centralizar col-sm-12"><table class="tabela"><tr><th class="celula">a<sub>0</sub></th><th class="celula">a<sub>1</sub></th><th class="celula">r<sup>2</sup></th></tr><tr><td class="celula">' + a0 + '</td><td class="celula">' + a1 + '</td><td class="celula">' + r2 + '</td></tr></table></div>');
+
+			// Desenha os gráficos e chama a animação
+			$('.resRegLinGraf').append('<div class="resultadoreglin centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico1"></canvas></div></div>');
+			$('.resRegLinGraf').append('<div class="resultadoreglin centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico2"></canvas></div></div>');
+			graficoGeral('grafico1', 'Valores de f(x) e reta de regressão', [dadosOriginais, dadosRegressao], [false, true], ['f(x)', 'Regressão'], ['#000000', '#6d6969'], ['#000000', 'rgba(0,0,0,0)'], 'x', 'f(x)');
+			graficoGeral('grafico2', 'Resíduos em função de x', [dadosResiduos], [false], ['Resíduos'], ['#000000'], ['#000000'], 'x', 'Resíduo');
+			$('.resultadoreglin').addClass('animacaoPagina');
+		});
+
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

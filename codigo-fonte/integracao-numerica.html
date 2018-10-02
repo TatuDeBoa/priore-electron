@@ -1,0 +1,158 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+	
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que envolve todo o conteúdo da página -->
+		<div class="section">
+		
+			<!-- Seção para cálculo da integração numérica -->
+			<div class="section">
+				<div class="container margemInicial animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">INTEGRAÇÃO NUMÉRICA - REGRAS DE SIMPSON E DOS TRAPÉZIOS</p>
+							<p class="txtFormularioApresentacao">Esta seção é destinada para cálculo de integração a partir de valores pontuais de uma dada função f<sub>(t)</sub>. Estão implementados três métodos distintos, oriundos do polinômio interpolador de Newton com número de intervalos diferentes, o Método dos Trapézios, o Método 1/3 de Simpson e o Método 3/8 de Simpson. Cada método possui uma particularidade relacionada com a quantidade de pontos (f<sub>(t)</sub> e x) são conhecidos para realizar a integral numérica. Quando informar valores, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="col-sm-12">
+							<p class="txtFormularioGeral">No espaço abaixo, informe os valores de uma função f<sub>(t)</sub> em seus respectivos valores de x, estes na segunda coluna e aqueles na primeira. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados.</p>
+						</div>
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-7 centralizar"><div id="tabintnum"></div></div>
+							<div class="col-md-5 margemSuperior">
+								<p>Método de integração</p>
+								<select class="form-control dadosFormulario" id="metodointnum">
+									<option value="trapézios">Regra dos Trapézios</option>
+									<option value="1/3 de Simpson">Regra 1/3 de Simpson</option>
+									<option value="3/8 de Simpson">Regra 3/8 de Simpson</option>
+								</select>
+								<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated bg-warning margemSuperior oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao margemSuperior btnIntNum"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+								<div class="resIntNum margemSuperior"><p class="resultadointnum"></p></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+	
+	</body>
+	
+	<script>
+	
+		// Declaração da instância do handsontable para integração numérica
+		tabela = document.getElementById("tabintnum");
+		var dadosIntNum = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 400,
+			height: 300,
+			colWidths: 150,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["f(x)", "x"],
+			columns: [0, 0],
+			minSpareRows: 12
+		});
+		
+		// Ação de clique do botão de integração numérica
+		$(".btnIntNum").click(function() {
+			// Declaração de variáveis necessárias
+			var dados = [], x = [], y = [], metodo = $("#metodointnum").val(), integral;
+			receberDados(dados, dadosIntNum);
+
+			// Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadointnum").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntNum").append('<p class="resultadointnum resErro">Não foram encontrados valores suficientes para realizar a integração.</p>');
+				return;
+			}
+			if(metodo == "1/3 de Simpson" && dados.length % 2 == 0) {
+				$(".resultadointnum").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntNum").append('<p class="resultadointnum resErro">Para executar a integração pelo método 1/3 de Simpson é preciso que o número de pontos informados seja ímpar. Por favor, reveja os pontos ou escolha outro método.</p>');
+				return;
+			}
+			if(metodo == "3/8 de Simpson" && (dados.length - 1) % 3 != 0) {
+				$(".resultadointnum").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntNum").append('<p class="resultadointnum resErro">Para executar a integração pelo método 3/8 de Simpson é preciso que o número de pontos menos um seja múltiplo de 3. Por favor, reveja os pontos ou escolha outro método.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra");
+			$('#barra').addClass('visivel text-center');
+			$('#barra').removeClass('oculta');
+
+			// Executa os cálculos
+			for(var i = 0; i < dados.length; i++) {
+				x[i] = dados[i][1];
+				y[i] = dados[i][0];
+			}
+			if(metodo == "trapézios")
+				integral = Calculo.integrartrap(x, y).toString().replace(".", ",");
+			if(metodo == "1/3 de Simpson")
+				integral = Calculo.integrar3simpson(x, y).toString().replace(".", ",");
+			if(metodo == "3/8 de Simpson")
+				integral = Calculo.integrar8simpson(x, y).toString().replace(".", ",");
+
+			// Prepara a resposta e chama a animacao
+			$(".resultadointnum").remove();
+			$(".resIntNum").append('<p class="resultadointnum resPrincipal">A integração pelo método ' + metodo + ' encontrou o valor de ' + integral + '.</p>');
+			$('.resultadointnum').addClass('animacaoPagina');
+		});
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+	
+	</script>
+
+</html>

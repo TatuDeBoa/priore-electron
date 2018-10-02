@@ -1,0 +1,304 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+	
+		<!-- Seção que envolve todo o texto, utilizada para animação -->
+		<div class="section margemInicial">
+			
+			<!-- Primeiro tipo de cálculo da seção DTR -->
+			<div class="section">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">PARÂMETROS ESTATÍSTICOS E ANÁLISE GRÁFICA</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível desenhar gráficos das funções E<sub>(t)</sub> e F<sub>(t)</sub>, a partir de dados experimentais. É preciso informar, além dos valores numéricos, o tipo de perturbação (teste) e a unidade de tempo trabalhada. Utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Tipo de Perturbação</p>
+								<select class="form-control dadosFormulario" id="listaTesteGDTR">
+									<option value="pulso">Pulso</option>
+									<option value="degrau">Degrau</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<p>Unidade de Tempo</p>
+								<select class="form-control dadosFormulario" id="listaUnidadesGCTR">
+									<option value="s">Segundo</option>
+									<option value="min">Minuto</option>
+									<option value="h">Hora</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-12 margemSuperior">
+							<p class="txtFormularioGeral">Informe nos espaços abaixo os valores de concentração e de tempo, estes na primeira coluna e aqueles na segunda. Espaços vazios ou com valores não numéricos fazem o programa ignorar a linha em que forem encontrados.</p>
+						</div>
+						<div class="form-inline">
+							<div class="col-md-8 centralizar"><div id="tabela" class="margemInferior"></div></div>
+							<div class="col-md-4 margemSuperior">
+								<div id="barra2" class="progress-bar progress-bar-striped progress-bar-animated bg-warning margemInferior oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao btgdtr"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+								<div class="resGDTR txtResposta2"><p></p></div>
+							</div>
+						</div>
+						<div class="resGDTRGraf"></div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Segundo tipo de cálculo da seção DTR -->
+			<div class="section fundo2">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">MODELO DE SEGREGAÇÃO - CONVERSÃO MÉDIA</p>
+							<p class="txtFormularioApresentacao">O foco desta seção é o cálculo da conversão média através do modelo de segregação. As informações necessárias são: dados de concentração por tempo, tipo do teste, ordem da reação, velocidade específica da reação e concentração inicial do reagente limitante (no caso de ordem diferente de 1). Utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Tipo de Perturbação</p>
+								<select class="form-control dadosFormulario" id="listaTesteSEG">
+									<option value="pulso">Pulso</option>
+									<option value="degrau">Degrau</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<p>Velocidade Específica da Reação</p>
+								<input type="text" class="form-control dadosFormulario vesp">
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Ordem da Reação</p>
+								<select class="form-control dadosFormulario" id="listaOrdem" onchange="exibirCa0()">
+									<option value="ordem1">Primeira Ordem</option>
+									<option value="ordem2">Segunda Ordem</option>
+								</select>
+							</div>
+							<div class="col-md-6 oculta" id="divCa0">
+								<p>Concentração Inicial do Limitante</p>
+								<input type="text" class="form-control dadosFormulario ca0">
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<p class="txtFormularioGeral margemSuperior">Informe nos espaços abaixo os valores de concentração e de tempo, estes na primeira coluna e aqueles na segunda. Espaços vazios ou com valores não numéricos fazem o programa ignorar a linha em que forem encontrados.</p>
+						</div>
+						<div class="form-inline">
+							<div class="col-md-8 centralizar"><div id="tabelaSEG"></div></div>
+							<div class="col-md-4 margemSuperior">
+								<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated bg-warning margemInferior oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao btseg"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+								<div class="resSEG txtResposta2"><p></p></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Margem final da página -->
+		<div class="fundo fundo2"></div>
+
+	</body>
+
+	<script>
+		// Declaração das instâncias de classes utilizadas
+		var dtr = new DTR();
+
+		// Instância do Handsontable para cálculo das distribuições
+		var tabela = document.getElementById("tabela");
+		var entradaDados = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 350,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["Tempo", "Concentração"],
+			columns: [0, 0],
+			minSpareRows: 12
+		});
+
+		// Instância do Handsontable para cálculo da conversão via segregação
+		var seg = document.getElementById("tabelaSEG");
+		var dadosSeg = new Handsontable(seg, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 350,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["Tempo", "Concentração"],
+			columns: [0, 0],
+			minSpareRows: 12
+		});
+
+		$(".btseg").click(function() {
+			// Delcara as variáveis necessárias
+			var teste = $("#listaTesteSEG").val();
+			var k = $(".vesp").val();
+			var ordem = $("#listaOrdem").val();
+			var ca0 = $(".ca0").val();
+			var dados = [], tempos = [], concentracoes = [];
+
+			//Estrutura de controle de erros
+			if(k == "" || (ca0 == "" && ordem == "ordem2")) {
+				$(".res2").remove();
+				$('#barra').removeClass('visivel');
+				$('#barra').addClass('oculta');
+				$(".resSEG").append('<p class="res2 resErro">Faltam parâmetros a serem informados, por favor reveja os dados inseridos.</p>');
+				return;
+			}
+			if(!valNum(k) || (!valNum(ca0) && ordem == "ordem2") || !valPos(parseFloat(k.replace(",", "."))) || (!valPos(parseFloat(ca0.replace(",", "."))) && ordem == "ordem2")) {
+				$(".res2").remove();
+				$('#barra').removeClass('visivel');
+				$('#barra').addClass('oculta');
+				$(".resSEG").append('<p class="res2 resErro">Foram encontrados parâmetros inválidos, por favor revise os valores informados.</p>');
+				return;
+			}
+			receberDados(dados, dadosSeg);
+			k = parseFloat(k.replace(",", "."));
+			ca0 = parseFloat(ca0.replace(",", "."));
+			if(dados.length < 2) {
+				$(".res2").remove();
+				$('#barra').removeClass('visivel');
+				$('#barra').addClass('oculta');
+				$(".resSEG").append('<p class="res2 resErro">Não foram encontrados valores suficientes na tabela de tempo e concentração. Por favor, revise as informações inseridas.</p>');
+				return;
+			}
+
+			// Chama a animação da barra de progresso
+			$('#barra').removeClass('oculta');
+			$('#barra').addClass('visivel text-center');
+			animacao("barra");
+
+			// Inicia os cálculos pelo modelo de segregação
+			for(var i = 0; i < dados.length; i++) {
+				tempos[i] = dados[i][0];
+				concentracoes[i] = dados[i][1];
+			}
+			if(ordem == "ordem1") ca0 = 1;
+			dtr.definirValores(concentracoes, tempos);
+			dtr.definirTeste(teste);
+			dtr.definirSistema(ordem, k, ca0);
+			dtr.conversaoSegregacao();
+
+			// Prepara as respostas
+			var str = "Para o modelo de segregação, a partir de dados de uma perturbação do tipo " + teste + ", encontrou-se o valor médio de conversão de:";
+			$(".res2").remove();
+			$(".resSEG").append('<p class="res2 resGeral">' + str + '</p>');
+			$(".resSEG").append('<p class="res2 resPrincipal">X = ' + dtr.conversao.toFixed(5).replace('.', ',') + '</p>');
+			$(".res2").addClass('animacaoPagina');
+		});
+
+		$(".btgdtr").click(function() {
+			// Declara as variáveis necessárias
+			var teste = $("#listaTesteGDTR").val();
+			var unid = $("#listaUnidadesGCTR").val();
+			var dados = [], tempos = [], concentracoes = [];
+
+			// Estrutura de controle de erros
+			receberDados(dados, entradaDados);
+			if(dados.length < 2) {
+				$(".res1").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resGDTR").append('<p class="res1 resErro">Não foram identificados valores suficientes para executar os cálculos. Por favor, revise os dados informados</p>');
+				return;
+			}
+
+			// Chama a animação da barra de progresso
+			animacao("barra2");
+			$('#barra2').removeClass('oculta');
+			$('#barra2').addClass('visivel text-center');
+
+			// Inicia a execução dos cálculos
+			for(var i = 0; i < dados.length; i++) {
+				tempos[i] = dados[i][0];
+				concentracoes[i] = dados[i][1];
+			}
+			dtr.definirValores(concentracoes, tempos);
+			dtr.definirTeste(teste);
+			dtr.calcularDistribuicoes();
+			dtr.calcularParametros();
+
+			// Prepara os pontos utilizados nos gráficos
+			var et = dtr.E.slice(), ft = dtr.F.slice(), dados1 = [], dados2 = [];
+			for(var i = 0; i < et.length; i++) {
+				dados1[i] = [tempos[i], et[i]];
+				dados2[i] = [tempos[i], ft[i]];
+			}
+
+			// Exibe respostas e gráficos
+			$(".res1").remove();
+			$('.resGDTRGraf').append('<div class="res1 centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf1"></canvas></div></div>');
+			$('.resGDTRGraf').append('<div class="res1 centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf2"></canvas></div></div>');
+			graficoGeral('graf1', 'E(t) versus tempo', [dados1], [false], ['E(t)'], ['#000000'], ['#000000'], 'Tempo (t)', 'E(t)');
+			graficoGeral('graf2', 'F(t) versus tempo', [dados2], [false], ['F(t)'], ['#000000'], ['#000000'], 'Tempo (t)', 'F(t)');
+			$(".resGDTR").append('<div class="margemElemento res1 resGeral"><p>Para a situação informada, com dados de uma perturbação do tipo ' + teste + ', foram determinados:</p><p class="res1 resPrincipal">t<sub>med</sub> = ' + dtr.tempoMedio.toFixed(3).replace(".", ",") + ' ' + unid + '</p><p class="res1 resPrincipal">&sigma;<sup>2</sup> = ' + dtr.variancia.toFixed(3).replace(".", ",") + ' '+unid+'<sup>2</sup></p></div>');
+			$('.res1').addClass('animacaoPagina');
+		});
+
+		function exibirCa0() {
+			var ordem = document.getElementById("listaOrdem").value;
+			if(ordem == "ordem1") {
+				document.getElementById("divCa0").style.display = "none";
+			}
+			if(ordem == "ordem2") {
+				document.getElementById("divCa0").style.display = "block";
+			}
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

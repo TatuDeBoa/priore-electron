@@ -1,0 +1,728 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+	
+	<body>
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que cobre todo o conteúdo da página -->
+		<div class="section">
+			<div class="container margemInicial">
+				<div class="row centralizar" style="height: 500px;">
+					<!-- Sumário -->
+					<div class="col-md-4">
+						<ul id="sumario" class="sumarioAjuda listaConteudoAjuda">
+							<!-- Lista de tópicos de dtr -->
+							<li class="linkAmarelo link margemSuperior indiceAtivoSumario" topico="dtr0">1 Distribuição de Tempo de Residência</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtr1">1.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtr2">1.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtr3">1.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtr4">1.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtr5">1.5 Referências</li>
+							<!-- Lista de tópicos de dtp -->
+							<li class="linkAmarelo link margemSuperior" topico="dtp0">2 Distribuição de Tamanho de Partícula</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtp1">2.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtp2">2.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtp3">2.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtp4">2.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="dtp5">2.5 Referências</li>
+							<!-- Lista de tópicos de filtros -->
+							<li class="linkAmarelo link margemSuperior" topico="ft0">3 Filtros</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ft1">3.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ft2">3.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ft3">3.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="ft4">3.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ft5">3.5 Referências</li>
+							<!-- Lista de tópicos de ell -->
+							<li class="linkAmarelo link margemSuperior" topico="ell0">4 Equilíbrio Líquido-Líquido</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ell1">4.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ell2">4.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ell3">4.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="ell4">4.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="ell5">4.5 Referências</li>
+							<!-- Lista de tópicos de elv -->
+							<li class="linkAmarelo link margemSuperior" topico="elv0">5 Equilíbrio Líquido-Vapor</li>
+							<li class="linkAmarelo margemEsquerda link" topico="elv1">5.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="elv2">5.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="elv3">5.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="elv4">5.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="elv5">5.5 Referências</li>
+							<!-- Lista de tópicos de tc -->
+							<li class="linkAmarelo link margemSuperior" topico="tc0">6 Trocadores de Calor</li>
+							<li class="linkAmarelo margemEsquerda link" topico="tc1">6.1 Definição</li>
+							<li class="linkAmarelo margemEsquerda link" topico="tc2">6.2 Resolução</li>
+							<li class="linkAmarelo margemEsquerda link" topico="tc3">6.3 Experimental</a></li>
+							<li class="linkAmarelo margemEsquerda link" topico="tc4">6.4 Modo de Utilização</li>
+							<li class="linkAmarelo margemEsquerda link" topico="tc5">6.5 Referências</li>
+						</ul>
+					</div>
+					
+					<!-- Conteúdo de texto -->
+					<div class="col-md-8">
+						<div class="listaConteudoAjuda section animacaoPagina" id="conteudo">
+							
+							<!-- Conteúdo total de DTR -->
+							<div class="section">
+								<p class="txtTituloSecao1" id="dtr0">1 DISTRIBUIÇÃO DE TEMPO DE RESIDÊNCIA</p>
+								<!-- Seção 1 de DTR -->
+								<div class="section">
+									<p class="txtTituloSecao2" id="dtr1">1.1 Definição</p>
+									<p class="txtConteudo">Em dimensionamentos é muito útil utilizar definições de idealidade para se avaliar de forma inicial e rápida um problema determinado. Após essa análise, faz-se necessário o estudo mais aprofundado do caso, para determinar se o sistema pode ser considerado ideal ou não. Caso não, segue-se para o processo de avaliação da não-idealidade. Para reatores, um modo de realizar tal procedimento é através de um teste com traçador, capaz de fornecer a Distribuição de Tempo de Residência (DTR) do fluido dentro da unidade.</p>
+									<p class="txtConteudo">O teste com traçador pode ser realizado de duas formas distintas: pertubação pulso ou pertubação degrau (FOGLER, 2009). No caso de perturbação degrau, junto com a alimentação é injetada uma vazão constante de traçador, medida na corrente de saída com o tempo. Para a perturbação pulso o procedimento se dá pela adição de uma quantidade finita do traçador na corrente de entrada do reator, com a obtenção de medidas de concentração de traçador na saída em função do tempo.</p>
+									<p class="txtConteudo">Cada conjunto de medidas gera um tipo de função de distribuição de tempo de residência diferente. A perturbação degrau resulta em uma distribuição cumulativa, que estabilida na unidade, chamada F<sub>(t)</sub>, uma perturbação do tipo pulso origina uma distribuição normal em forma de sino (gaussiana), chamada E<sub>(t)</sub>. F<sub>(t)</sub> e E<sub>(t)</sub> são definidas em função das concentrações na corrente de saída do reator e suas expressões matemáticas são mostradas nas Equações 1 e 2 (FOGLER, 2009). Nas Figuras 1 e 2 estão exemplos de gráficos resultantes de cada tipo de teste.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-ft.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-et.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>C<sub>(t)</sub> = concentração na corrente de saída em função do tempo;</br>C<sub>T,0</sub> = concentração total em uma perturbação degrau.</br></p>
+									<div class="form-inline">
+										<div class="col-lg-6 text-center">
+											<img src="figuras/grafico-ft.png" class="margemElemento" width="200px"></img>
+											<p class="txtConteudo">Figura 1. Distribuição de Tempo de Residência para perturbação degrau.</p>
+										</div>
+										<div class="col-lg-6 text-center">
+											<img src="figuras/grafico-et.png" class="margemElemento" width="200px"></img>
+											<p class="txtConteudo">Figura 2. Distribuição de Tempo de Residência para perturbação pulso.</p>
+										</div>
+									</div>
+									<p class="txtConteudo">Com a determinação da DTR, esta passa a representar o reator, ou seja, não é feita a distinção entre reator de mistura perfeita (CSTR) e reator de fluxo axial (PFR), ambos recebem o nome de vaso reacional (LEVENSPEIL, 2007). Assim, é preciso utilizar uma modelagem matemática sobre os dados da DTR para avaliar o desempenho da unidade, sem conhecer as configurações específicas da mesma. Dentre os modelos existentes, o Modelo de Segregação é particularmente interessante por ser aplicável em qualquer situação, sem restrições de operação ou configuração (FOGLER, 2009). A Equação 3 representa a expressão utilizada pelo modelo para avaliação da conversão.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-segregacao.png" width="250px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>X<sub>(t)</sub> = conversão em função do tempo no reator batelada;</br>E<sub>(t)</sub> = distribuição de tempo de residência para perturbação pulso;</br>X<sub>m</sub> = conversão média do vaso.</p>
+								</div>
+								<!-- Seção 2 de DTR -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtr2">1.2 Resolução</p>
+									<p class="txtConteudo">De acordo com a Equação 3, para calcular a conversão é preciso avaliar uma integral, cujo argumento é uma multiplicação de funções que variam no tempo, a DTR gerada por um pulso e a conversão em um reator batelada. Esta pode ser obtida por meio de resolução analítica das equações características do reator batelata, porém a sua manipulação varia de acordo com a expressão de taxa e a ordem da reação. Para a função DTR em perturbação pulso há um agravante, pois o teste de traçador resulta em um conjunto de valores concentração em função do tempo.</p>
+									<p class="txtConteudo">Em um primeiro momento, para resolução manual do problema, a integração numérica do conjunto de valores por meio de um método (trapézios, 1/3 de Simpson ou 3/8 de Simpson) pode fornecer uma resposta satisfatória. Mas, com a potência de processamento computacional, tal método poderia se substituído por outro mais eficiente.</p>
+									<p class="txtConteudo">Com os dados de concentração do traçador em função do tempo, Priore executa a interpolação polinomial pelo método de Newton para o conjunto de valores (ARENALES e DAREZZO, 2008). Com a expressão do polinômio interpolador, calcula-se a integral do denominador da Equação 2 e com ela, obtêm-se uma expressão que aproxima E<sub>(t)</sub>, através de uma segunda interpolação. Dados adicionais sobre o sistema são informados pelo usuário, que permite a avaliação da Equação 3.</p>
+									<p class="txtConteudo">Todavia, existem comentários importantes sobre o processo numérico realizado pela aplicação. A confiabilidade da resposta é totalmente dependente da qualidade dos dados informados, pois o programa não realiza extrapolação do polinômio interpolador para calcular as integrais, por não ser uma prática recomendada (ARENALES e DAREZZO, 2008), já que a aproximação não é garantida fora do intervalo informado, de modo que todos os cálculos executados são realizados dentro dos intervalos limitados pelos conjuntos de valores informados. De fato, se o teste for bem feito, seja uma perturbação tipo pulso ou tipo degrau, o valor final se estabilida e a função E<sub>(t)</sub> resultante assume o valor de 0 em um tempo finito, que reduz a multiplicação dentro da integral da Equação 3 a Priore no mesmo tempo e garante que o resultado da integração até tal número finito seja igual a integração até o infinito.</p>
+									<p class="txtConteudo">Outra característica é o caso do teste não for do tipo pulso. Existes relações entre E<sub>(t)</sub> e F<sub>(t)</sub>, expressas nas Equações 4 e 5 (FOGLER, 2009), que podem ser utilizadas para converter os resultados de um teste com perturbação pulso em resultados para um teste com perturbação degraus, e vice e versa.</p>
+									<p class="txtConteudo">Para conversão de dados da DTR E<sub>(t)</sub> em F<sub>(t)</sub>, Priore realiza a sua rotina numérica de integração do tempo Priore até o tempo de cada medida, utilizando o polinômio interpolador. Nessa conversão podem ocorrer certos desvios, mais especificamente nos valores iniciais de tempo. A definição do polinômio interpolador é de aproximar a função avaliada, sendo que seus valores são identicos nos pontos utilizados para a interpolação (ARENALES e DAREZZO, 2008). Porém, o formato do polinômio entre os pontos não é exatamente igual ao da função, mas no todo a área abaixo da curva se aproxima à da função desconhecida.</p>
+									<p class="txtConteudo">Por outro lado, a conversão de um teste tipo degrau para um tipo pulso é feita por intermédio do polinômio interpolador obtido para a DTR F<sub>(t)</sub>, pois as derivadas em cada valor de tempo geram o conjunto de E<sub>(t)</sub> versus tempo. Isso é possível porque a derivação de expressões polinomiais é de fácil obtenção, de forma que o polinômio permite este cálculo de forma simples e com boa aproximação (FRANCO, 2011).</p>
+									<p class="txtConteudo">De modo geral, o sucesso do procedimento numérico realizado por Priore na seção de Distribuição de Tempo de Residência é extremamente influenciado pela qualidade dos dados informados, devido às peculiaridades de interpolação polinomial e ao fato de não ser realizada extrapolação. Caso seja do interesse do usuário observar as particularidades desse procedimento numérico, existe a seção para "Polinômio Interpolador de Newton", que recebe um conjunto de valores e desenha o gráfico com os pontos informados e a função do polinômio e permite a realização de testes com os pontos, para percepção da influência deles sobre o gráfico. Nesta seção também é informada a expressão do polinômio e permite estimar o valor da função ou da derivada em um dado valor do domínio.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-et-para-ft.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 4</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-ft-para-et.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 5</p></div>
+									</div>
+								</div>
+								<!-- Seção 3 de DTR -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtr3">1.3 Experimental</p>
+									<p class="txtConteudo">Priore possui duas seções de cálculo para DTR, independentes entre si. Uma delas é destinada ao cálculo da conversão por meio do modelo de segregação e a outra é destinada para avaliação de testes com perturbação degrau ou pulso, com desenho dos gráficos de cada distribuição para os dados informados e cálculo de alguns parâmetros estatísticos, o tempo médio de residência e a variância dos dados, cujas expressões estão nas Equações 6 e 7, respectivamente (SCHMAL, 2010).</p>
+									<p class="txtConteudo">A seção destinada para desenho de curvas pode ser utilizada em procedimentos experimentais de cunho educacional com testes de traçador. Com o recolhimento de dados experimentais, o usuário pode perceber os resultados de forma visual, por causa dos gráficos, sem a necessidade de trabalhar muito sobre os valores obtidos ou utilizar uma planilha eletrônica e realizar várias definições sobre o desenho e tratamento de valores, para então visualizar o resultado. Com o mesmo clique, Priore também calcula o tempo médio de residência e a variância, que possibilita uma avaliação mais completa e rápida, com maior precisão do que integração numérica via outras ferramentas de cálculo.</p>
+									<p class="txtConteudo">Outra vantagem de se utilizar esta aplicação para fins educacionais está no fato de que é uma ferramenta eficiente e rápida, capaz de entregar respostas e gráficos sem muito esforço por parte do usuário, otimizando o tempo disponível e gerando respostas mais precisas, além da facilidade e velocidade de apreciação de mudanças no procedimento que podem ser realizadas pelo estudante.</p>
+									<p class="txtConteudo">De fato, existem várias ferramentas numéricas que podem ser empregadas, porém a maioria delas ou possui licença paga ou não possuiu interface muito amigável e intuitiva, sem mencionar que não são específicas para o cálculo de DTR e sim atuam na resolução de procedimentos numéricos existentes. Porém, Priore é fundamentado sobre a filosofia Open Source, de modo que pode ser alterado de acordo com as críticas dos usuários ou pelos próprios.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-tm.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 6</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-variancia.png" width="150px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 7</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>t<sub>m</sub> = tempo de residência médio do fluido;</br>&sigma;<sup>2</sup> = variância do tempo de residência.</p>
+								</div>
+								<!-- Seção 4 de DTR -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtr4">1.4 Modo de Utilização</p>
+									<p class="txtConteudo">As duas seções disponíveis para DTR possuem modo de interação semelhante e bem intuitivo. Ambas são feitas para análise de dados, que são inseridos em espaços iguais aos das planilhas eletrônicas, o que facilita a utilização e também permite cópia e cola de uma planilha eletrônica. Para desenho dos gráficos de E<sub>(t)</sub> e de F<sub>(t)</sub>, junto do cálculo dos parâmetros estatísticos, é necessáro que o usuário selecione o tipo de perturbação e a unidade de tempo utilizado, para melhor apresentação dos resultados, e informe os valores de concentração e tempo nos locais adequados, as duas colunas dispostas abaixo das caixas de selação.</p>
+									<p class="txtConteudo">Na seção de cálculo de conversão pelo modelo de segregação o procedimento é semelhante, com a seleção do tipo de perturbação e inserção dos dados de concentração e tempo. Adicionamente é preciso que o usuário informe a velocidade específica da reação e escolha a ordem da mesma. Caso seja escolhida reação de segunda ordem, aparecerá uma caixa extra para informar a concentração inicial do reagente limitante.</p>
+									<p class="txtConteudo">É importante reforçar dois fatores importantes. Em primeiro lugar, todo o equacionamento é feito em função do reagente limitante, ou seja, a conversão apresentada como resposta pelo programa é a conversão média do reagente limitante. Outro fator é a problemática de unidades. Enquanto outros tipos de dimensionamento de Priore possuem seleção de unidades, como a seção destinada a filtração, em DTR fica a cargo do usuário informar a velocidade específica condizente com os dados de tempo e de concentração. Isso foi feito para facilitar o uso e diminuir a poluição visual do formulário de inserção de informações, com a finalidade de deixar a interface mais direta e simples.</p>
+								</div>
+								<!-- Seção 5 de DTR -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtr5">1.5 Referências</p>
+									<p class="txtConteudo">ARENALES, Selma; DAREZZO, Artur. Cálculo numérico: aprendizagem com apoio de software. São Paulo: Thomson, 2008, 364 p. ISBN 9788522106028.</p>
+									<p class="txtConteudo">FOGLER, H. Scott. Elementos de engenharia das reações químicas. Rio de Janeiro: LTC, 2009, 892 p. ISBN 9788521617167.</p>
+									<p class="txtConteudo">FRANCO, Neide Bertoldi. Cálculo numérico. São Paulo: Pearson Prentice Hall, 2011. 505 p. ISBN 9788576050872.</p>
+									<p class="txtConteudo">LEVENSPIEL, Octave. Engenharia das reações químicas. São Paulo: Blucher, 2007, 563 p. ISBN 852120275.</p>	
+									<p class="txtConteudo">SCHMAL, Martin. Cinética e reatores: aplicação na engenharia química, teoria e exercícios. Rio de Janeiro: Synergia, FAPERJ, 2010, 572 p. ISBN 9788561325411.</p>
+								</div>
+							</div>
+							
+							<!-- Conteúdo total de DTP -->
+							<div class="section margemInicial">
+								<p class="txtTituloSecao1" id="dtp0">2 DISTRIBUIÇÃO DE TAMANHO DE PARTÍCULA</p>
+								<!-- Seção 1 de DTP -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtp1">2.1 Definição</p>
+									<p class="txtConteudo">Compreender a granulometria de um material particulado é necessário, pois a partir dela é possível dimensionar equipamentos para tratamento ou controle de qualidade do produto em questão. Assim, é útil desenvolver uma forma de se avaliar essa característica, capaz de descrever a situação granulométrica das partículas tanto para dimensionamento quanto para garantia de critério de produção.</p>
+									<div class="form-inline txtConteudo">
+										<div class="col-md-6">
+											<p>Uma técnica capaz de entregar a análise granulométrica é o Teste de Peneira (CREMASCO, 2012), que consiste na passagem de uma amostra do particulado por uma sequência de peneiras com diâmetros de furo variados, do maior no topo para o menor no fundo, como esquematizado na Figura 1. Um teste bem executado resulta na distribuição de massa em todas as peneiras do meio, com nenhuma massa no fundo ou no topo. Caso este resultado não ocorra, alteram-se as peneiras para outras com diâmetros diferentes.</p>
+											<p>Por exemplo, caso seja retida massa na peneira de topo, issso é indício de que os diâmetros estão muito pequenos para as partículas existentes, então a melhor configuração é alterar as peneiras para diâmetros de furos maiores. No caso da massa transpassar pela peneira de fundo, melhor estruturação é obtida com peneiras de diâmetros de furo menores.</p>
+										</div>
+										<div class="col-md-6 text-center">
+											<img height="420px" src="figuras/teste-peneira.png" class="margemElemento"></img>
+											<p>Figura 1. Esquema do teste de peneira.</p>
+										</div>
+									</div>
+									<p class="txtConteudo">Um teste de peneira bem realizado gera dados de massa em cada paneira. A interpretação é feita da seguinte forma: as partículas passaram pela peneira 1, com 2 mm de diâmetro, e foram retidas pela peneira 2, com 1,5 mm de diâmetro. Assim, assumi-se que o diâmetro médio dessa massa do material partículado é a média entre a peneira 1 e a peneira 2 (CREMASCO, 2012), ou seja, 1,75 mm. Com esse tratamento, obtem-se dados como os exemplificados na Tabela 1.</p>
+									<p class="txtConteudo">Com os valores da Tabela 1 é possível executar uma regressão linear para encontrar os parâmetros da equação Distribuição de Tamanho de Partícula (DTP), que relaciona o diâmetro da partícula com a fração acumulada. Esta equação é fundamental em dimensionamento de equipamentos, como por exemplo o ciclone, com utilidade também para identificação de diâmetros máximos e mínimos, a partir da própria expressão ou do gráfico gerado pela mesma (CREMASCO, 2012).</p>
+									<p class="txtConteudo text-center">Tabela 1. Exemplos de dados obtidos pelo teste de peneira.</p>
+									<div class="centralizar">
+										<table class="tabela">
+											<tr class="txtConteudo">
+												<th class="celula">Diâmetro Médio (mm)</th>
+												<th class="celula">Massa Retida (g)</th>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">1,75</td>
+												<td class="celula">7</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">1,25</td>
+												<td class="celula">3</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,875</td>
+												<td class="celula">4</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,625</td>
+												<td class="celula">7</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,4</td>
+												<td class="celula">2</td>
+											</tr>
+										</table>
+									</div>
+									<p class="txtConteudo margemSuperior">A regressão linear porém não é de uma equação típica de reta, pois a fração acumulada em função do diâmetro possiu comportamento de função cumulativa em forma de "S", cuja imagem se estabiliza na unidade a partir de dado valor finito do domínio. Existem modelos específicos para DTP, que podem ser linearizados para se aplicar uma regressão linear simples e estimar os parâmetros do modelo desejado, sendo três mais comuns, os modelos GGS, RRB e Sigmóide (CREMASCO, 2012), ilustrados nas Equações 1, 2 e 3, respectivamente.</p>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/ggs.png" width="170px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/rrb.png" width="170px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/sigmoide.png" width="170px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>X = fração acululada de partículas;</br>d<sub>p</sub> = diâmetro da partícula;</br>a e b = parâmetros do modelo.</p>
+									<p class="txtConteudo">A linearização dos modelos envolve operações com logaritmo natual, que não recebe como argumento valores menores ou iguais a Priore. Porém, a própria definição de diâmetro e fração acumulada impede a existência desses valores, de modo que esta excessão não representa nenhum problema para o procedimento. Outra particularidade da linearização é que para os modelos RRB e Sigmóide não é adimitido um valor de fração acumulada igual a 1, pois isso resulta em um argumento inválido no logaritmo natural.</p>
+									<p class="txtConteudo">Para converter os valores de massa em fração acumulada é preciso escolher uma convenção para cálculo entre as duas opções disponíveis: considerar que a massa no diâmetro médio toda está abaixo do mesmo, ou considerar que toda a massa no diâmetro médio está acima do mesmo (CREMASCO, 2012). A fração acumulada no diâmetro médio é calculada a partir da razão entre toda a massa abaixo do diâmetro e a massa total empregada no teste. Para os valores do exemplo anterior, obtem-se os resultados exibidos na Tabela 2.</p>
+									<p class="txtConteudo text-center">Tabela 2. Conversão dos valores de massa em fração acumulada.</p>
+									<div class="centralizar">
+										<table class="tabela">
+											<tr class="txtConteudo">
+												<th class="celula">Diâmetro Médio (mm)</th>
+												<th class="celula">Fração Acumulada</th>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">1,75</td>
+												<td class="celula">0,84375</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">1,25</td>
+												<td class="celula">0,625</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,875</td>
+												<td class="celula">0,53125</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,625</td>
+												<td class="celula">0,40625</td>
+											</tr>
+											<tr class="txtConteudo">
+												<td class="celula">0,4</td>
+												<td class="celula">0,1875</td>
+											</tr>
+										</table>
+									</div>
+									<p class="txtConteudo margemSuperior">Com os valores de diâmetro e fração acumulada, é preciso realizar as mudanças de variáveis necessárias para cada modelo e então executar a regressão linear simples. As expressões da linearização dos modelos GGS, RRB e Sigmóide são mostradas nas Equações 4, 5 e 6, respectivamente. Ao se obter os valores das estimativas dos parâmetros dos modelos, encontra-se então a equação que define a DTP. Uma forma de escolher qual o melhor modelo é executar a regressão para os três e avaliar qual possui o maior coeficiente de determinação (r<sup>2</sup>).</p>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/linearizacao-ggs.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 4</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/linearizacao-rrb.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 5</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/linearizacao-sigmoide.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 6</p></div>
+									</div>
+								</div>
+								<!-- Seção 2 de DTP -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtp2">2.2 Resolução</p>
+									<p class="txtConteudo">A função principal de Priore é realizar o trabalho pesado do procedimento de determinação dos parâmetros dos modelos de DTP, que são as mudanças de variáveis para regressão linear simples. A aplicação recebe como entrada o diâmetro, a fração acumulada (ou massas retidas) e a massa total, no caso de dados de massas, para trabalhar sobre eles e realizar três regressões, com armazenamento dos valores dos parâmetros encontrados e também do coeficiente de determinação.</p>
+									<p class="txtConteudo">Adicionamente, o programa também calcula os diâmetros médios volumétrico, superficial e de Sauter, calculados de acordo com as Equações 7, 8 e 9, caso a entrada de dados informada pelo usuário for massa retida em função do diâmetro.</p>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/dm-volumetrico.png" width="250px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 7</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/dm-superficial.png" width="250px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 8</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/dm-sauter.png" width="250px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 9</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>m<sub>i</sub> = massa retida no ponto i;</br>d<sub>i</sub> = diâmetro da partícula no ponto i;</br>m<sub>total</sub> = massa total da amostra utilizada;</br>d<sub>m,vol</sub> = diâmetro médio volumétrico;</br>d<sub>m,sup</sub> = diâmetro médio superficial;</br>d<sub>m,sauter</sub> = diâmetro médio de Sauter.</br></p>
+								</div>
+								<!-- Seção 3 de DTP -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtp3">2.3 Experimental</p>
+									<p class="txtConteudo">O procedimento de determinação da função DTP é puramente experimental, de modo que sua execução necessita de módulo de teste de peneira (ou estratégia similar) para recolhimento de dados experimentais.</p>
+									<p class="txtConteudo">A utilização de Priore permite que sejam executados vários testes de peneira, com a alteração da amostra utilizada ou da sequência de peneiras, para averiguar a influência dessas mudanças sobre os resultados. Além disso, o programa gera automaticamente gráficos com os pontos, para que o usuário possa visualizar a qualidade dos dados experimentais informados.</p>
+								</div>
+								<!-- Seção 4 de DTP -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtp4">2.4 Modo de Utilização</p>
+									<p class="txtConteudo">A seção de cálculo DTP é bem simples e intuitiva. O usuário precisa escolher primeiro o tipo de entrada de dados entre os dois disponíveis na lista: fração acumulada versus diâmetro ou massa retida versus diâmetro. Caso este seja selecionado, logo abaixo da seleção aparecerá uma caixa para que se informe a massa total da amostra utilizada. Depois, o usuário escolhe a unidade do diâmetro de partícula. Esta escolha não tem interferência no cálculo da DTP, serve para deixar a resposta mais amigável, pois as equações envolvem unicamente diâmetro e retornam valores com a unidade original do diâmetro utilizado.</p>
+									<p class="txtConteudo">Após selecionar o tipo de entrada e o diâmetro, basta inserir os dados experimentais nos espaços adequados, semelhantes aos de planilhas eletrônicas. Por fim, quando todos os dados forem informados, é só clicar no botão "Calcular", que irá exibir a tebela com o resultado da regressão para os três modelos, o gráfico dos pontos experimentais e uma tabela com os diâmetros médios, caso a entrada de dados seja massas retidas em função do diâmetro.</p>
+								</div>
+								<!-- Seção 5 de DTP -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="dtp5">2.5 Referências</p>
+									<p class="txtConteudo">CREMASCO, Marco Aurélio. Operações unitárias em sistemas particulados e fluidomecânicos. São Paulo: Blucher, 2012. 423 p. ISBN 9788521205937.</p>
+								</div>
+							</div>
+							
+							<!-- Conteúdo total de Filtros -->
+							<div class="section margemInicial">
+								<p class="txtTituloSecao1" id="ft0">3 FILTROS</p>
+								<!-- Seção 1 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ft1">3.1 Definição</p>
+									<p class="txtConteudo">Filtrar é separar sólidos de uma corrente líquida e esta operação é uma das mais conhecidas. Um exemplo clássico é o processo de tratamento de água, que envolve um filtro de areia em uma das etapas. Um esquema de como ocorre o processo de filtragem está representado na Figura 1.</p>
+									<div class="text-center"><img class="margemElemento" src="figuras/esquema-filtro.png"></img></div>
+									<p class="txtConteudo text-center">Figura 1. Esquema de filtração simples, com queda de pressão constante.</p>
+									<p class="txtConteudo">Existem duas formas de se conduzir a filtração, a primeira é manter a queda de pressão aplicada sobre o meio filtrante constante e a outra é manter a vazão de filtrado recolhido constante (CREMASCO, 2012). Com o desenvolvimento do tempo de operação, o sólido contido na alimentação é retido e forma a Torta de Filtro. Por causa de tal fato é que o processo de filtragem é em batelada, pois o acúmulo de particulados dificulta cada vez mais a passagem do líquido.</p>
+									<p class="txtConteudo">Na operação com queda de pressão constante, a formação da torta provoca uma diminuição da vazão de filtrado recolhido, já para o modo de operação com vazão de filtrado constante, o acúmulo de torta exige que seja aplicada uma maior pressão sobre o meio filtrante, o que faz com que a queda de pressão aumente com o tempo.</p>
+									<p class="txtConteudo">O equacionamento do processo de filtragem é desenvolvido a partir da equação base da filtração, a Equação 1 (CREMASCO, 2012). De acordo com o modo de operação, a diferencial é avaliada de forma diferente. A Equação 2 representa o procedimento com queda de pressão constante e a Equação 3 o com vazão de filtrado constante (COULSON, 2012).</p>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/equacao-geral-filtracao.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/equacao-filtracao-pressao-constante.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-md-6"><img src="figuras/equacao-filtracao-vazao-constante.png" width="300px"></img></div>
+										<div class="col-md-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>V = volume de filtrado (m<sup>3</sup>);</br>t = tempo de filtração (s);</br>A = área de filtração (m<sup>2</sup>);</br>(-&Delta;P) = queda de pressão (Pa);</br>&mu; = viscosidade dinâmica (Pa s);</br>&alpha; = resistência específica da torta (m kg<sup>-1</sup>);</br>C = razão entre massa de torta seca e volume de filtrado (kg m<sup>-3</sup>);</br>Rm = resistência do meio filtrante (m<sup>-1</sup>);</br>Q = vazão de filtrado (m<sup>3</sup>).</p>
+									<p class="txtConteudo">Para dimensionamento de filtros, devem de ser conhecidos os valores das propriedades da torta (&alpha;) e do meio filtrante (Rm). Ambos parâmetros podem ser estimados experimentalmente, através de um teste laboratorial, com a mesma substância a ser filtrada e o mesmo meio filtrante, a partir da regressão linear dos dados encontrados (CREMASCO, 2012).</p>
+									<p class="txtConteudo">Em casos industriais, o filtro clássico (um recipiente com uma membrana) pode não ser muito eficiente, pois ocuparia muito espaço e seriam necessários vários equipamentos em paralelo para executar o trabalho em alta vazão. Uma configuração mais interessante é a de placas e quadros, o chamado Filtro Prensa, desenvolvido para operar com vazões elevadas e em espaços compactos quando comparado com o filtro comum (COULSON, 2011). Nele, o meio filtrante fica entre as placas e o fluido a ser filtrado percorre as mesmas, de modo que a torta é formada dentro filtro, o que facilita a remoção ou recuperação dela. A Figura 2 é um desenho esquemático do funcionamento de um filtro prensa. As placas (parte sólida) e os quadros (parte com o meio filtrante) são prensadas sucessivamente e formam o filtro prensa.</p>
+									<div class="text-center"><img src="figuras/esquema-filtro-prensa.png" class="margemElemento" width="500px"></img></div>
+									<p class="txtConteudo text-center">Figura 2. Esquema do funcionamento do filtro prensa.</p>
+									<p class="txtConteudo">Filtros prensas são dimensionados, frequentemente, por meio da produção dele, representada pela Equação 4 (COULSON, 2011). Também, sua operação mais comum é com queda de pressão constante e a área de filtragem é determinada pela quantidade de quadros que compõem o filtro.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-filtracao-producao.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 4</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>prod = produção do filtro (m<sup>3</sup> s<sup>-1</sup>);</br>t<sub>total</sub> = tempo de operação somado com o tempo não operacional (s).</p>
+								</div>
+								<!-- Seção 2 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ft2">3.2 Resolução</p>
+									<p class="txtConteudo">Existem dois procedimentos disponíveis em Zero para filtração. O primeiro é a determinação dos parâmetros da torta e do meio filtrante e o segundo é o dimensionamento de filtro prensa. Para o primeiro, o processo é simples, após receber os dados informados pelo usuário, é feita a regressão linear simples e então são estimados os valores para &alpha; e Rm.</p>
+									<p class="txtConteudo">O dimensionamento do filtro prensa é um pouco mais complexo. Estão disponíveis 5 modos de dimensionamento, em que cada um possui uma forma de cálculo diferente, detalhados abaixo.</p>
+									<p class="txtConteudo">Método 1) Determinar o número de quadros para um volume de filtrado específico: Neste dimensionamento o objetivo é encontrar o número de quadros, em outras palavras a área de filtragem ou tamanho do filtro, necessário para se atingir a produção e volume de filtrado recolhido especificado como critérios de projeto. Como a área não está definida, é acionada uma rotina numérica iterativa semelhante ao método de aproximação por intervalos, que itera sobre um limite inferior e um superior de número de quadros (definidos dinâmicamente pelo algoritmo) para calcular um tempo de operação. Quando o tempo de operação encontrado gera a produção informada, tem-se a resposta para o número de quadros necessários.</p>
+									<p class="txtConteudo">Método 2) Determinar o número de quadros para um tempo específico de filtração: Este dimensionamento é parecido com o anterior, com a troca da iteração sobre o tempo para a iteração sobre o volume. Uma rotina numérica semelhante é acionada e quando o volume de filtrado gera a produção informada como critério de projeto, encontra-se o número de quadros necessários.</p>
+									<p class="txtConteudo">Método 3) Determinar produção para um tempo específico de filtração: Para este dimensionamento, a área é conhecida, ou seja, o tamanho do filtro é definido, o necessário é avaliar a produção, por meio do tempo de filtração como critério de projeto. Tal procedimento é mais simples, pois a avaliação da raíz da Equação 2 permite o cálculo do volume de filtrado e posteriormente a produção, pela Equação 4.</p>
+									<p class="txtConteudo">Método 4) Determinar produção para um volume de filtrado específico: Processo semelhante ao anterior, porém o critério de projeto deixa de ser o tempo de operação e se torna o volume de filtrado recolhido em cada batelada. Os cálculos são mais diretos, pois a Equação 2 já fornece o tempo de operação do filtro. Por fim, a produção é calculada.</p>
+									<p class="txtConteudo">Método 5) Otimização: Este processo otimiza a produção através da derivação da Equação 4 em função do volume. Com o número de quadros definidos (tamanho do filtro), encontra-se as condições de produção máxima, com o tempo de operação e volume de filtrado recolhido em cada batelada.</p>
+									<p class="txtConteudo">Os processos ainda incluem nas suas rotinas o tempo de lavagem da torta, somado ao tempo não operacional informado pelo usuário.</p>
+								</div>
+								<!-- Seção 3 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ft3">3.3 Experimental</p>
+									<p class="txtConteudo">É relativamente simples realização do teste experimental para determinação da resistência da torta (&alpha;) e do meio filtrante (Rm), principalmente na operação com queda de pressão constante. Neste caso, são recolhidos dados de volume de filtrado recolhido em função do tempo de filtragem. Esses valores são utilizados para regressão linear da Equação 2 (com uma pequena mudança de variável).</p>
+									<p class="txtConteudo">Porém, há uma consideração a ser feita. Os pontos iniciais e finais da filtração podem ser distoantes, pois a inexistência da torta no primeiro caso e o acúmulo de torta no segundo caso, podem provocar situações de vazão constante. Assim, é bom avaliar também o gráfico gerado pelos pontos experimentais e caso existam situações que representem comportamento de vazão constante, é melhor removê-los para evitar erros na estimativa dos parâmetros (CREMASCO, 2012).</p>
+								</div>
+								<!-- Seção 4 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ft4">3.4 Modo de Utilização</p>
+									<p class="txtConteudo">Devido a grande quantidade de variáveis e com elas várias unidades, Zero não fixa uma unidade padrão na seção de filtros. Assim que o usuário informar o valor de um parâmetro, poderá escolher a unidade do parâmetro informado na lista disponível. Isso permite uma maior flexibilidade de uso, já que existem casos de que o sistema internacional não é utilizado.</p>
+									<p class="txtConteudo">Para utilização do procedimento de determinação de parâmetros da torta e do filtro, são necessários dados numéricos de volume em função do tempo ou queda de pressão em função do tempo, de acordo com o modo de operação do filtro. Primeiramente é necessário que o usuário descreva o sistema, ou seja, informe a viscosidade dinâmica, massa de torta por volume de filtrado, área de filtração e o modo de operação, junto com o parâmetro fixado (queda de pressão ou vazão de filtração).</p>
+									<p class="txtConteudo">Determinado o sistema, procede-se com a inserção dos dados experimentais nos espaços apropriados, semelhantes aos de planilhas eletrônicas. Também é preciso que sejam escolhidas as unidades dos dados experimentais, nas listas acima da tabela de entrada de valores.</p>
+									<p class="txtConteudo">Finalizado o processo de entrada de valores, o resultado é exibido ao clicar no botão "Executar Cálculos" e é desenhado um gráfico com os pontos experimentais. Este é útil para se avaliar a qualidade dos pontos, principalmente na operação com queda de pressão constante, que pode apresentar comportamento anômalo no início e no final da filtração. Caso o usuário entenda que é preciso remover alguns pares de valores, é só apagá-los na tabela e clicar novamente no botão, para novo cálculo.</p>
+									<p class="txtConteudo">No dimensionamento do filtro prensa existem dois tipos de entrada de dados: um genérico para todos os tipos de dimensionamento e outro específico. O primeiro diz respeito ao sistema de filtração, viscosidade, massa de torta por volume de filtrado, queda de pressão, volume de lavagem, tempo não operacional (lavagem, desmonte e etc.), área do quadro, resistência específica da torta e resistência do meio filtrante. Já o segundo tipo varia de acordo com o tipo de dimensionamento, ou seja, de acordo com o critério de projeto escolhido.</p>
+									<p class="txtConteudo">Existem 5 métodos de dimensionamento possíveis e de acordo com cada um deles é necessário que o usuário informe um critério de projeto diferente. Por exemplo, para determinar o número de quadros (tamanho) do filtro para um tempo de operação, devem ser informadas a produção desejada e o tempo de cada batelada como critério de projeto. Ao selecionar um modo de dimensionamento, aparecerão abaixo caixas com o nome das informações necessárias e as unidades disponíveis para escolha.</p>
+									<p class="txtConteudo">Após preencher todas os dados necessários, os cálculos serão executados após clicar no botão "Dimensionar". A resposta será exibida em forma de texto, logo abaixo do botão.</p>
+								</div>
+								<!-- Seção 5 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ft5">3.5 Referências</p>
+									<p class="txtConteudo">CREMASCO, Marco Aurélio. Operações unitárias em sistemas particulados e fluidomecânicos. São Paulo: Blucher, 2012, 423 p. ISBN 9788521205937.</p>
+									<p class="txtConteudo">COULSON, J. M.; RICHARDSON, J.F. Chemical engineering: J.F. Richardson, J.M. Coulson. New York: Pergamon Press, 2011, ISBN 0080379508.</p>
+								</div>
+							</div>
+							
+							<!-- Conteúdo total de Equilíbrio Líquido-Líquido -->
+							<div class="section margemInicial">
+								<p class="txtTituloSecao1" id="ell0">4 EQUILÍBRIO LÍQUIDO-LÍQUIDO</p>
+								<!-- Seção 1 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ell1">4.1 Definição</p>
+									<p class="txtConteudo">Um assunto importante da termodinâmica é o equilíbrio de fases, com aplicações tecnológicas de grande interesse industrial. Por exemplo, a partir do estudo de sistemas de equilíbrio líquido-vapor foi possível o desenvolvimento de uma das mais importantes operações unitárias, a destilação. Outro caso é o Equilíbrio Líquido-Líquido (ELL), particularmente interessante para operações de extração, relacionadas muitas vezes com produtos de alto valor agregado.</p>
+									<p class="txtConteudo">A definição termodinâmica para equilíbrio de fases é a isofugacidade, em que ambas as fases possuem a mesma fugacidade (SMITH, ABBOTT e VAN NESS, 2009). Porém, desenvolver equacionamentos a partir dessa definição é complicada e trabalhosa, pois necessita de modelos para Energia de Gibbs em Excesso, que podem ou não serem dependentes de dados experimentais de interação binários. Assim, foi desenvolvido um novo método para avaliar e predizer um sistema ELL.</p>
+									<p class="txtConteudo">Esse método é o ajuste de dados experimentais de equilíbrio para um determinado sistema em uma equação característica, que representa o comportamento característico sistema ELL (HAN et al., 2014). Este é esquematizado na Figura 1, em que alfa (&alpha;) e beta (&beta;) são os componentes do sistema e os valores de concentração estão em porcentagem massa/massa.</p>
+									<div class="text-center"><img class="margemElemento" src="figuras/grafico-ell.png" width="500px"></img></div>
+									<p class="txtConteudo text-center">Figura 1. Esquema do gráfico de equilíbrio entre duas fases líquidas.</p>
+									<p class="txtConteudo">Com essa abordagem, a problemática do desenvolvimento das equações termodinâmicas, a partir de um modelo específico, é substituída pelo ajuste de uma equação modelo, que relaciona a concentração do componente beta em função da concentração do componente alfa. Os modelos mais comuns são representados pelas Equações 1, 2 e 3 (HAN et al., 2014). Felizmente esses modelos, através de uma mudança de variáveis, pode ser alocado na forma de uma equação linear múltipla, que possui método de regressão direta (MONTGOMERY, 2012), diferente de equações não lineares, que precisam além da determinação da matriz de transformação (Jacobiana), iterações sucessivas e um bom estimador inicial, sob pena de não convergência (ROUAUD, 2017).</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/modelo1-ell.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/modelo2-ell.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/modelo3-ell.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>C<sub>&beta;</sub> = concentração mássica do componente beta;</br>C<sub>&alpha;</sub> = concentração mássica do componente alfa;</br>a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub> e a<sub>3</sub> = parâmetros dos modelos.</p>
+									<p class="txtConteudo">Para escolher um modelo entre os três disponíveis é feita a análise da qualidade da regressão e também dos erros dos estimadores calculados. Determinado o modelo, é possível predizer a concentração das fases em equilíbrio, a partir de um sistema formado por uma quantidade x do componente alfa e y do componente beta, com a acoplagem da equação escolhida e do balanço de massa.</p>
+								</div>
+								<!-- Seção 2 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ell2">4.2 Resolução</p>
+									<p class="txtConteudo">Zero possui duas áreas na seção ELL, uma destinada para ajuste dos dados experimentais em um dos modelos cadastrados e outra para predição das concentrações das fases em equilíbrio a partir de uma mistura, com a escolha de uma equação característica. Essa divisão foi realizada pelo fato de serem processos separados e independentes. Primeiro é feito a análise do ajuste dos dados experimentais, depois, com uma expressão definida, é possível executar a predição.</p>
+									<p class="txtConteudo">Para ajuste, é feita a mudança de variáveis e então regressão linear múltipla. Este processo é realizado por uma rotina interna (classe Regressor), que recebe apenas os valores numéricos de y<sub>i</sub> e x<sub>n,i</sub> e calcula os parâmetros, o coeficiente de determinação, erro padrão dos estimadores e outras definições estatísticas, que não são exibidas na seção ELL para evitar poluição visual.</p>
+									<p class="txtConteudo">A predição envolve uma rotina numérica iterativa, pois ao acoplar a equação do modelo escolhido com o balanço de massa é gerado um sistema de equações não lineares. Para resolução deste, Zero utiliza um algoritmo específico para aplicar o método de Newton (REF) e resolver o sistema. Tal método necessita de um estimador inicial, do cálculo da matriz Jacobiana e da resolução de um sistema linear simples para encontrar o incremento do estimador de iteração. O procedimento possui rápida convergência, mas é fortemente influenciado pela qualidade do estimador inicial. Esta aplicação utiliza como padrão estimadores iniciais que geralmente resultam na convergência do sistema, mas permite também que o usuário altere os estimadores caso deseje ou ocorra algum erro.</p>
+								</div>
+								<!-- Seção 3 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ell3">4.3 Experimental</p>
+									<p class="txtConteudo">A seção ELL se assemelha com a DTP no caso de procedimento experimental, pois a própria concepção do processo está relacionada com dados laboratoriais. Com este norte, Zero apresenta uma interface intuitiva que resolve todas as necessidades no mesmo ambiente. Realiza o ajuste de uma equação, calcula alguns parâmetros estatísticos, gera gráficos e permite a predição de concentração no equilíbrio de fases de uma mistura.</p>
+									<p class="txtConteudo">Uma forma de se obter dados de equilíbrio é a partir do teste turbidimétrico, utilizados em sistemas aquasos bifásicos (SAB), de grande interesse por serem não tóxicos e com capacidade de extração de susbstâncias com alto valor agregado (HAN et al., 2014). O procedimento é simples e necessita dos componentes do sistema, um recipiente para alocação do sistema (por exemplo, tudo de ensaio) e balança analítica para medição das massas adicionadas.</p>
+								</div>
+								<!-- Seção 4 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ell4">4.4 Modo de Utilização</p>
+									<p class="txtConteudo">A metodologia de ajuste de dados é simples, necessita que o usuário informe os dados experimentais obtidos. É de responsabilidade do mesmo que identifique para o seu caso qual é o componente alfa (forma a fase pesada) e qual o componente beta (forma a fase leve), ou seja, em função de qual componente irá descrever o outro. Para consultar as equações dos modelos, existe um link "Exibir Equações dos Modelos", localizado na parte superior direita, logo abaixo do nome da seção, cujo clique exibe ou oculta as expressões dos modelos. A entrada de dados é semelhante aos espaços das planilhas eletrônicas, o que torna mais intuitivo e fácil a inserção deles, pois podem ser copiados diretamente de uma planilha e colados nos espaços do programa. Após informar os valores disponíveis, a resolução é informada depois após clicar no botão "Executar Cálculos", que exibirá na tela as respostas e os gráficos com os dados experimentais e as funções ajustadas.</p>
+									<p class="txtConteudo">Para predição, o procedimento de inserção de dados é diferente. Primeiro é preciso escolher um modelo entre os três disponíveis e depois alocar os parâmetros dele nos espaços abaixo da lista de seleção. O próximo passo é informar a Razão de Fases, que é a razão entre a massa de fase de topo e a massa total da mistura (soma da massa das duas fases). Por fim, é preciso inserir a composição da mistura que formará duas fases (Ponto de Mistura). O usuário pode informar quantos pontos de mistura desejar, através do formulário que contêm lacunas para concentrações de alfa e beta e um botão de adição, que grava as informações digitadas e as exibe ao lado.</p>
+									<p class="txtConteudo">Há também a possibilidade da alteração dos estimadores iniciais padrões do programa. Para isso é preciso clicar no link "Configurações Avançadas", que abrirá um novo espaço para que se informe os estimadores iniciais da concentração de alfa na fase superior (rica em beta) e da concentração de alfa na fase inferior (rica em alfa). O usuário pode alterar esses estimadores por vontade própria ou para consertar um erro que convergência. Quando um erro deste tipo ocorre, no lugar dos valores numéricos é exibido a mensagem "NaN".</p>
+									<p class="txtConteudo">Finalizadas as inserções de dados à aplicação, clicar no botão "Executar Cálculos" dispara o processo de resolução e assim que terminado, serão exibidas mensagens no espaço abaixo do botão com as respostas da predição, juntamente com um gráfico com a linha de amarração dos pontos de mistura e a curva gerada pela equação escolhida.</p>
+								</div>
+								<!-- Seção 5 de Filtros -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="ell5">4.5 Referências</p>
+									<p class="txtConteudo">HAN, Juan; WANG, Yun; CHEN, Can; KANG, Wenbing; LIU, Yan; XU, Kangkang; NI, Liang. (Liquid + liquid) equilibria and extraction capacity of (imidazolium ionic liquids + potassium tartrate) aqueous two-phases systems. Journal of Molecular Liquids, 193, p. 23-28, 2014.</p>
+									<p class="txtConteudo">SMITH, J. M; ABBOTT, Michael M; VAN NESS, H. C. Introdução à termodinâmica da engenharia química. Rio de Janeiro: LTC, 2007, 626 p. ISBN 9788521615538.</p>
+									<p class="txtConteudo">MONTGOMERY, Douglas C.; RUNGER, George C. Estatística aplicada e probabilidade para engenheiros. Rio de Janeiro: LTC, 2012, 521 p. ISBN 9788521619024.</p>
+									<p class="txtConteudo">ROUAUD, Mathieu. Probabilités, statistiques et analyses multicritères: Application aux sciences expérimentales. Version Courte. Disponível em &lt;goo.gl/dm65MA&gt;.</p>
+								</div>
+							</div>
+							
+							<!-- Conteúdo total de Equilíbro Líquido-Vapor -->
+							<div class="section margemInicial">
+								<p class="txtTituloSecao1" id="elv0">5 EQUILÍBRIO LÍQUIDO-VAPOR</p>
+								<!-- Seção 1 de ELV -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="elv1">5.1 Definição</p>
+									<p class="txtConteudo">No simples ato de posicionar um copo com água sobre uma mesa está presente equilíbrio líquido-vapor (ELV). Este tópico além de muito comum, também possui aplicações tecnológicas importantes, como por exemplo, a Destilação, operação unitária responsável pelo refino do álcool, separando-o da água.</p>
+									<p class="txtConteudo">O ELV trata de situações em que uma mistura líquida está em equilíbrio com o vapor da mesma, sendo o objetivo da aplicação da termodinâmica predizer as composições em uma fase a partir da definição da outra. O equacionamento do ELV nasce do conceito de isofugacidade, de onde é possível obter a Equação 1, que representa a equação geral na abordagem gama-fi (KORETSKY, 2007).</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-geral-elv.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>y<sub>i</sub> = fração molar na fase gás do componente i;</br>&Phi;<sub>i</sub> = razão entre coeficientes de fugacidade em mistura e de saturação;</br>P = pressão do sistema;</br>x<sub>i</sub> = fração molar na fase líquida do componente i;</br>&gamma;<sub>i</sub> = coeficiente de atividade do componente i;</br>P<sub>i</sub><sup>sat</sup> = pressão de saturação do componente i.</p>
+									<p class="txtConteudo">Na Equação 1, o lado direito representa a fase líquida e o lado esquerdo a fase gás. Dois parâmetros são importantes de serem detalhados, o coeficiente de atividade (&gamma;<sub>i</sub>), obtido por meio de um modelo termodinâmico para Energia de Gibbs em Excesso, e a razão entre coeficientes de fugacidade (&Phi;<sub>i</sub>), calculado, por exemplo, a partir de uma Equação de Estado capaz de descrever a fase vapor (SMITH, ABBOTT e VAN NESS, 2007).</p>
+									<p class="txtConteudo">Para ilustrar o ELV é útil avaliar o caso da composição binária. Na Figura 1 se encontram dois gráficos para tal sistema, um com a temperatura em função da fração do componente 1 e o outro com a pressão em função da fração do componente 2. A área interna definida pelas curvas, representa uma região em que estão presentes as fases gás e líquido em equilíbrio termodinâmico.</p>
+									<div class="text-center"><img class="margemElemento" src="figuras/diagramas-equilibrio.png" width="400px"></img></div>
+									<div class="txtConteudo text-center">Figura 1. Ilustrações de diagramas de equilíbrio binários.</div>
+									<p class="txtConteudo margemSuperior">As linhas de orvalho e de bolha representam os limites da região de equilíbrio e são fundamentais para processos de separação, pois em uma determinada temperatura e pressão dentro desta zona, uma fase (líquida ou gasosa) pode ser mais rica em um componente, de modo que equipamentos capazes de manipular uma mistura dentro deste intervalo são capazes de separar um componente do outro, ou pelo menos enriquecer uma fase até um valor mínimo do componente desejado.</p>
+									<p class="txtConteudo">Linhas de orvalho de temperatura são compostas pelas Temperaturas de Orvalho (ORVT) e as de pressão são compostas pelas Pressões de Orvalho (ORVP). De modo análogo, as linhas de bolha são compostas por Temperaturas de Bolha (BOLT) ou Pressões de Bolha (BOLP), de acordo com o parâmetro desejado ou fixado.</p>
+									<p class="txtConteudo">Executar cálculos de ELV são encontrar temperaturas ou pressão de bolha e orvalho, ou seja,  para uma situação específica de fração em uma fase e pressão ou temperatura, deseja-se predizer as frações na outra fase e a temperatura ou pressão do sistema. De modo geral, existem quatro tipos de problemas (SANDLER, 2006):</p>
+									<p class="txtConteudo">1) ORVT: são conhecidas as frações na fase gasosa e a pressão do sistema, deseja-se encontrar as frações na fase líquida e a temperatura do sistema.</p>
+									<p class="txtConteudo">2) ORVP: são conhecidas as frações na fase gasosa e a temperatura do sistema, deseja-se encontrar as frações na fase líquida e a pressão do sistema.</p>
+									<p class="txtConteudo">3) BOLT: são conhecidas as frações na fase líquida e a pressão do sistema, deseja-se encontrar as frações na fase gasosa e a temperatura do sistema.</p>
+									<p class="txtConteudo">4) BOLP: são conhecidas as frações na fase líquida e a temperatura do sistema, deseja-se encontrar as frações na fase gasosa e a temperatura do sistema.</p>
+									<p class="txtConteudo">Os quatro tipos de procedimentos são iterativos, ou seja, a partir de um estimador inicial, este sofre recursivas operações até a convergência. Além dessa peculiaridade, avaliar &Phi;<sub>i</sub> e &gamma;<sub>i</sub> pode ser um trabalho árduo, de acordo com o tipo de modelo utilizado para o cálculo deles. Para baixas e moderadas pressões, vale supor que a fase gás se comporta idealmente (&Phi;<sub>i</sub> = 1) e a fase líquida é não-ideal, fundamento da chamada Lei de Raoult Modificada.</p>
+								</div>
+								<!-- Seção 2 de ELV -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="elv2">5.2 Resolução</p>
+									<p class="txtConteudo">Existem três seções de cálculo para equilíbrio líquido-vapor, a saber Método UNIFAC, Ponto de Bolha e Orvalho e Desenho de Diagramas Binários. Este é na verdade uma aplicação dos dois primeiros, pois a partir da predição do coeficiente de atividade (UNIFAC) e do cálculo iterativo das temperaturas ou pressões de bolha e orvalho, é possível desenhar um gráfico com estes valores, de modo que fique mais perceptível visualmente a influência da fração molar de um determinado componente sobre a zona de equilíbrio.</p>
+									<p class="txtConteudo">O cálculo do coeficiente de atividade pelo método UNIFAC não difere muito do procedimento detalhado em Smith et al., 2007. Os parâmetros necessários são lidos a partir de um arquivo .txt alocado em um dos diretórios do programa, e estes dados foram obtidos do mesmo autor. Este método é um modelo preditivo fundamentado na teoria de grupos, diferente dos modelos clássicos para Energia de Gibbs em Excesso, escolhido justamente por não necessitar de dados experimentais para parâmetros de interação binária entre as substâncias.</p>
+									<p class="txtConteudo">Na seção de Ponto de Bolha e Orvalho são implementados quatro algoritmos numéricos iterativos, que utilizam o procedimento UNIFAC em determinados momentos, juntamente com outro algoritmo para cálculo da pressão de saturação por meio da Equação de Antoine, representada na Equação 2, cujos parâmetros também foram obtidos de Smith et al., 2007. No processo iterativo também são necessárias variáveis de iterações e modificações da lei geral do ELV, obtidas pelas Equações 3, 4, 5 e 6.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-antoine.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-3.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-4.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 4</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-5.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 5</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-6.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 6</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>A, B e C = parâmetros da Equação de Antoine para o componente;</br>P<sub>it</sub> = pressão de iteração.</p>
+									<p class="txtConteudo">A pressão de iteração utilizada nas equações 3 e 4 são estimadas, inicialmente, como a pressão de saturação de um componente i qualquer, como por exemplo, o primeiro componente. Os algoritmos recursivos estão detalhados em alto nível abaixo e para melhor observação não foram colocados juntos, podem ser visualizados independentemente ao clicar no botão com o nome do mesmo.</p>
+									<div class="form-inline txtConteudo">
+										<div class="col-md-6"><p>Tipo de Cálculo</p></div>
+										<div class="col-md-6">
+											<select class="form-control dadosFormulario" onchange="alteraImagem()" id="listaAlgoritmos">
+												<option value="orvt">Temperatura de Orvalho</option>
+												<option value="bolt">Temperatura de Bolha</option>
+												<option value="orvp">Pressão de Orvalho</option>
+												<option value="bolp">Pressão de Bolha</option>
+											</select>
+										</div>
+									</div>
+									<div id="elv-bolp" class="txtConteudo bordaAlgoritmoELV oculta">
+										<p class="text-center"><b>PRESSÃO DE BOLHA</b></p>
+										<p>Entradas: Temperatura, frações do líquido e erro desejado</br>Iniciar erro com valor elevado (maior que o desejado)</br>Calcular pressão de saturação dos componentes via Equação 2</br>Calcular coeficientes de atividade via método UNIFAC</br>Calcular pressão via Equação 6</br>Repetir equanto o erro atual for maior que o erro desejado:</br>&emsp;&emsp;Calcular frações no gás via Equação 1</br>&emsp;&emsp;Calcular pressão via Equação 5</br>&emsp;&emsp;Atualizar o erro com a nova pressão</p>
+									</div>
+									<div id="elv-orvp" class="txtConteudo bordaAlgoritmoELV oculta">
+										<p class="text-center"><b>PRESSÃO DE ORVALHO</b></p>
+										<p>Entradas: Temperatura, frações do gás e erro desejado</br>Iniciar erro com valor elevado (maior que o desejado)</br>Iniciar os coeficientes de atividade com o valor de 1</br>Calcular a pressão de saturação dos componentes via Equação 2</br>Calcular pressão via Equação 5</br>Calcular frações no líquido via Equação 1</br>Calcular coeficientes de atividade via método UNIFAC</br>Repetir enquanto o erro atual for maior que o erro desejado:</br>&emsp;&emsp;Calcular pressão via Equação 5</br>&emsp;&emsp;Calcular frações no líquido via Equação 1</br>&emsp;&emsp;Calcular coeficiente de atividade via método UNIFAC</br>&emsp;&emsp;Calcular pressão via Equação 5</br>&emsp;&emsp;Atualizar o erro com a nova pressão</p>
+									</div>
+									<div id="elv-bolt" class="txtConteudo bordaAlgoritmoELV oculta">
+										<p class="text-center"><b>TEMPERATURA DE BOLHA</b></p>
+										<p>Entradas: Pressão, frações do líquido e erro desejado</br>Iniciar erro com valor elevado (maior que o desejado)</br>Calcular a temperatura de saturação para os componentes via Equação 2</br>Estimar temperatura via média ponderadas das temperaturas de saturação</br>Calcular pressão de saturação de saturação dos componentes via Equação 2</br>Calcular coeficientes de atividade via método UNIFAC</br>Calcular pressão de iteração via Equação 4</br>Calcular temperatura via Equação 2 utilizando a pressão de iteração</br>Repetir enquanto o erro atual for maior que o erro desejado:</br>&emsp;&emsp;Calcular pressões de saturação dos componentes via Equação 2</br>&emsp;&emsp;Calcular frações no gás via Equação 1</br>&emsp;&emsp;Calcular coeficientes de atividade via método UNIFAC</br>&emsp;&emsp;Calcular pressão de iteração via Equação 4</br>&emsp;&emsp;Calcular temperatura via Equação 2 utilizando a pressão de iteração</br>&emsp;&emsp;Atualizar o erro com a nova temperatura</p>
+									</div>
+									<div id="elv-orvt" class="txtConteudo bordaAlgoritmoELV visivel">
+										<p class="text-center"><b>TEMPERATURA DE ORVALHO</b></p>
+										<p>Entradas: Pressão, frações do gás e erro desejado</br>Iniciar erro com valor elevado (maior que o desejado)</br>Iniciar os coeficientes de atividade iguais a 1</br>Calcular a temperatura de saturação para os componentes via Equação 2</br>Estimar temperatura via média ponderada das temperaturas de saturação</br>Calcular pressão de saturação dos componentes via Equação 2</br>Calcular pressão de iteração via Equação 3</br>Calcular temperatura via Equação 2 utilizando a pressão de iteração</br>Calcular pressões de saturação dos componentes via Equação 2</br>Calcular as frações no líquido via Equação 1</br>Calcular coeficientes de atividade via método UNIFAC</br>Calcular pressão de iteração via Equação 3</br>Calcular temperatura via Equação 2 utilizando a pressão de iteração</br>Repetir enquanto o erro atual for maior que o erro desejado:</br>&emsp;&emsp;Calcular pressões de saturação dos componentes</br>&emsp;&emsp;Calcular frações no líquido via Equação1</br>&emsp;&emsp;Calcular coeficientes de atividade via método UNIFAC</br>&emsp;&emsp;Calcular pressão de iteração via Equação 3</br>&emsp;&emsp;Calcular temperatura via Equação 2 utilizando a pressão de iteração</br>&emsp;&emsp;Atualizar o erro com a nova temperatura</p>
+									</div>
+									<p class="txtConteudo">Para desenhar o diagrama, Zero utiliza os algoritmos de ponto de bolha e orvalho e calcula um conjunto de pontos que definem as curvas de equilíbrio. De posse dos dados, faz o desenho na tela ao ligar os valores.</p>
+								</div>
+								<!-- Seção 3 de ELV -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="elv3">5.3 Experimental</p>
+									<p class="txtConteudo">Infelizmente não há uma proposta de atividade experimental em que a seção de ELV de Zero possa ser aplicada, porém ainda existem outras possibilidades. Como o processo é preditivo, fundamentado na teoria de grupos para o coeficiente de atividade e a Lei de Raoult Modifica para descrever o equilíbrio, há viabilidade de experimentação livre por parte do usuário, principalmente no desenho de diagramas de equilíbrio.</p>
+									<p class="txtConteudo">Utilizar a metodologia desta aplicação permite que o estudante visualize o comportamento do equilíbrio líquido-vapor, de um sistema binário arbitrário definido por ele. Avaliações como aproximação com a idealidade e existência ou não de azeótropos são exemplos de discussões e críticas, passíveis de serem feitas pelo usuário de posse do gráfico gerado pelo programa. Assim, a contribuição maior não está na eventualidade de uso em procedimentos experimentais, mas sim na contribuição de um melhor entendimento teórico sobre o assunto.</p>
+								</div>
+								<!-- Seção 4 de ELV -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="elv4">5.4 Modo de Utilização</p>
+									<p class="txtConteudo">Para executar o cálculo dos coeficientes de atividade por meio do modelo preditivo UNIFAC, o usuário precisa informar a temperatura e sua unidade e definir o sistema componente a componente utilizando um formulário, composto por uma lista e um local de digitação. Na lista de substâncias cadastradas, escolhe-se uma e na caixa ao lado se informa o valor da fração molar da substância selecionada. Feito isso, a informação é gravada pelo programa ao clicar no botão "Adicionar", sendo os dados exibidos no espaço em branco ao lado do formulário de entrada de dados. Zero interpreta que, quando a soma das frações molares informadas for igual a 1, o sistema está definido. Caso seja da vontade do usuário excluir um dado informado anteriormente, há um botão "Excluir" junto da referência gerada pelo botão "Adicionar".</p>
+									<p class="txtConteudo">Ao final da definição do sistema, clicar no botão "Executar Cálculos" fez com que o programa utilize os dados provenidos pelo usuário para predizer os coeficientes de atividade de todas as substâncias do sistema. O resultado é exibido em texto logo abaixo do botão.</p>
+									<p class="txtConteudo">A seção de Ponto de Bolha e Orvalho possui a função de calcular a temperatura ou pressão de bolha ou orvalho, de acordo com a escolha do usuário. De modo análogo ao procedimento anterior, também há a definição do sistema, realizado exatamente da mesma forma que no método UNIFAC. Posteriormente, é necessário escolher o tipo de cálculo (pressão de bolha, temperatura de bolha, pressão de orvalho e temperatura de orvalho) e a temperatura ou pressão (varia de acordo com o tipo de cálculo) com a sua unidade, escolhida na lista ao lado da caixa utilizada para informar o valor numérico.</p>
+									<p class="txtConteudo">Igual à seção do método UNIFAC, o resultado do cálculo é mostrado logo abaixo do botão "Executar Cálculos", assim que este for acionado pelo usuário.</p>
+									<p class="txtConteudo">Por fim, a seção destinada para desenho de diagramas de equilíbrio possui interface mais simplificada. O usuário precisa preencher um formulário rápido, para informar os dois componentes do sistema, através de uma lista de substâncias cadastradas, o tipo de diagrama (pressão, temperatura ou fração molar de gás em função da fração molar de líquido), a temperatura ou pressão (varia de acordo com o tipo de diagrama) com sua unidade e, caso desejar, escolher cores diferentes para as curvas de bolha e orvalho. Completada a inserção das instruções necessárias, o diagrama é gerado ao clicar no botão "Desenhar Gráfico". O programa desenha o gráfico com referência ao Componente 1 informado no formulário, ou seja, as frações são relativas ao primeiro componente selecionado.</p>
+								</div>
+								<!-- Seção 5 de ELV -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="elv5">5.5 Referências</p>
+									<p class="txtConteudo">KORETSKY, M. D. Termodinâmica para engenharia química. Rio de Janeiro: LTC Ed., 2007, 502 p. ISBN 9788521615309.</p>
+									<p class="txtConteudo">SMITH, J. M.; ABBOTT, M. M.; VAN NESS, H. C. Introdução à termodinâmica da engenharia química. Rio de Janeiro: LTC Ed., 2007, 626 p. ISBN 9788521615538.</p>
+									<p class="txtConteudo">SANDLER, S. I. Chemical, biochemical and engineering thermodynamics. Nova Delhi: Wiley, 2006, 912 p. ISBN 9788126526437.</p>
+								</div>
+							</div>
+							
+							<!-- Conteúdo total de Trocadores de Calor -->
+							<div class="section margemInicial">
+								<p class="txtTituloSecao1" id="tc0">6 TROCADORES DE CALOR</p>
+								<!-- Seção 1 de Trocadores de Calor -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="tc1">6.1 Definição</p>
+									<p class="txtConteudo">São comuns processos em que seja necessário aquecer ou resfriar algo, como por exemplo o procedimento de pasteurização, que consiste no aquecimento do leite para remoção de patógenos. Estes processos utilizam comumente equipamentos auxiliares que permitem a troca térmica entre dois meios (um quente e um frio), denominados genericamente de trocadores de calor (TC). Um esquema genérico é exibido na Figura 1.</p>
+									<div class="text-center"><img src="figuras/tc-generico.png" class="margemElemento" width="400px;"></img>
+									<p class="txtConteudo text-center">Figura 1. Esquema de um trocador de calor genérico, com configuração de escoamento contracorrente (fluxos opostos).</p></div>
+									<p class="txtConteudo">Os trocadores de calor possuem configuração diversa, alguns são os constituídos de tubos concêntricos, de múltiplos passes, de casco e tubo e de placas (ÇENGEL, 2012). Cada um desses foi desenvolvido para atender determinado tipo de problema, guardado as respectivas simitações. O trocador de calor a placas, por exemplo, visa maximizar a área de troca térmica e minimizar o espaço ocupado, porém não pode ser utilizado com fluidos muito viscosos (REF).</p>
+									<p class="txtConteudo">Dimensionar um trocador de calor é determinar a área de troca térmica necessária para uma situação específica de operação. Desse modo, são conhecidas, no mínimo, temperaturas de entrada (fluido frio e fluido quente) e coeficiente global de transferência de calor (U). O conhecimento ou não de mais informações implica na escolha do método de cálculo entre os dois disponíveis. São eles: diferença de temperatura média (&Delta;T<sub>m</sub>) e efetividade-nut (COULSON, 2011).</p>
+									<p class="txtConteudo">O método da diferença de temperatura média necessita do conhecimento das temperaturas de entrada e saída dos fluidos quente e frio, junto da taxa de transferência de calor (ÇENGEL, 2012). Esta pode ser postulada como critério de projeto ou obtida por balanço de energia simples, através da Equação 1.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-taxa-vazao.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 1</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>q = taxa de transferência de calor (W);</br>m = vazão mássica do fluido (kg s<sup>-1</sup>);</br>C<sub>p</sub> = capacidade calorífica do fluido (J kg<sup>-1</sup> °C<sup>-1</sup>);</br>&Delta;T = diferença de temperatura esperimentada pelo fluido (°C).</p>
+									<p class="txtConteudo ">Com os valores disponíveis, é calculada a temperatura média do equipamento, que é função do tipo de configuração do equipamento, que pode ser contracorrente, paralelo, múltiplos passes (casca e tubo) ou fluxo cruzado (INCROPERA, 2012). No primeiro caso, &Delta;T<sub>m</sub> é obtida pela equação 2 e para os outros pela Equação 3. Porém, nas configurações múltiplos passes e fluxo cruzado, é preciso determinar o fator de correção, um multiplicador da diferença de temperatura média (varia entre 0 e 1), obtido por gráficos disponíveis na internet ou em literaturá própria sobre trocadores de calor, por exemplo Çengel, 2012.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-dtln-paralelo.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 2</p></div>
+									</div>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-dtln-contracorrente.png" width="300px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 3</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>&Delta;T<sub>m</sub> = diferença de temperatura média (°C);</br>T<sub>qe</sub> = temperatura de entrada do fluido frio (°C);</br>T<sub>fe</sub> = temperatura de entrada do fluido frio (°C);</br>T<sub>qs</sub> = temperatura de saída do fluido quente (°C);</br>T<sub>fs</sub> = temperatura de saída do fluido frio (°C).</p>
+									<p class="txtConteudo">Determinada a diferença de temperatura média, esta se torna &Delta;T da Equação 4, utilizada para o cálculo da área de troca térmica necessária. Com este valor, escolhe-se um trocador de calor em algum frabricante que atenda as configurações desejadas.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-taxa-u.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 4</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>U = coeficiente global de troca térmica (W m<sup>-2</sup> °C<sup>-1</sup>);</br>A = área de troca térmica (m<sup>2</sup>).</p>
+									<p class="txtConteudo">O dimensionamento através do método efetividade-nut é fundamentado em dois parâmetros distintos, a efetividade e o número de unidades de transferência (nut), com a necessidade de serem conhecidos, além dos parâmetros comuns aos dois métodos, as vazões e capacidades caloríficas de ambos os fluidos e mais um critério de projeto, área ou taxa de transferência de calor (INCROPERA, 2008). Um pode ser obtido em função do outro, de acordo com uma equação específica para cada tipo de configuração, as mesmas discutidas anteriormente. Tais equações podem ser encontradas em livros específicos sobre transferência de calor, a citar Çengel, 2012.</p>
+									<p class="txtConteudo">Define-se efetividade como a razão entre a taxa real de transferência de calor e a taxa máxima de transferência de calor, em que esta é obtida a partir da diferença de temperatura máxima (&Delta;T<sub>max</sub>), que corresponde a diferença entre temperaturas de entrada, e a capacitância térmica mínima (C<sub>min</sub>) entre os fluidos (INCROPERA, 2008). Com a efetividade, encontra-se o número de unidades de transferência via equação própria. A Figura 2 representa um esquema do procedimento descrito para um sistema genérico.</p>
+									<div class="text-center"><img src="figuras/esquema-efetividade.png" class="margemElemento" width="400px"></img></div>
+									<p class="txtConteudo text-center">Figura 2. Esquema do processo de determinação da efetividade.</p>
+									<p class="txtConteudo">Com a efetividade, calcula-se nut segundo uma equação própria para o tipo de configuração. Finaliza-se o dimensionamento através da Equação 5, que permite encontrar a área de troca térmica.</p>
+									<div class="form-group form-inline">
+										<div class="col-sm-6"><img src="figuras/equacao-nut.png" width="200px"></img></div>
+										<div class="col-sm-6"><p class="txtConteudo text-right">Equação 5</p></div>
+									</div>
+									<p class="txtConteudo">Em que,</br>NUT = número de unidades de transferência;</br>C<sub>min</sub> = capacitância térmica mínima do sistema (J °C<sup>-1</sup> s<sup>-1</sup>).</p>
+								</div>
+								<!-- Seção 2 de Trocadores de Calor -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="tc2">6.2 Resolução</p>
+									<p class="txtConteudo">Não existem grandes estratégias no algoritmo de dimensionamento de trocadores de calor. A resolução computacional segue o mesmo procedimento da resolução manual para os dois métodos, diferença de temperatura média e efetividade-nut. O melhor incremento de Zero é no fato de abstração que incorpora. Ao usuário, basta informar os parâmetros do sistema e o tipo de configuração, todas as particularidades de cálculo são identificadas e resovidas internamente.</p>
+									<p class="txtConteudo">A abstração é possível porque o algoritmo responsável pelo dimensionamento desennvolve um caminho diferente para cada critério de cálculo escolhido (área, coeficiente global de transferência de calor, taxa ou temperatura). Essa abordagem é parecida com a da "Máquina de Estados", uma estratégia computacional que faz com que o algoritmo identifique o problema e de acordo com as características do mesmo (o seu estado), faça uma sequência de ações permitidas. Assim, erros de cálculo são minimizados, pois cada tipo de cálculo é avaliado e executado de forma independente.</p>
+								</div>
+								<!-- Seção 3 de Trocadores de Calor -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="tc3">6.3 Experimental</p>
+									<p class="txtConteudo">Existem três procedimentos disponíveis na seção de trocadores de calor: método da diferença de temperatura média, método da efetividade-nut e avaliação de experimento com trocador de calor a placas. Este foi desenvolvido para auxílio em experimentos com módulos educacionais de trocadores de calor, mais específico, de placas.</p>
+									<p class="txtConteudo">O experimento consiste na alteração da vazão de entrada dos fluidos quente ou frio, com a medição das temperaturas de entrada e saída de ambos. A partir dos dados de capacidade calorífica e o tipo de configuração (paralelo ou contracorrente), o programa calcula a taxa de transferência de calor, a diferença de temperatura média ou efetividade (escolha do usuário) e o coeficiente global de transferência de calor. Esses valores são exibidos em uma tabela e também desenhados em gráficos, exibidos na tela.</p>
+									<p class="txtConteudo">Utilizar Zero durante o procedimento experimental permite uma avaliação rápida e completa sobre o comportamento do sistema, principalmente por uma outra funcionalidade existente, que é a possibilidade de escolher o fluido base para determiniação da taxa de transferência de calor, ou seja, se a taxa será calculada de acordo com a diferença de temperatura do fluido frio ou do fluido quente. Isso possibilita avaliar erros na medição de temperatura ou perda térmica, pois em condições ideais todo o calor cedido pelo fluido quente é absorvido pelo fluido frio. Caso algum desses problemas ocorram, valores conflitantes serão resultado para cada método, principalmente a efetividade-nut, que pode retornar respostas com o valor "NaN", o que indica alguma excessão teórica, como por exemplo a efetividade maior que a unidade.</p>
+								</div>
+								<!-- Seção 4 de Trocadores de Calor -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="tc4">6.4 Modo de Utilizar</p>
+									<p class="txtConteudo">Os dois primeiros procedimentos disponíveis são de grande simplicidade, o usuário preenche um formuário com as características do sistema nas unidades informadas entre parênteses, escolhe um tipo de configuração e, quando disponível, escolhe um tipo de dimensionamento entre os disponíveis. Após inserir todos os dados, a resolução é escrita na tela logo depois de clicar no botão no final do formulário.</p>
+									<p class="txtConteudo">Para o procedimento de avaliação de dados experimentais, além do formulário para definição do sistema, existe um espaço semelhante ao das planilhas eletrônicas, devidamente rotulados, utilizados para a inserção dos resultados obtidos no processo experimental. Assim que preenchidos, clicar no botão "Executar Cálculos" inicia o processo de cálculo e desenho do gráfico, que serão exibidos na tela.</p>
+								</div>
+								<!-- Seção 5 de Trocadores de Calor -->
+								<div class="section">
+									<p class="txtTituloSecao2 margemSuperior" id="tc5">6.5 Referências</p>
+									<p class="txtConteudo">ÇENGEL, Yunus A. Tranferência de calor e massa: umas abordagem prática. São Paulo: AMGH, 2012. 902 p. ISBN 9788580551273.</p>
+									<p class="txtConteudo">COULSON, J. M.; RICHARDSON, J.F. Chemical engineering: J.F. Richardson, J.M. Coulson. New York: Pergamon Press, 2011, ISBN 0080379508.</p>
+									<p class="txtConteudo">INCROPERA, Frank P. Fundamentos de transferência de calor e de massa. Rio de Janeiro: LTC, 2008, 643 p. ISBN 9788521615842.</p>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	
+	<script>
+		
+		// Objeto controlador da posição da div
+		var controleScroll = {
+			posicaoAtual: 0,
+			posicaoAnterior: 0,
+			listaIndices: ['dtr0', 'dtr1', 'dtr2', 'dtr3', 'dtr4', 'dtr5', 'dtp0', 'dtp1', 'dtp2', 'dtp3', 'dtp4', 'dtp5', 'ft0', 'ft1', 'ft2', 'ft3', 'ft4', 'ft5', 'ell0', 'ell1', 'ell2', 'ell3', 'ell4', 'ell5', 'elv0', 'elv1', 'elv2', 'elv3', 'elv4', 'elv5', 'tc0', 'tc1', 'tc2', 'tc3', 'tc4', 'tc5'],
+			listaPosicoes: [],
+			atualizaPosicoes: function() {
+				for(var i = 0; i < this.listaIndices.length; i++) {
+					this.listaPosicoes[i] = $('#'+this.listaIndices[i]).position().top + this.posicaoAnterior;
+				}
+			}
+		}
+		
+		controleScroll.atualizaPosicoes();
+	
+		// Altera o algoritmo de ponto elv que aparece na tela, de acordo com a escolha da lista
+		function alteraImagem() {
+			var modelo = document.getElementById('listaAlgoritmos').value;
+			document.getElementById('elv-bolp').style.display = 'none';
+			document.getElementById('elv-bolt').style.display = 'none';
+			document.getElementById('elv-orvp').style.display = 'none';
+			document.getElementById('elv-orvt').style.display = 'none';
+			document.getElementById('elv-' + modelo).style.display = 'block';
+		}
+		
+		// Contabiliza o movimento de scroll para identificar a posição
+		$('#conteudo').scroll(function() {
+			controleScroll.posicaoAnterior = $('#conteudo').scrollTop();
+			atualizarIcone();
+		});
+		
+		// Ação de click dos ícones de navegação
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var posicao = $('#'+topico).position().top + controleScroll.posicaoAnterior;
+			controleScroll.posicaoAtual = posicao;
+			var zero = $('#conteudo').position().top
+			$('#conteudo').animate({
+				scrollTop: controleScroll.posicaoAtual
+			}, 'slow');
+			controleScroll.posicaoAnterior = controleScroll.posicaoAtual;
+			atualizarIcone();
+		});
+		
+		// Função para dar o hover na seção em que o usuário se encontra
+		function atualizarIcone() {
+			controleScroll.atualizaPosicoes()
+			for(var i = 0; i < controleScroll.listaIndices.length; i++) {
+				$(buscarLink(controleScroll.listaIndices[i])).removeClass('indiceAtivoSumario');
+			}
+			for(var i = 0; i < controleScroll.listaIndices.length - 1; i++) {
+				if(controleScroll.posicaoAnterior >= controleScroll.listaPosicoes[i] && controleScroll.posicaoAnterior < controleScroll.listaPosicoes[i + 1]) {
+					$(buscarLink(controleScroll.listaIndices[i])).addClass('indiceAtivoSumario');
+					break;
+				}
+			}
+			if(controleScroll.posicaoAnterior >= controleScroll.listaPosicoes[controleScroll.listaIndices.length - 1]) {
+				$(buscarLink(controleScroll.listaIndices[controleScroll.listaIndices.length - 1])).addClass('indiceAtivoSumario');
+			}
+		}
+		
+		// Auxílio nas buscas com jQuery
+		function buscarLink(topico) {
+			var icones = $('.link');
+			for(var i = 0; i < icones.length; i++) {
+				if($(icones[i]).attr('topico') == topico)
+					return icones[i];
+			}
+		}
+	
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+	
+	</script>
+
+</html>

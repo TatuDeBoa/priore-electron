@@ -1,0 +1,99 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Título -->
+		<div class="container margemInicial">
+			<div class="row"><div class="col-sm-12"><p class="txtTitulo1">AGRADECIMENTOS</p></div></div>
+		</div>
+
+		<!-- Texto -->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Bem, este aqui é a seção dos clichês mas que preciso fazer. Não há como negar que sem a ajuda ou apoio de algumas pessoas este projeto não passaria de um desejo. Para ser sincero, Zero aconteceu apenas por causa de um conjunto de viscitudes do destino. Nesse amaranhado complexo de intermitências, pessoas passaram e deixaram suas marcas ou ainda fazem parte do cotidiano. Preciso então deixar o meu obrigado por toda a ajuda direta e indireta que recebi, pois Zero é um projeto um tanto quanto audacioso e pode não despertar muito interesse por ser Open Source.</p>
+					<p class="txtGeral">Bom, acho que falei muito, citarei agora alguns nomes que lembro no momento, mas gostaria de agradecer a todos que de alguma forma contribuíram com a realização deste projeto.</p>
+					<p class="txtGeral">Agradeço a Neuza Santos, Lucélia Santos e Joana D'arc dos Santos, minha família que foi o "backend" que permitiu o meu trabalho.</p>
+					<p class="txtGeral">Agradeço ao professor André Gustavo Sato, cuja confiança me rendeu o início dos trabalho, ao professor André Fernando de Oliveira, que abriu as portas para o horizonte que permitiria a minha evolução, e à professor Rita Superbi, que acreditou e incentivou o meu trabalho.</p>
+					<p class="txtGeral">Agradeço ao Pedro Sacramento, supervisor que me ensinou muita coisa e indicou a forma que possibilitou a criação de Zero, e ao Edson Ney, supervisor cujas dicas foram essenciais para que o amontoado de linhas de comando se tornassem algo palpável para interação com o usuário.</p>
+					<p class="txtGeral">Agradeço aos amigos Angélica Lorena de Oliveira, Antônio Marcos, Jean Lucas Meireles e Marcos Passos. As conversas, desabafos, dicas e aleatoriedades também foram de grande importância para que eu não só conseguisse terminar a empreitada, como para não surtar no meio do caminho.</p>
+					<p class="txtGeral">Por fim, mas não menos importante, agradeço aos anônimos do Stack Overflow. Essas pessoas me fizeram agraditar na frase "nem todo heroi usa capa". Bati cabeça muitas vezes e por causa deles consegui resolver grande parte dos meus erros.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+</html>

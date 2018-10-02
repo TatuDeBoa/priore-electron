@@ -1,0 +1,99 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Biblioteca Zero - Testes</title>
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="estilos.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="bbt-js/math.js"></script>
+		<script src="funcoes-js/Calculo.js"></script>
+	</head>
+	<body></body>
+	
+	<script>
+	
+		var ciclone = new Ciclones();
+		/* Teste com ciclones */
+/*		ciclone.definirTipo("Ciclone");
+		ciclone.definirConfiguracao("Lapple");
+		ciclone.definirModelo("rrb", 1.5, convComprimento(37.7, "um", "m"));
+		ciclone.definirSistema(2300, 0.000035, 4.43, 0);
+		ciclone.definirVazao(100/60);
+		ciclone.definirEficiencia(0.9);
+		// Executa o cálculo de dimensionamento
+		ciclone.dimensionarPorEficiencia();
+		console.log(ciclone);
+		/* Teste com ciclones */
+		
+		/* Teste com os algoritimos de orndenação modificados */
+/*		var array1 = [1, 59, 5, 15, 7, 9];
+		var array2 = [9, 65, 78, 12, 49, 76];
+		var array3 = [95, 25, 61, 79, 59, 12];
+		ordenacaoDecrescente(array1, array2, array3);
+		console.log(array1);
+		console.log(array2);
+		console.log(array3);
+		/* Teste com os algoritimos de orndenação modificados */
+		
+		/* Teste com a classe de busca de arquivos com ajax */
+/*		var dados = [];
+		lerDadosAntoine(dados);
+		var psat = calculaPressaoSaturacao(dados, "Água", 25);
+		var tsat = calculaTemperaturaSaturacao(dados, "Água", 3.5);
+		console.log("A pressão de saturação da água em 25 °C é: " + psat + " kPa.");
+		console.log("A temperatura de saturação da água em 3.5 kPa é: " + tsat + " °C.");
+		/* Teste com a classe de busca de arquivos com ajax */
+		
+		/* Teste com classe UNIFAC */
+/*		var unifac = new Unifac();
+		unifac.definirSistema(["Benzeno", "Tolueno"], [0.3, 0.7]);
+		unifac.definirTemperatura(298.15);
+		unifac.carregarDados();
+		unifac.carregarDadosDeInteracao();
+		unifac.calcular();
+		console.log(unifac.gama)
+		/* Teste com classe UNIFAC */
+		
+		/* Teste com a classe de interpolação polinomial */
+/*		var intPol = new PolinomioInterpolador();
+		intPol.definirValores([0, 2, 7, 9, 12], [12, 12.16, 14.1, 15.53, 18.51]);
+		intPol.montarPolinomio();
+		console.log("Valor da função em x = 5: " + intPol.estimarValorEm(5));
+		console.log("Valor da derivada em x = 5: " + intPol.estimarDerivadaEm(0));
+		/* Teste com a classe de interpolação polinomial */
+		
+		/* Teste com a classe de regressão */
+/*		var reg = new Regressor();
+		//var x = [[2, 50], [8, 110], [11, 120], [10, 550], [8, 295], [4, 200], [2, 375], [2, 52], [9, 100], [8, 300], [4, 412], [11, 400], [12, 500], [2, 360], [4, 205], [4, 400], [20, 600], [1, 585], [10, 540], [15, 250], [15, 290], [16, 510], [17, 590], [6, 100], [5, 400]];
+		//var y = [9.95, 24.45, 31.75, 35, 25.02, 16.86, 14.38, 9.6, 24.35, 27.5, 17.08, 37, 41.95, 11.66, 21.65, 17.89, 69, 10.3, 34.93, 46.59, 44.88, 54.12, 56.63, 22.13, 21.15];
+		var x = [0.99, 1.02, 1.15, 1.29, 1.46, 1.36, 0.87, 1.23, 1.55, 1.4, 1.19, 1.15, 0.98, 1.01, 1.11, 1.2, 1.26, 1.32, 1.43, 0.95];
+		var y = [90.01, 89.05, 91.43, 93.74, 96.73, 94.45, 87.59, 91.77, 99.42, 93.65, 93.54, 92.52, 90.56, 89.54, 89.85, 90.39, 93.25, 93.41, 94.98, 87.33];
+		reg.definirValores(x, y);
+		reg.reglin();
+		console.log(reg.estimadores);
+		console.log(reg.intervalo);
+		console.log(reg.r2);
+		/* Teste com a classe de regressão */
+		
+		/* Teste com classe de cálculo */
+		var m1 = [[1, 2, 3], [-9, 4, 15], [15, -1, -8]];
+		var m2 = [[-2, 2, 15, 49], [5, -7, 14, -6], [-9, -15, 58, -105]];
+		var calc = new Calculo();
+		console.log(math.det(m1));
+		console.log(Calculo.det(m1));
+		console.log(math.multiply(m1, m2));
+		console.log(Calculo.mtzmulti(m1, m2));
+		/* Teste com classe de cálculo */
+	
+	</script>
+	
+</html>

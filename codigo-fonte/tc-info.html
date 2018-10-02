@@ -1,0 +1,200 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Título e início do texto -->
+		<div class="container margemInicial">
+			<div class="row"><div class="col-sm-12"><p class="txtTitulo1">TROCADORES DE CALOR</p></div></div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção de definição -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">São comuns processos em que seja necessário aquecer ou resfriar algo, como por exemplo o procedimento de pasteurização, que consiste no aquecimento do leite para remoção de patógenos. Estes processos utilizam comumente equipamentos auxiliares que permitem a troca térmica entre dois meios (um quente e um frio), denominados genericamente de trocadores de calor (TC). Um esquema genérico é exibido na Figura 1.</p>
+					<div class="centralizar"><img src="figuras/tc-generico.png" class="margemElemento"></img></div>
+					<div class="centralizar"><p class="txtGeral">Figura 1. Esquema de um trocador de calor genérico, com configuração de escoamento contracorrente (fluxos opostos).</p></div>
+					<p class="txtGeral">Os trocadores de calor possuem configuração diversa, alguns são os constituídos de tubos concêntricos, de múltiplos passes, de casco e tubo e de placas (ÇENGEL, 2012). Cada um desses foi desenvolvido para atender determinado tipo de problema, guardado as respectivas simitações. O trocador de calor a placas, por exemplo, visa maximizar a área de troca térmica e minimizar o espaço ocupado, porém não pode ser utilizado com fluidos muito viscosos (REF).</p>
+					<p class="txtGeral">Dimensionar um trocador de calor é determinar a área de troca térmica necessária para uma situação específica de operação. Desse modo, são conhecidas, no mínimo, temperaturas de entrada (fluido frio e fluido quente) e coeficiente global de transferência de calor (U). O conhecimento ou não de mais informações implica na escolha do método de cálculo entre os dois disponíveis. São eles: diferença de temperatura média (&Delta;T<sub>m</sub>) e efetividade-nut (COULSON, 2011).</p>
+					<p class="txtGeral">O método da diferença de temperatura média necessita do conhecimento das temperaturas de entrada e saída dos fluidos quente e frio, junto da taxa de transferência de calor (ÇENGEL, 2012). Esta pode ser postulada como critério de projeto ou obtida por balanço de energia simples, através da Equação 1.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-taxa-vazao.png" width="250px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>q = taxa de transferência de calor (W);</br>m = vazão mássica do fluido (kg s<sup>-1</sup>);</br>C<sub>p</sub> = capacidade calorífica do fluido (J kg<sup>-1</sup> °C<sup>-1</sup>);</br>&Delta;T = diferença de temperatura esperimentada pelo fluido (°C).</p>
+					<p class="txtGeral margemTitulo">Com os valores disponíveis, é calculada a temperatura média do equipamento, que é função do tipo de configuração do equipamento, que pode ser contracorrente, paralelo, múltiplos passes (casca e tubo) ou fluxo cruzado (INCROPERA, 2012). No primeiro caso, &Delta;T<sub>m</sub> é obtida pela equação 2 e para os outros pela Equação 3. Porém, nas configurações múltiplos passes e fluxo cruzado, é preciso determinar o fator de correção, um multiplicador da diferença de temperatura média (varia entre 0 e 1), obtido por gráficos disponíveis na internet ou em literaturá própria sobre trocadores de calor, por exemplo Çengel, 2012.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-dtln-paralelo.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-dtln-contracorrente.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>&Delta;T<sub>m</sub> = diferença de temperatura média (°C);</br>T<sub>qe</sub> = temperatura de entrada do fluido frio (°C);</br>T<sub>fe</sub> = temperatura de entrada do fluido frio (°C);</br>T<sub>qs</sub> = temperatura de saída do fluido quente (°C);</br>T<sub>fs</sub> = temperatura de saída do fluido frio (°C).</p>
+					<p class="txtGeral margemTitulo">Determinada a diferença de temperatura média, esta se torna &Delta;T da Equação 4, utilizada para o cálculo da área de troca térmica necessária. Com este valor, escolhe-se um trocador de calor em algum frabricante que atenda as configurações desejadas.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-taxa-u.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 4</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>U = coeficiente global de troca térmica (W m<sup>-2</sup> °C<sup>-1</sup>);</br>A = área de troca térmica (m<sup>2</sup>).</p>
+					<p class="txtGeral margemTitulo">O dimensionamento através do método efetividade-nut é fundamentado em dois parâmetros distintos, a efetividade e o número de unidades de transferência (nut), com a necessidade de serem conhecidos, além dos parâmetros comuns aos dois métodos, as vazões e capacidades caloríficas de ambos os fluidos e mais um critério de projeto, área ou taxa de transferência de calor (INCROPERA, 2008). Um pode ser obtido em função do outro, de acordo com uma equação específica para cada tipo de configuração, as mesmas discutidas anteriormente. Tais equações podem ser encontradas em livros específicos sobre transferência de calor, a citar Çengel, 2012.</p>
+					<p class="txtGeral">Define-se efetividade como a razão entre a taxa real de transferência de calor e a taxa máxima de transferência de calor, em que esta é obtida a partir da diferença de temperatura máxima (&Delta;T<sub>max</sub>), que corresponde a diferença entre temperaturas de entrada, e a capacitância térmica mínima (C<sub>min</sub>) entre os fluidos (INCROPERA, 2008). Com a efetividade, encontra-se o número de unidades de transferência via equação própria. A Figura 2 representa um esquema do procedimento descrito para um sistema genérico.</p>
+					<div class="text-center"><img src="figuras/esquema-efetividade.png" class="margemElemento" width="700px"></img></div>
+					<p class="txtGeral text-center">Figura 2. Esquema do processo de determinação da efetividade.</p>
+					<p class="txtGeral margemTitulo">Com a efetividade, calcula-se nut segundo uma equação própria para o tipo de configuração. Finaliza-se o dimensionamento através da Equação 5, que permite encontrar a área de troca térmica.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-nut.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 5</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>NUT = número de unidades de transferência;</br>C<sub>min</sub> = capacitância térmica mínima do sistema (J °C<sup>-1</sup> s<sup>-1</sup>).</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção para explicação do modo de resolução -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="2">2. ESTRATÉGIA DE RESOLUÇÃO UTILIZADA</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Não existem grandes estratégias no algoritmo de dimensionamento de trocadores de calor. A resolução computacional segue o mesmo procedimento da resolução manual para os dois métodos, diferença de temperatura média e efetividade-nut. O melhor incremento de Zero é no fato de abstração que incorpora. Ao usuário, basta informar os parâmetros do sistema e o tipo de configuração, todas as particularidades de cálculo são identificadas e resovidas internamente.</p>
+					<p class="txtGeral">A abstração é possível porque o algoritmo responsável pelo dimensionamento desennvolve um caminho diferente para cada critério de cálculo escolhido (área, coeficiente global de transferência de calor, taxa ou temperatura). Essa abordagem é parecida com a da "Máquina de Estados", uma estratégia computacional que faz com que o algoritmo identifique o problema e de acordo com as características do mesmo (o seu estado), faça uma sequência de ações permitidas. Assim, erros de cálculo são minimizados, pois cada tipo de cálculo é avaliado e executado de forma independente.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção do procedimento experimental -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL POSSÍVEL</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Existem três procedimentos disponíveis na seção de trocadores de calor: método da diferença de temperatura média, método da efetividade-nut e avaliação de experimento com trocador de calor a placas. Este foi desenvolvido para auxílio em experimentos com módulos educacionais de trocadores de calor, mais específico, de placas.</p>
+					<p class="txtGeral">O experimento consiste na alteração da vazão de entrada dos fluidos quente ou frio, com a medição das temperaturas de entrada e saída de ambos. A partir dos dados de capacidade calorífica e o tipo de configuração (paralelo ou contracorrente), o programa calcula a taxa de transferência de calor, a diferença de temperatura média ou efetividade (escolha do usuário) e o coeficiente global de transferência de calor. Esses valores são exibidos em uma tabela e também desenhados em gráficos, exibidos na tela.</p>
+					<p class="txtGeral">Utilizar Zero durante o procedimento experimental permite uma avaliação rápida e completa sobre o comportamento do sistema, principalmente por uma outra funcionalidade existente, que é a possibilidade de escolher o fluido base para determiniação da taxa de transferência de calor, ou seja, se a taxa será calculada de acordo com a diferença de temperatura do fluido frio ou do fluido quente. Isso possibilita avaliar erros na medição de temperatura ou perda térmica, pois em condições ideais todo o calor cedido pelo fluido quente é absorvido pelo fluido frio. Caso algum desses problemas ocorram, valores conflitantes serão resultado para cada método, principalmente a efetividade-nut, que pode retornar respostas com o valor "NaN", o que indica alguma excessão teórica, como por exemplo a efetividade maior que a unidade.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção de explicação do modo de utilização -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="4">4. MODO DE UTILIZAÇÃO DOS PROCEDIMENTOS DISPONÍVEIS</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Os dois primeiros procedimentos disponíveis são de grande simplicidade, o usuário preenche um formuário com as características do sistema nas unidades informadas entre parênteses, escolhe um tipo de configuração e, quando disponível, escolhe um tipo de dimensionamento entre os disponíveis. Após inserir todos os dados, a resolução é escrita na tela logo depois de clicar no botão no final do formulário.</p>
+					<p class="txtGeral">Para o procedimento de avaliação de dados experimentais, além do formulário para definição do sistema, existe um espaço semelhante ao das planilhas eletrônicas, devidamente rotulados, utilizados para a inserção dos resultados obtidos no processo experimental. Assim que preenchidos, clicar no botão "Executar Cálculos" inicia o processo de cálculo e desenho do gráfico, que serão exibidos na tela.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção das referências consultadas -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="5">5. REFERÊNCIAS</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">ÇENGEL, Yunus A. Tranferência de calor e massa: umas abordagem prática. São Paulo: AMGH, 2012. 902 p. ISBN 9788580551273.</p>
+					<p class="txtGeral">COULSON, J. M.; RICHARDSON, J.F. Chemical engineering: J.F. Richardson, J.M. Coulson. New York: Pergamon Press, 2011, ISBN 0080379508.</p>
+					<p class="txtGeral">INCROPERA, Frank P. Fundamentos de transferência de calor e de massa. Rio de Janeiro: LTC, 2008, 643 p. ISBN 9788521615842.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+	
+	<script>
+	
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000; 
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+	
+	</script>
+
+</html>

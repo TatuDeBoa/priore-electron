@@ -1,0 +1,456 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Breve introdução sobre as funções extras -->
+		<div class="container margemInicial">
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtTitulo1">FUNÇÕES EXTRAS - PROCEDIMENTOS NUMÉRICOS</p>
+					<p class="txtGeral">A maioria dos procedimentos numéricos genéricos estão disponíveis abaixo. Algumas rotinas utilizam um procedimento específico, que na verdade é a modificação de um dos procedimentos existentes aqui. Também há ferramentas estatísticas, como a regressão linear e a regressão linear múltipla. Basta escolher o que deseja fazer e clicar em "Exibir", localizado no lado direito do nome da função. Lembre-se de utilizar a vírgula como separador decimal quando for informar um valor ao programa.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção de Interpolação Polinomial pelo método de Newton -->
+		<div class="container bordaSecao">
+			<div class="row">
+				<div class="col-8">
+					<p class="txtTitulo2">INTERPOLAÇÃO POLINOMIAL - POLINÔMIO INTERPOLADOR DE NEWTON</p>
+				</div>
+				<div class="col-4 text-right">
+					<p><span onclick="exibirDivIntPol()" id="linkintpol" class="txtLink">Exibir</span></p>
+				</div>
+			</div>
+			<!-- Formulário de entrada de dados -->
+			<div id="divintpol" class="row oculta">
+				<p class="txtFormulario margemElemento">No espaço abaixo, informe os valores de uma função f(x) em seus respectivos valores de x, estes na segunda coluna e aqueles na primeira. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados. Caso deseje também estimar valores de f(x) ou da derivada da mesma em um x qualquer, basta informar o respectivo x nos espaços indicados abaixo da tabela.</p>
+				<div class="centralizar"><div id="tabintpol" class="margemElemento"></div></div>
+				<div class="form-group form-inline txtFormulario">
+					<div class="col-sm-6"><p>Estimar valor de f(x) em:</p></div>
+					<div class="col-sm-6"><input type="text" class="form-control dadosFormulario xintpol"></div>
+				</div>
+				<div class="form-group form-inline txtFormulario">
+					<div class="col-sm-6"><p>Estimar derivada de f(x) em:</p></div>
+					<div class="col-sm-6"><input type="text" class="form-control dadosFormulario xlinhaintpol"></div>
+				</div>
+				<div class="centralizar"><button class="btn btnAcao margemElemento btnIntPol">Executar Cálculo</button></div>
+				<div class="resIntPol txtResposta2 margemElemento"><p class="resultadointpol"></p></div>
+			</div>
+		</div>
+
+		<!-- Seção de Integração Numérica -->
+		<div class="container bordaSecao">
+			<div class="row">
+				<div class="col-8">
+					<p class="txtTitulo2">INTEGRAÇÃO NUMÉRICA A PARTIR DE CONJUNTO DE PONTOS</p>
+				</div>
+				<div class="col-4 text-right">
+					<p><span onclick="exibirDivIntNum()" id="linkintnum" class="txtLink">Exibir</span></p>
+				</div>
+			</div>
+			<!-- Formulário de entrada de dados -->
+			<div id="divintnum" class="row oculta">
+				<div class="form-group form-inline txtFormulario">
+					<div class="col-sm-6"><p>Método de integração</p></div>
+					<div class="col-sm-6">
+						<select class="form-control dadosFormulario" id="metodointnum">
+							<option value="trapézios">Regra dos Trapézios</option>
+							<option value="1/3 de Simpson">Regra 1/3 de Simpson</option>
+							<option value="3/8 de Simpson">Regra 3/8 de Simpson</option>
+						</select>
+					</div>
+				</div>
+				<p class="txtFormulario margemElemento">No espaço abaixo, informe os valores de uma função f(x) em seus respectivos valores de x, estes na segunda coluna e aqueles na primeira. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados.</p>
+				<div class="centralizar"><div id="tabintnum" class="margemElemento"></div></div>
+				<div class="centralizar"><button class="btn btnAcao margemElemento btnIntNum">Calcular</button></div>
+				<div class="resIntNum margemElemento"><p class="resultadointnum"></p></div>
+			</div>
+		</div>
+
+		<!-- Seção de Regressão Linear -->
+		<div class="container bordaSecao">
+			<div class="row">
+				<div class="col-8">
+					<p class="txtTitulo2">REGRESSÃO LINEAR SIMPLES</p>
+				</div>
+				<div class="col-4 text-right">
+					<p><span onclick="exibirDivRegLin()" id="linkreglin" class="txtLink">Exibir</span></p>
+				</div>
+			</div>
+			<!-- Formulário de entrada de dados -->
+			<div id="divreglin" class="row oculta">
+				<div class="txtFormulario form-inline">
+					<div class="col-sm-6"><p>No espaço abaixo, informe valores de x e y, estes na primeira coluna e aqueles na segunda coluna. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados. Ao lado está a equação de regressão utilizada neste programa.</p></div>
+					<div class="col-sm-6"><div class="centralizar"><img class="margemElemento" width="300px" src="figuras/equacao-reta.png"></img></div></div>
+				</div>
+				<div class="centralizar"><div id="tabreglin" class="margemElemento"></div></div>
+				<div class="centralizar"><button class="btn btnAcao margemElemento btnRegLin">Executar Cálculos</button></div>
+				<div class="resRegLin txtResposta2"><div class="resultadoreglin"></div></div>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+		<!-- Modal da barra de progresso -->
+		<div class="modal fade" id="progresso">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p class="txtGeral">Progresso do Cálculo</p>
+						<button type="button" class="close" data-dismiss="modal">&times</button>
+					</div>
+					<div class="modal-body">
+						<div class="progress">
+							<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 70%"></div>
+						</div>
+						<p id="resProgress" class="txtProgress"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+	<script>
+		// Declaração das instâncias utilizadas nos cálculos
+		var grafico = new GraficoCanvas();
+		var intpol = new PolinomioInterpolador();
+		var reg = new Regressor();
+
+		// Declaração de instância do handsontable para interpolação polinomial
+		var tabela = document.getElementById("tabintpol");
+		var dadosIntPol = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 300,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["f(x)", "x"],
+			columns: [0, 0],
+			minSpareRows: 1
+		});
+
+		// Declaração da instância do handsontable para integração numérica
+		tabela = document.getElementById("tabintnum");
+		var dadosIntNum = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 300,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["f(x)", "x"],
+			columns: [0, 0],
+			minSpareRows: 1
+		});
+
+		// Declaração da instância do handsontable para regressão linear
+		tabela = document.getElementById("tabreglin");
+		var dadosRegLin = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 300,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["y", "x"],
+			columns: [0, 0],
+			minSpareRows: 1
+		});
+
+		// Ação de clique do botão de regressão linear
+		$(".btnRegLin").click(function() {
+			// Declaração das variáveis utilizadas
+			var dados = [], x = [], y = [], a0, a1, r2, dimensao = 600;
+			receberDados(dados, dadosRegLin);
+
+			//Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadoreglin").remove();
+				$(".resRegLin").append('<p class="resultadoreglin">Não foram encontrados valores suficientes para fazer a regressão, por favor verifique as informações inseridas.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			$("#progresso").modal();
+			animacao("barra", "resProgress");
+
+			// Execução dos cálculos
+			for(var i = 0; i < dados.length; i++) {
+				x[i] = dados[i][1];
+				y[i] = dados[i][0];
+			}
+			reg.definirValores(x, y);
+			reg.reglin();
+			a0 = padraoBr(reg.acessarEstimadores()[0], 5) + " &plusmn; " + padraoBr(reg.acessarIntervalo()[0], 5);
+			a1 = padraoBr(reg.acessarEstimadores()[1], 5) + " &plusmn; " + padraoBr(reg.acessarIntervalo()[1], 5);
+			r2 = reg.acessarR2().toFixed(6).replace(".", ",");
+
+			// Prepara as respostas para exibição
+			$(".resultadoreglin").remove();
+			$(".resRegLin").append('<div class="resultadoreglin centralizar col-sm-12"><p>Resultados para os estimadores da equação linear (&plusmn; erro padrão estimado) e coeficiente de determinação (r<sup>2</sup>).</p>');
+			$(".resRegLin").append('<div class="resultadoreglin centralizar col-sm-12"><table class="margemElemento tabela"><tr><th class="celula">a<sub>0</sub></th><th class="celula">a<sub>1</sub></th><th class="celula">r<sup>2</sup></th></tr><tr><td class="celula">' + a0 + '</td><td class="celula">' + a1 + '</td><td class="celula">' + r2 + '</td></tr></table></div>');
+
+			// Exibição do gráfico de pontos
+			$(".resRegLin").append('<div class="resultadoreglin centralizar"><canvas width="' + dimensao + 'px" height="' + dimensao + 'px" id="grafRegLinPont" class="margemElemento"></canvas></div>');
+			grafico.definirElemento("grafRegLinPont");
+			grafico.definirDimensoes(dimensao, dimensao);
+			grafico.alteraCasasDecimais(3);
+			grafico.apagar();
+			grafico.definirPontos(x, y);
+			grafico.limitesPorPontos();
+			grafico.desenharEixos();
+			grafico.desenharGraficoPontos();
+			grafico.rotularEixoX("X");
+			grafico.rotularEixoY("Y");
+			grafico.rotularGrafico("Valores de Y em função de X", 0.3);
+
+			// Exibição do gráfico de resíduos
+			$(".resRegLin").append('<div class="resultadoreglin centralizar"><canvas width="' + dimensao + 'px" height="' + dimensao + 'px" id="grafRegLinRes" class="margemElemento"></canvas></div>');
+			grafico.definirElemento("grafRegLinRes");
+			grafico.apagar();
+			grafico.definirPontos(x, reg.acessarResiduos());
+			grafico.limitesPorPontos();
+			grafico.desenharEixos();
+			grafico.desenharGraficoPontos();
+			grafico.rotularEixoX("X");
+			grafico.rotularEixoY("Resíduos");
+			grafico.rotularGrafico("Resíduos em função de X", 0.3);
+		});
+
+		// Ação de clique do botão de integração numérica
+		$(".btnIntNum").click(function() {
+			// Declaração de variáveis necessárias
+			var dados = [], x = [], y = [], metodo = $("#metodointnum").val(), integral;
+			receberDados(dados, dadosIntNum);
+
+			// Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadointnum").remove();
+				$(".resIntNum").append('<p class="resultadointnum">Não foram encontrados valores suficientes para realizar a integração.</p>');
+				return;
+			}
+			if(metodo == "1/3 de Simpson" && dados.length % 2 == 0) {
+				$(".resultadointnum").remove();
+				$(".resIntNum").append('<p class="resultadointnum">Para executar a integração pelo método 1/3 de Simpson é preciso que o número de pontos informados seja ímpar. Por favor, reveja os pontos ou escolha outro método.</p>');
+				return;
+			}
+			if(metodo == "3/8 de Simpson" && (dados.length - 1) % 3 != 0) {
+				$(".resultadointnum").remove();
+				$(".resIntNum").append('<p class="resultadointnum">Para executar a integração pelo método 3/8 de Simpson é preciso que o número de pontos menos um serja múltiplo de 3. Por favor, reveja os pontos ou escolha outro método.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			$("#progresso").modal();
+			animacao("barra", "resProgress");
+
+			// Executa os cálculos
+			for(var i = 0; i < dados.length; i++) {
+				x[i] = dados[i][1];
+				y[i] = dados[i][0];
+			}
+			if(metodo == "trapézios")
+				integral = Calculo.integrartrap(x, y).toString().replace(".", ",");
+			if(metodo == "1/3 de Simpson")
+				integral = Calculo.integrar3simpson(x, y).toString().replace(".", ",");
+			if(metodo == "3/8 de Simpson")
+				integral = Calculo.integrar8simpson(x, y).toString().replace(".", ",");
+
+			// Prepara a resposta
+			$(".resultadointnum").remove();
+			$(".resIntNum").append('<p class="resultadointnum">A integração pelo método ' + metodo + ' encontrou o valor de ' + integral + '.</p>');
+		});
+
+		// Ação de clique do botão de interpolação polinomial
+		$(".btnIntPol").click(function() {
+			// Declaração de variáveis necessárias
+			var dados = [], valoresX = [], valoresY = [], x = $(".xintpol").val(), xlinha = $(".xlinhaintpol").val(), estimarFuncao = false, estimarDerivada = false, funcao, derivada, dimensao = 600, intervalo = 600, limInf, limSup, passo, plotX = [], plotY = [];
+			receberDados(dados, dadosIntPol);
+
+			//Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadointpol").remove();
+				$(".resIntPol").append('<p class="resultadointpol">Não foram encontrados valores suficientes para realizar a interpolação polinomial, por favor revise os dados informados.</p>');
+				return;
+			}
+			if(x != "" && !valNum(x)) {
+				$(".resultadointpol").remove();
+				$(".resIntPol").append('<p class="resultadointpol">Foi informado um dado não numérico para estimar f(x), reveja por favor.</p>');
+				return;
+			}
+			if(xlinha != "" && !valNum(xlinha)) {
+				$(".resultadointpol").remove();
+				$(".resIntPol").append('<p class="resultadointpol">Foi informado um dado não numérico para estimar a derivada de f(x), reveja por favor.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			$("#progresso").modal();
+			animacao("barra", "resProgress");
+
+			// Realiza os cálculos
+			if(x != "") {
+				estimarFuncao = true;
+				x = interpretar(x);
+			}
+			if(xlinha != "") {
+				estimarDerivada = true;
+				xlinha = interpretar(xlinha);
+			}
+			for(var i = 0; i < dados.length; i++) {
+				valoresX[i] = dados[i][1];
+				valoresY[i] = dados[i][0];
+			}
+			intpol.definirValores(valoresX, valoresY);
+			intpol.montarPolinomio();
+			if(estimarFuncao)
+				funcao = intpol.estimarValorEm(x).toString().replace(".", ",");
+			if(estimarDerivada)
+				derivada = intpol.estimarDerivadaEm(xlinha).toString().replace(".", ",");
+
+			// Prepara a resposta para exibição
+			$(".resultadointpol").remove();
+			var str = "Para os dados informados, foi encontrado o sequinte polinômio interpolardor de Newton: " + intpol.acessarString() + ".";
+			$(".resIntPol").append('<p class="resultadointpol">' + str + '</p>');
+			if(estimarFuncao) {
+				$(".resIntPol").append('<p class="resultadointpol">O valor estimado para função em ' + x.toString().replace(".", ",") + ' é ' + funcao + '.</p>');
+			}
+			if(estimarDerivada) {
+				$(".resIntPol").append('<p class="resultadointpol">O valor estimado para derivada da função em ' + xlinha.toString().replace(".", ",") + ' é ' + derivada + '.</p>');
+			}
+			$(".resIntPol").append('<div class="centralizar resultadointpol"><canvas id="grafIntPol" class="margemElemento" width="' + dimensao + 'px" height="' + dimensao + 'px"></canvas></div>');
+
+			// Prepara os pontos para desenhar o polinômio interpolador
+			limInf = menorValor(valoresX);
+			limSup = maiorValor(valoresX);
+			passo = (limSup - limInf) / intervalo;
+			for(var i = 0; i <= intervalo; i++) {
+				plotX[i] = limInf + i * passo;
+				plotY[i] = intpol.estimarValorEm(plotX[i]);
+			}
+
+			// Desenha o gráfico com os pontos e o polinômio interpolador
+			grafico.definirElemento("grafIntPol");
+			grafico.definirDimensoes(dimensao, dimensao);
+			grafico.alteraCasasDecimais(3);
+			grafico.apagar();
+			grafico.definirPontos(valoresX, valoresY);
+			grafico.limitesPorPontos();
+			grafico.desenharEixos();
+			grafico.desenharGraficoPontos();
+			grafico.definirPontos(plotX, plotY);
+			grafico.desenharGraficoLinhas();
+			grafico.rotularEixoX("X");
+			grafico.rotularEixoY("f(X)");
+			grafico.rotularGrafico("Pontos e polinômio interpolador", 0.3);
+		});
+
+		function exibirDivIntPol() {
+			var div = document.getElementById("divintpol");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				document.getElementById("linkintpol").innerHTML = "Exibir";
+			} else {
+				div.style.display = "block";
+				document.getElementById("linkintpol").innerHTML = "Ocultar";
+			}
+		}
+
+		function exibirDivIntNum() {
+			var div = document.getElementById("divintnum");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				document.getElementById("linkintnum").innerHTML = "Exibir";
+			} else {
+				div.style.display = "block";
+				document.getElementById("linkintnum").innerHTML = "Ocultar";
+			}
+		}
+
+		function exibirDivRegLin() {
+			var div = document.getElementById("divreglin");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				document.getElementById("linkreglin").innerHTML = "Exibir";
+			} else {
+				div.style.display = "block";
+				document.getElementById("linkreglin").innerHTML = "Ocultar";
+			}
+		}
+
+	</script>
+
+</html>

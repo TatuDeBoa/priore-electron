@@ -1,0 +1,645 @@
+<!DOCTYPE>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+        <!-- JQuery e Bootstrap -->
+        <script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+        <!-- Arquivos próprios -->
+        <link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+        <script src="funcoes-js/Calculo.js"></script>
+        <script src="funcoes-js/funcoes-gerais.js"></script>
+        <script src="funcoes-js/OperacoesUnitarias.js"></script>
+        <script src="funcoes-js/Termodinamica.js"></script>
+        <script src="funcoes-js/conversor.js"></script>
+        <script src="funcoes-js/GraficosCanvas.js"></script>
+        <!-- Arquivos de terceiros -->
+        <script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+        <link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+	
+		<!-- Seção que envolve todo o conteúdo da tela -->
+		<div class="section">
+		
+			<!-- Seção para método UNIFAC -->
+			<div class="section">
+				<div class="container animacaoPagina margemInicial">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">MÉTODO UNIFAC - COEFICIENTE DE ATIVIDADE</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível predizer os coeficientes de atividade dos componentes de um sistema qualquer, através do procedimento UNIFAC, baseado na teoria de grupos. Quando informar valores numéricos, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p class="text-center">Temperatura do sistema</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario tempunifac">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidadesUnifac">
+											<option value="K">K - Kelvin</option>
+											<option value="°C">°C - Celsius</option>
+											<option value="°R">°R - Rankine</option>
+											<option value="°F">°F - Fahrenheit</option>
+										</select>
+									</div>
+								</div>
+								
+								
+							</div>
+							<div class="col-md-6">
+								<p class="txtFormularioGeral">Utilize o formulário abaixo para definir o sistema. Escolha um componentes na lista e depois informe a fração molar dele. Quando finalizar, clique no botão "Adicionar" e os dados que informou serão exibidos em tela, junto de um botão para excluí-los, caso desejar.</p>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior tabela">
+							<div class="col-md-6 margemSuperior">
+								<div class="form-group form-inline">
+									<div class="col-md-6"><select class="form-control dadosFormulario" id="listaUnifac"></select></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario fracunifac"></div>
+								</div>
+								<div class="text-right"><button class="btn btnSecundario margemElemento btAddUnifac"><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar</button></div>
+							</div>
+							<div class="col-md-6 margemSuperior" id="adicaoUnifac">
+								<p class="text-center">Componentes Adicionados</p>
+							</div>
+						</div>
+						<div class="col-sm-12 margemSuperior paddingInferior">
+							<div id="barra1" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+							<button class="btn btnAcao btCalcUnifac margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+							<div id="resUnifac" class="txtResposta2 margemSuperior"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção do cálculo de ponto de bolha e ponto de orvalho -->
+			<div class="section fundo2">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">PONTO DE BOLHA E PONTO DE ORVALHO</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível calcular temperatura ou pressão de orvalho ou de bolha, através de algoritmos iterativos que utilizam a Equação de Antoine para pressão de saturação e UNIFAC para coeficiente de atividade. Quando digitar valores numéricos, atente-se para utilizar a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="col-sm-12 margemInferior">
+							<p class="txtFormularioGeral">Utilize o formulário abaixo para definir o sistema para o qual deseja efetuar os cálculos de equilíbrio. Selecione um componente da lista e informe a fração molar do mesmo, depois clique em "Adicionar". Os dados serão exibidos em tela com um botão para a exclusão, caso seja desejado.</p>
+						</div>
+						<div class="form-inline txtFormularioGeral tabela">
+							<div class="col-md-6 margemSuperior">
+								<div class="form-inline">
+									<div class="col-md-6"><select class="form-control dadosFormulario" id="listaBolOrv"></select></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario fracbolorv"></div>
+								</div>
+								<div class="text-right"><button class="btn btnSecundario margemElemento btAddBolOrv"><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar</button></div>
+							</div>
+							<div class="col-md-6 margemSuperior" id="adicaoBolOrv">
+								<p class="text-center">Componentes Adicionados</p>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemInferior margemSuperior">
+							<div class="col-md-6">
+								<p>Tipo de cálculo</p>
+								<select class="form-control dadosFormulario" id="listaTipoCalcBolOrv" onchange="alterarBolOrv()">
+									<option value="bolp">Pressão de Bolha</option>
+									<option value="bolt">Temperatura de Bolha</option>
+									<option value="orvp">Pressão de Orvalho</option>
+									<option value="orvt">Temperatura de Orvalho</option>
+								</select>
+							</div>
+							<div class="col-md-6 visivel" id="divTempBolOrv">
+								<p class="text-center">Temperatura do Sistema</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario tempBolOrv">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidadesTempBolOrv">
+											<option value="K">K - Kelvin</option>
+											<option value="°C">°C - Celsius</option>
+											<option value="°R">°R - Rankine</option>
+											<option value="°F">°F - Fahrenheit</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divPressBolOrv">
+								<p class="text-center">Pressão do Sistema</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario pressBolOrv">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidadesPressBolOrv">
+											<option value="kPa">kPa - Quilo Pascal</option>
+											<option value="Pa">Pa - Pascal</option>
+											<option value="atm">atm - Atmosfera</option>
+											<option value="bar">bar - Bar</option>
+											<option value="kgf/cm2">kgf/cm2 - Quilograma-força por Centímetro Quadrado</option>
+											<option value="psi">psi - Libra-força por Polegada Quadrada</option>
+											<option value="mmHg">mmHg - Milímetro de Mercúrio</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 paddingInferior">
+							<div id="barra2" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+							<div class="centralizar"><button class="btn btnAcao btn25 btCalcBolOrv margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button></div>
+							<div id="resBolOrv" class="txtResposta2 margemSuperior"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção de desenho de diagramas de equilíbrio -->
+			<div class="section">
+				<div class="container animacaoPagina fundo1">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">DIAGRAMA DE EQUILÍBRIO BINÁRIO</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível criar diagramas de equilíbrios para misturas binárias, através dos algoritmos de pontos de bolha e de orvalho anteriores. Escolha os componentes nas listas próprias e será gerado o gráfico, que toma como base a substância informada como "componente 1". Quando informar valores numéricos, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Componente 1</p>
+								<select class="form-control dadosFormulario" id="listaDiagrama1"></select>
+							</div>
+							<div class="col-md-6">
+								<p>Componente 2</p>
+								<select class="form-control dadosFormulario" id="listaDiagrama2"></select>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Tipo de Gráfico</p>
+								<select id="listaTipoDiagrama" class="form-control dadosFormulario" onchange="alterarCriterioDiagrama()">
+									<option value="pvsx">Pressão versus Fração Molar de Líquido</option>
+									<option value="tvsx">Temperatura versus Fração Molar de Líquido</option>
+									<option value="yvsx">Fração Molar de Gás versus Fração Molar de Líquido</option>
+								</select>
+							</div>
+							<div class="col-md-6 visivel" id="divTempDiagrama">
+								<p class="text-center">Temperatura do Sistema</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario tempDiagrama">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidadesTempDiagrama">
+											<option value="K">K - Kelvin</option>
+											<option value="°C">°C - Celsius</option>
+											<option value="°R">°R - Rankine</option>
+											<option value="°F">°F - Fahrenheit</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 oculta" id="divPressDiagrama">
+								<p class="text-center">Pressão do Sistema</p>
+								<div class="form-inline">
+									<div class="col-md-6">
+										<input type="text" class="form-control dadosFormulario pressDiagrama">
+									</div>
+									<div class="col-md-6">
+										<select class="form-control dadosFormulario" id="listaUnidadesPressDiagrama">
+											<option value="kPa">kPa - Quilo Pascal</option>
+											<option value="Pa">Pa - Pascal</option>
+											<option value="atm">atm - Atmosfera</option>
+											<option value="bar">bar - Bar</option>
+											<option value="kgf/cm2">kgf/cm2 - Quilograma-força por Centímetro Quadrado</option>
+											<option value="psi">psi - Libra-força por Polegada Quadrada</option>
+											<option value="mmHg">mmHg - Milímetro de Mercúrio</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="txtFormularioGeral margemSuperior" id="divptvsx">
+							<div class="form-inline">
+								<div class="col-md-6">
+									<p>Cor para Linha de Bolha</p>
+									<select class="form-control dadosFormulario" id="listaCorBolha">
+										<option value="#000000" style="color: #000000;">Preto</option>
+										<option value="#f50606" style="color: #f50606;">Vermelho</option>
+										<option value="#f5ee06" style="color: #f5ee06;">Amarelho</option>
+										<option value="#4cf506" style="color: #4cf506;">Verde</option>
+										<option value="#1d02ff" style="color: #1d02ff;">Azul Escuro</option>
+										<option value="#02e8ff" style="color: #02e8ff;">Azul Claro</option>
+										<option value="#f506c2" style="color: #f506c2;">Rosa</option>
+										<option value="#f57f06" style="color: #f57f06;">Laranja</option>
+										<option value="#880c5c" style="color: #880c5c;">Roxo</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<p>Cor para Linha de Orvalho</p>
+									<select class="form-control dadosFormulario" id="listaCorOrvalho">
+										<option value="#000000" style="color: #000000;">Preto</option>
+										<option value="#f50606" style="color: #f50606;">Vermelho</option>
+										<option value="#f5ee06" style="color: #f5ee06;">Amarelho</option>
+										<option value="#4cf506" style="color: #4cf506;">Verde</option>
+										<option value="#1d02ff" style="color: #1d02ff;">Azul Escuro</option>
+										<option value="#02e8ff" style="color: #02e8ff;">Azul Claro</option>
+										<option value="#f506c2" style="color: #f506c2;">Rosa</option>
+										<option value="#f57f06" style="color: #f57f06;">Laranja</option>
+										<option value="#880c5c" style="color: #880c5c;">Roxo</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 margemSuperior margemInferior">
+							<div id="barra3" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+							<button class="btn btnAcao margemSuperior" id="btDesenharDiagrama"><i class="fa fa-area-chart" aria-hidden="true"></i> Desenhar Gráfico</button>
+							<div class="txtResposta2 margemSuperior" id="resDiagrama"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!-- Margem final da página -->
+        <div class="fundo"></div>
+
+    </body>
+
+    <script>
+
+        // Intâncias necessárias para o Programa
+        var controleUnifac = { listaId: [], listaSubs: [], listaFrac: [], indc: 0 };
+        var controleBolOrv = { listaId: [], listaSubs: [], listaFrac: [], indc: -1 };
+        var grafico = new GraficoCanvas();
+        var elv = new ELV();
+        var unifac = new Unifac();
+        unifac.carregarDados();
+        unifac.carregarDadosDeInteracao();
+        var antoine = new Antoine();
+        antoine.carregarDados();
+        var subsUnifac = unifac.acessarCadastradas();
+        var subsAntoine = antoine.acessarCadastradas();
+        var conjunto = inter(subsUnifac, subsAntoine);
+
+        // Carrega os dados lidos no txt para a lista de seleção do usuário no método unifac
+        for(var i = 0; i < subsUnifac.length; i++) {
+            $("#listaUnifac").append('<option value="' + subsUnifac[i] + '">' + subsUnifac[i] + '</option>');
+        }
+
+        // Carrega os dados das substâncias disponíveis para cálculo de ponto de bolha e orvalho
+        // É o conjunto "and" entre os disponíveis em antoine e UNIFAC
+        for(var i = 0; i < conjunto.length; i++) {
+            $("#listaBolOrv").append('<option value="' + conjunto[i] + '">' + conjunto[i] + '</option>');
+			$("#listaDiagrama1").append('<option value="' + conjunto[i] + '">' + conjunto[i] + '</option>');
+			$("#listaDiagrama2").append('<option value="' + conjunto[i] + '">' + conjunto[i] + '</option>');
+        }
+		
+		// Ação de clique do botão de desenho do diagramas
+		$("#btDesenharDiagrama").click(function() {
+			// Declaração de variáveis
+			var temperatura = $(".tempDiagrama").val(), unidTemp = $("#listaUnidadesTempDiagrama").val(), pressao = $(".pressDiagrama").val(), unidPress = $("#listaUnidadesPressDiagrama").val(), componente1 = $("#listaDiagrama1").val(), componente2 = $("#listaDiagrama2").val(), tipoDiagrama = $("#listaTipoDiagrama").val(), cor2 = $("#listaCorOrvalho").val(), cor1 = $("#listaCorBolha").val(), dimensao = 700, intervalo = 100, limInf = 0, limSup = 1, passo, valoresX = [], valoresY1 = [], valoresY2 = [], rotuloY = "", titulo = "", dadosCurva1 = [], dadosCurva2 = [], cores = [], tituloY, rotulos = [];
+			
+			// Estrutura de controle de erros
+			if(componente1 == componente2) {
+				$(".resdiagrama").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$("#resDiagrama").append('<p class="resdiagrama resErro">Os dois componentes indicados são iguais, por favor revise.</p>');
+				return;
+			}
+			if((tipoDiagrama == "pvsx" || tipoDiagrama == "yvsx") && (!valNum(temperatura) || convTemperatura(padraoProg(temperatura), unidTemp, "K") <= 0)) {
+				$(".resdiagrama").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$("#resDiagrama").append('<p class="resdiagrama resErro">Valor inválido encontrado para temperatura, por favor revise o dado informado.</p>');
+				return;
+			}
+			if(tipoDiagrama == "tvsx" && !valNumPos(pressao)) {
+				$(".resdiagrama").remove();
+				$('#barra3').removeClass('visivel');
+				$('#barra3').addClass('oculta');
+				$("#resDiagrama").append('<p class="resdiagrama resErro">Valor inválido encontrado para pressão, por favor revise o dado informado.</p>');
+				return;
+			}
+			
+			// Chama a animação
+			animacao("barra3");
+			$('#barra3').removeClass('oculta');
+			$('#barra3').addClass('visivel text-center');
+			
+			// Prepara os pontos e os rótulos
+			if(tipoDiagrama == "yvsx") { cor1 = "#656560"; cor2 = "#000000"; }
+			passo = (limSup - limInf) / intervalo;
+			for(var i = 0; i <= intervalo; i++) {
+				var x = limInf + i * passo;
+				switch(tipoDiagrama) {
+					case "pvsx":
+						dadosCurva1.push([x, elv.bolp(convTemperatura(padraoProg(temperatura), unidTemp, "K"), [componente1, componente2], [x, 1 - x])]);
+						dadosCurva2.push([x, elv.orvp(convTemperatura(padraoProg(temperatura), unidTemp, "K"), [componente1, componente2], [x, 1 - x])]);
+						break;
+					case "tvsx":
+						dadosCurva1.push([x, elv.bolt(convPressao(padraoProg(pressao), unidPress, "kPa"), [componente1, componente2], [x, 1 - x])]);
+						dadosCurva2.push([x, elv.orvt(convPressao(padraoProg(pressao), unidPress, "kPa"), [componente1, componente2], [x, 1 - x])]);
+						break;
+					case "yvsx":
+						alfa = elv.alfaBinario(convTemperatura(padraoProg(temperatura), unidTemp, "K"), [componente1, componente2], [x, 1 - x]);
+						dadosCurva1.push([x, x]);
+						dadosCurva2.push([x, alfa * x / (1 + x * (alfa - 1))]);
+						break;
+				}
+			}
+			switch(tipoDiagrama) {
+				case 'pvsx':
+					tituloY = 'Pressão (kPa)';
+					rotulos = ['Linha de Bolha', 'Linha de Orvalho'];
+					titulo = 'Pressão versus fração molar de ' + componente1 + '';
+					break;
+				case 'tvsx':
+					tituloY = 'Temperatura (K)';
+					rotulos = ['Linha de Bolha', 'Linha de Orvalho'];
+					titulo = 'Temperatura versus fração molar de ' + componente1 + '';
+					break;
+				case 'yvsx':
+					tituloY = 'Fração Molar de Gás';
+					rotulos = ['Linha Amarração', 'Linha de Equilíbrio'];
+					titulo = 'Fração de gás versus fração de líquido (' + componente1 + ')';
+					break;
+			}
+			
+			// Desenha o gráfico e chama a animação da resposta
+			$(".resdiagrama").remove();
+			$('#resDiagrama').append('<div class="resdiagrama centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico"></canvas></div></div>');
+			graficoGeral('grafico', titulo, [dadosCurva1, dadosCurva2], [true, true], rotulos, [cor1, cor2], ['rgba(0,0,0,0)', 'rgba(0,0,0,0)'], 'Fração Molar de Líquido', tituloY);
+			$(".resdiagrama").addClass('animacaoPagina');
+		});
+
+        // Ação de clique do botão de cálculo para ponto de bolha e orvalho
+        $(".btCalcBolOrv").click(function() {
+            // Declaração de variáveis
+            var unidTemp = $("#listaUnidadesTempBolOrv").val(), unidPress = $("#listaUnidadesPressBolOrv").val(), temperatura = $(".tempBolOrv").val(), pressao = $(".pressBolOrv").val(), tipoCalculo = $("#listaTipoCalcBolOrv").val(), resFrac = [], resPonto = '', soma = 0, rotuloFrac, rotuloPonto, valor;
+
+            // Estrutura de controle de erros
+            if((tipoCalculo == "bolp" || tipoCalculo == "orvp") && !valNum(temperatura) || (tipoCalculo == "bolt" || tipoCalculo == "orvt") && !valNumPos(pressao)) {
+                $(".resbolorv").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+                $("#resBolOrv").append('<p class="resbolorv resErro">Valor inválido encontrado, por favor revise os dados informados.</p>');
+                return;
+            }
+            if(controleBolOrv.listaSubs.length < 2) {
+                $(".resbolorv").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+                $("#resBolOrv").append('<p class="resbolorv resErro">Não foram identificados componentes suficientes para realizar o cálculo, por favor reveja o sistema definido.</p>');
+                return;
+            }
+            if((tipoCalculo == "bolp" || tipoCalculo == "orvp") && convTemperatura(temperatura, unidTemp, "K") <= 0) {
+                $(".resbolorv").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+                $("#resBolOrv").append('<p class="resbolorv resErro">A temperatura informada é inferior ao zero absoluto, por favor reveja o valor informado.</p>');
+                return;
+            }
+			for(var i = 0; i < controleBolOrv.listaFrac.length; i++) {
+				soma += controleBolOrv.listaFrac[i];
+			}
+			if(parseFloat(soma.toFixed(5)) != 1) {
+				$(".resbolorv").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$("#resBolOrv").append('<p class="resbolorv resErro">O somatório das frações informadas não é igual a unidade, por favor revise os dados informados.</p>');
+				return;
+			}
+			
+			// Chama a animação da barra de progresso
+			animacao("barra2");
+			$('#barra2').removeClass('oculta');
+			$('#barra2').addClass('visivel text-center');
+
+            // Executa os cálculos
+            switch(tipoCalculo) {
+                case "bolp":
+					temperatura = convTemperatura(padraoProg(temperatura), unidTemp, "K");
+					pressao = elv.bolp(temperatura, controleBolOrv.listaSubs, controleBolOrv.listaFrac);
+					resFrac = elv.fracoesGas;
+					rotuloFrac = 'Fração Molar de Gás';
+					rotuloPonto = 'Pressão de Bolha (kPa)';
+					valor = padraoBr(pressao, 5);
+                    break;
+                case "bolt":
+					pressao = convPressao(padraoProg(pressao), unidPress, "kPa");
+					temperatura = elv.bolt(pressao, controleBolOrv.listaSubs, controleBolOrv.listaFrac);
+					resFrac = elv.fracoesGas;
+					rotuloFrac = 'Fração Molar de Gás';
+					rotuloPonto = 'Temperatura de Bolha (K)';
+					valor = padraoBr(temperatura, 3);
+                    break;
+                case "orvp":
+					temperatura = convTemperatura(padraoProg(temperatura), unidTemp, "K");
+					pressao = elv.orvp(temperatura, controleBolOrv.listaSubs, controleBolOrv.listaFrac);
+					resFrac = elv.fracoesLiq;
+					rotuloFrac = 'Fração Molar de Líquido';
+					rotuloPonto = 'Pressão de Orvalho (kPa)';
+					valor = padraoBr(pressao, 5);
+                    break;
+                case "orvt":
+					pressao = convPressao(padraoProg(pressao), unidPress, "kPa");
+					temperatura = elv.orvt(pressao, controleBolOrv.listaSubs, controleBolOrv.listaFrac);
+					resFrac = elv.fracoesLiq;
+					rotuloFrac = 'Fração Molar de Líquido';
+					rotuloPonto = 'Temperatura de Orvalho (K)';
+					valor = padraoBr(temperatura, 3);
+                    break;
+            }
+			
+			// Exibe o resultado na tela e chama a animação das respostas
+			for(var i = 0; i < elv.componentes.length; i++) {
+				resPonto += '<tr><td class="celula">' + elv.componentes[i] + '</td><td class="celula">' + padraoBr(resFrac[i], 5) + '</td><td class="celula">' + valor + '</td></tr>';
+			}
+			$(".resbolorv").remove();
+			$("#resBolOrv").append('<p class="resbolorv resGeral text-center">Tabela 1. Resultados encontrados para o sistema definido.</p><table class="resbolorv tabela margemTabela"><tr><th class="celula">Componente</th><th class="celula">' + rotuloFrac + '</th><th class="celula">' + rotuloPonto + '</th></tr>' + resPonto + '</table>');
+			$('.resbolorv').addClass('animacaoPagina');
+        });
+
+        // Botão de adição de componente para o cálculo de ponto de bolha e de orvalho
+        $(".btAddBolOrv").click(function() {
+            var componente = $("#listaBolOrv").val();
+            var fracao = $(".fracbolorv").val();
+            if(!valNumPos(fracao) || padraoProg(fracao) <= 0 || padraoProg(fracao) > 1) {
+                alert("Valor inválido para fração encontrado, por favor reveja o dado informado.");
+                return;
+            }
+            var id = controleBolOrv.indc;
+            controleBolOrv.listaId.push(id);
+            controleBolOrv.listaSubs.push(componente);
+            controleBolOrv.listaFrac.push(padraoProg(fracao));
+            controleBolOrv.indc--;
+            $("#adicaoBolOrv").append('<div id="' + id + '" class="form-group form-inline txtResposta1"><div class="col-sm-6"><p>' + componente + ' com fração molar igual a ' + fracao + '.</p></div><div class="col-sm-6 text-center"><button class="btn btnExcluir" onclick="excluirBolOrv(' + id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i> </button></div></div>');
+        });
+
+        // Botão para exclusão de componente para o cálculo de ponto de bolha e de orvalho
+        function excluirBolOrv(id) {
+            var indc = controleBolOrv.listaId.indexOf(id);
+			controleBolOrv.listaId.splice(indc, 1);
+			controleBolOrv.listaSubs.splice(indc, 1);
+			controleBolOrv.listaFrac.splice(indc, 1);
+			$("#"+id).remove();
+        }
+
+        // Botão para cálculo do método UNIFAC
+        $(".btCalcUnifac").click(function() {
+            // Declaração das variáveis
+            var temperatura = $(".tempunifac").val(), unidTemp = $("#listaUnidadesUnifac").val(), soma = 0, gama, resposta = "", subs, frac;
+
+            // Estrutura de controle de terceiros
+            if(!valNum(temperatura)) {
+                $(".resunifac").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+                $("#resUnifac").append('<p class="resunifac resErro">Valor não numérico informado para temperatura, por favor revise.</p>');
+                return;
+            }
+            if(controleUnifac.listaSubs.length < 2) {
+                $(".resunifac").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+                $("#resUnifac").append('<p class="resunifac resErro">Não foram identificados componentes suficientes inseridos, por favor reveja.</p>');
+                return;
+            }
+            temperatura = convTemperatura(padraoProg(temperatura), unidTemp, "K");
+            if(temperatura <= 0) {
+                $(".resunifac").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+                $("#resUnifac").append('<p class="resunifac resErro">O valor de temperatura informado é abaixo do zero absoluto, por favor reveja o que foi informado.</p>');
+                return;
+            }
+            for(var i = 0; i < controleUnifac.listaFrac.length; i++) {
+                soma += controleUnifac.listaFrac[i];
+            }
+            if(parseFloat(soma.toFixed(5)) != 1) {
+                $(".resunifac").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+                $("#resUnifac").append('<p class="resunifac resErro">O somatório das frações molares dos componentes informados é diferente da unidade, por favor revise os dados informados.</p>');
+                return;
+            }
+
+            // Chama a animação da barra de progresso
+			animacao("barra1");
+			$('#barra1').removeClass('oculta');
+			$('#barra1').addClass('visivel text-center');
+
+            // Realiza os cálculos
+            unifac.definirTemperatura(temperatura);
+            unifac.definirSistema(controleUnifac.listaSubs, controleUnifac.listaFrac);
+            unifac.calcular();
+            gama = unifac.acessarGama();
+            subs = unifac.acessarSubstancias();
+            frac = unifac.acessarFracoes();
+            for(var i = 0; i < gama.length; i++) {
+                resposta += '<tr><td class="celula">' + subs[i] + '</td><td class="celula">' + padraoBr(frac[i], 5) + '</td><td class="celula">'+ padraoBr(gama[i], 5) +'</td></tr>';
+            }
+
+            // Exibe a resposta na tabela e chama a animação das respostas
+            $(".resunifac").remove();
+			$("#resUnifac").append('<p class="resunifac text-center">Tabela 1. Resultados para coeficientes de atividade do sistema</p><table class="resunifac tabela margemTabela"><tr><th class="celula">Componente</th><th class="celula">Fração Molar (x)</th><th class="celula">Coeficiente de atividade (&gamma;)</th></tr>' + resposta + '</table>');
+			$('.resunifac').addClass('animacaoPagina');
+        });
+
+        // Botão de adicionar componente no método UNIFAC
+        $(".btAddUnifac").click(function() {
+            var componente = $("#listaUnifac").val();
+            var fracao = $(".fracunifac").val();
+            if(!valNumPos(fracao) || padraoProg(fracao) <= 0 || padraoProg(fracao) > 1) {
+                alert("Valor inválido para fração encontrado, por favor reveja o dado informado.");
+                return;
+            }
+            var id = controleUnifac.indc;
+            controleUnifac.listaId.push(id);
+            controleUnifac.listaSubs.push(componente);
+            controleUnifac.listaFrac.push(padraoProg(fracao));
+            controleUnifac.indc++;
+            $("#adicaoUnifac").append('<div id="' + id + '" class="form-group form-inline txtResposta1"><div class="col-sm-6"><p>' + componente + ' com fração molar igual a ' + fracao + '.</p></div><div class="col-sm-6 text-center"><button class="btn btnExcluir" onclick=excluirUnifac(' + id + ')><i class="fa fa-trash-o" aria-hidden="true"></i> </button></div></div>');
+        });
+
+        // Botão para exclusão de componente no método UNIFAC
+        function excluirUnifac(id) {
+            var indc = controleUnifac.listaId.indexOf(id);
+			controleUnifac.listaId.splice(indc, 1);
+			controleUnifac.listaSubs.splice(indc, 1);
+			controleUnifac.listaFrac.splice(indc, 1);
+			$("#"+id).remove();
+        }
+
+        // Funções para alteração de visibilidade de div
+		function alterarCriterioDiagrama() {
+			var tipo = document.getElementById("listaTipoDiagrama").value;
+			switch(tipo) {
+				case "pvsx":
+					document.getElementById("divTempDiagrama").style.display = "block";
+					document.getElementById("divptvsx").style.display = "block";
+					document.getElementById("divPressDiagrama").style.display = "none";
+					break;
+				case "tvsx":
+					document.getElementById("divTempDiagrama").style.display = "none";
+					document.getElementById("divptvsx").style.display = "block";
+					document.getElementById("divPressDiagrama").style.display = "block";
+					break;
+				case "yvsx":
+					document.getElementById("divTempDiagrama").style.display = "block";
+					document.getElementById("divptvsx").style.display = "none";
+					document.getElementById("divPressDiagrama").style.display = "none";
+					break;
+			}
+		}
+		
+        function alterarBolOrv() {
+            var tipo = $("#listaTipoCalcBolOrv").val();
+            if(tipo == "bolp" || tipo == "orvp") {
+                document.getElementById("divTempBolOrv").style.display = "block";
+                document.getElementById("divPressBolOrv").style.display = "none";
+            }
+            if(tipo == "bolt" || tipo == "orvt") {
+                document.getElementById("divTempBolOrv").style.display = "none";
+                document.getElementById("divPressBolOrv").style.display = "block";
+            }
+        }
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+    </script>
+
+</html>

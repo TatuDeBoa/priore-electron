@@ -1,0 +1,285 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que envolve todo o conteúdo da página, para melhor manipulação -->
+		<div class="section margemInicial">
+		
+			<!-- Seção de cálculo dos parâmetros da DTP -->
+			<div class="section">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">DETERMINAÇÃO DE PARÂMETROS DOS MODELOS DE DISTRIBUIÇÃO DE TAMANHO DE PARTÍCULA</p>
+							<p class="txtFormularioApresentacao">Esta seção é destinada para cálculo dos parâmetros de três modelos típicos de DTP. São necessários dados experimentais de um teste de peneira, junto com a definição dos conjuntos de informações (massa ou fração acumulada versus diâmetro). Utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline text-center">
+							<div class="col-sm-4">
+								<p class="txtFormularioGeral text-center">MODELO GGS</p>
+								<img width="160px" src="figuras/ggs.png"></img>
+							</div>
+							<div class="col-sm-4">
+								<p class="txtFormularioGeral text-center">MODELO RRB</p>
+								<img width="160px" src="figuras/rrb.png"></img>
+							</div>
+							<div class="col-sm-4">
+								<p class="txtFormularioGeral text-center">MODELO SIGMÓIDE</p>
+								<img width="160px" src="figuras/sigmoide.png"></img>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior">
+							<div class="col-md-6">
+								<p>Tipo de Entrada de Dados</p>
+								<select class="form-control dadosFormulario" id="tipoEntrada" onchange="exibirMT()">
+									<option value="frac">Fração Acumulada versus Diâmetro</option>
+									<option value="mass">Massa Retida versus Diâmetro</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<p>Unidade de Diâmetro</p>
+								<select class="form-control dadosFormulario" id="listaUnidDTP">
+									<option value="mm">Milímetro</option>
+									<option value="um">Micrômetro</option>
+									<option value="in">Polegada</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-inline oculta txtFormularioGeral margemSuperior" id="divMT">
+							<div class="col-md-6"><p>Massa Total de Amostra do Teste</p></div>
+							<div class="col-md-6"><input class="form-control dadosFormulario mtotal" type="text"></input></div>
+						</div>
+						<div class="col-sm-12 margemSuperior">
+							<p class="txtFormularioGeral">Nos espaços abaixo, informe os dados de diâmetro e fração acumulada (ou massa retida), estes na primeira coluna e aqueles na segunda coluna. Espaços vazios ou com valores não numéricos fazem o programa ignorar a linha em que forem encontrados.</p>
+						</div>
+						<div class="form-inline margemSuperior">
+							<div class="col-md-8 centralizar"><div id="tabela"></div></div>
+							<div class="col-md-4">
+								<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao btCalc margemSuperior"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+							</div>
+						</div>
+						<div class="col-sm-12 margemSuperior">
+							<div class="resDTP txtResposta2"><p class="res"></p></div>
+							<div class="resDTPGraf"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+	<script>
+		// Instância da classe DTP
+		var dtp = new DTP();
+		var grafico = new GraficoCanvas();
+
+		// Instância do Handsontable
+		var tabela = document.getElementById("tabela");
+		var entradaDados = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 480,
+			height: 300,
+			colWidths: 200,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["Fração Acumulada/Massa", "Diâmetro"],
+			columns: [0, 0],
+			minSpareRows: 12
+		});
+
+		$(".btCalc").click(function() {
+			// Declaração de variáveis
+			var diametros = [], fracoes = [];
+			var titulo1 = ["", "Parâmetro a", "Parâmetro b", "r<sup>2</sup>"];
+			var titulo2 = ["Diâmetro Volumétrico", "Diâmetro Superficial", "Diâmetro Sauter"];
+			var linhas1 = [["GGS"], ["RRB"], ["Sigmóide"]];
+			var linhas2 = [];
+			var tipoEntrada = $("#tipoEntrada").val();
+			var massaTotal = $(".mtotal").val();
+			var unid = $("#listaUnidDTP").val();
+			var dados = [], dadosFrac = [], dadosMassa = [];
+			receberDados(dados, entradaDados);
+
+			// Estrutura de controle de erros
+			if(tipoEntrada == "mass" && (massaTotal == "" || !valNum(massaTotal) || !valPos(parseFloat(massaTotal.replace(",", "."))))) {
+				$(".res").remove();
+				$('#barra').removeClass('visivel');
+				$('#barra').addClass('oculta');
+				$(".resDTP").append('<p class="res resErro">Para entrada de dados de diâmetro e massas retidas é preciso informar um valor válido para a massa total do teste, por favor revise o dado informado.</p>');
+				return;
+			}
+			if(dados.length < 2) {
+				$(".res").remove();
+				$('#barra').removeClass('visivel');
+				$('#barra').addClass('oculta');
+				$(".resDTP").append('<p class="res resErro">Informe pelo menos dois conjuntos de valores nos espaços de dados. Reveja o informado, por favor.</p>');
+				return;
+			}
+			// Interpreta matriz lida pelo handsontable
+			for(var i = 0; i < dados.length; i++) {
+				fracoes[i] = dados[i][0];
+				diametros[i] = dados[i][1];
+			}
+			if(tipoEntrada == "mass") {
+				var soma = 0;
+				for(var i = 0; i < fracoes.length; i++) {
+					soma += fracoes[i];
+				}
+				if(soma > massaTotal) {
+					$(".res").remove();
+					$('#barra').removeClass('visivel');
+					$('#barra').addClass('oculta');
+					$(".resDTP").append('<p class="res resErro">Ocorreu um erro, o somatório das massas no espaço de entrada de dados é superior a massa total que foi informada. Por favor, revise as informações digitadas.</p>');
+					return;
+				}
+			}
+
+			// Início dos cálculos por meio da classe DTP
+			if(tipoEntrada == "frac") {
+				dtp.definirValoresComFracao(diametros, fracoes);
+			} else {
+				dtp.definirMassaTotal(massaTotal);
+				dtp.definirValoresComMassa(diametros, fracoes);
+			}
+			// Realiza o último teste de coerência dos dados informados
+			if(!testarCoerencia(dtp.valoresDiametros, dtp.valoresFracoes)) return;
+
+			// Inicia a barra de progresso
+			$('#barra').removeClass('oculta');
+			$('#barra').addClass('visivel text-center');
+			animacao("barra");
+
+			// Finaliza os cálculos (para cada modelo) e armazena os resultados
+			dtp.calcularGGS();
+			linhas1[0][1] = dtp.parametroA.toFixed(6).replace(".", ",");
+			linhas1[0][2] = dtp.parametroB.toFixed(6).replace(".", ",");
+			linhas1[0][3] = dtp.coeficienteDeterminacao.toFixed(6).replace(".", ",");
+			dtp.calcularRRG();
+			linhas1[1][1] = dtp.parametroA.toFixed(6).replace(".", ",");
+			linhas1[1][2] = dtp.parametroB.toFixed(6).replace(".", ",");
+			linhas1[1][3] = dtp.coeficienteDeterminacao.toFixed(6).replace(".", ",");
+			dtp.calcularSigmoide();
+			linhas1[2][1] = dtp.parametroA.toFixed(6).replace(".", ",");
+			linhas1[2][2] = dtp.parametroB.toFixed(6).replace(".", ",");
+			linhas1[2][3] = dtp.coeficienteDeterminacao.toFixed(6).replace(".", ",");
+			if(tipoEntrada == "mass") {
+				dtp.calcularDiametros();
+				linhas2 = [dtp.diametroVolumetrico.toFixed(6).replace(".", ",") + " " + unid, dtp.diametroSuperficial.toFixed(6).replace(".", ",") + " " + unid, dtp.diametroSauter.toFixed(6).replace(".", ",") + " " + unid];
+			}
+
+			// Exibe os resultados na tela, em forma de tabela
+			var str1 = "", str2 = "";
+			str1 += '<p class="res margemSuperior text-center">Tabela 1. Parâmetros e coeficientes de determinação dos modelos GGS, RRB e Sigmóide.</p><div class="res centralizar col-sm-12"><table class="margemElemento tabela margemTabela"><tr><th class="celula">' + titulo1[0] + '</th><th class="celula">' + titulo1[1] + '</th><th class="celula">' + titulo1[2] + '</th><th class="celula">' + titulo1[3] + '</th></tr>';
+			for(var i = 0; i < linhas1.length; i++) {
+				str1 += '<tr><td class="celula">' + linhas1[i][0] + '</td><td class="celula">' + linhas1[i][1] + '</td><td class="celula">' + linhas1[i][2] + '</td><td class="celula">' + linhas1[i][3] + '</td></tr>';
+			}
+			str1 += '</table></div>';
+			$(".res").remove();
+			$(".resDTP").append(str1);
+			if(tipoEntrada == "mass") {
+				str2 += '<p class="res margemSuperior text-center">Tabela 2. Diâmetros médios volumétrico, superficial e de Sauter.</p><div class="res centralizar col-sm-12"><table class="margemElemento tabela margemTabela"><tr><th class="celula">' + titulo2[0] + '</th><th class="celula">' + titulo2[1] + '</th><th class="celula">' + titulo2[2] + '</th></tr>';
+				str2 += '<tr><td class="celula">' + linhas2[0] + '</td><td class="celula">' + linhas2[1] + '</td><td class="celula">' + linhas2[2] + '</td></tr></table></div>';
+				$(".resDTP").append(str2);
+			}
+
+			// Prepara os dados para exibição
+			for(var i = 0; i < dtp.valoresDiametros.length; i++) {
+				dadosFrac[i] = [dtp.valoresDiametros[i], dtp.valoresFracoes[i]];
+				if(tipoEntrada == 'mass') {
+					dadosMassa[i] = [dtp.valoresDiametros[i], dtp.valoresMassas[i]];
+				}
+			}
+
+			// Desenha os gráficos e chama a animação
+			$('.resDTPGraf').append('<div class="res centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf1"></canvas></div></div>');
+			graficoGeral('graf1', 'Fração acumulada versus diâmetro de partícula', [dadosFrac], [false], ['X'], ['#000000'], ['#000000'], 'Diâmetro ('+unid+')', 'Fração Acumulada (X)');
+			if(tipoEntrada == 'mass') {
+				$('.resDTPGraf').append('<div class="res centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf2"></canvas></div></div>');
+				graficoGeral('graf2', 'Massa retida em cada diâmetro', [dadosMassa], [false], ['massa'], ['#000000'], ['#000000'], 'Diâmetro ('+unid+')', 'Massa Retida');
+			}
+			$('.res').addClass('animacaoPagina');
+		});
+
+		function exibirMT() {
+			var i = $("#tipoEntrada").val();
+			if(i == "frac")
+				document.getElementById("divMT").style.display = "none";
+			if(i == "mass")
+				document.getElementById("divMT").style.display = "block";
+		}
+
+		function testarCoerencia(diametros, fracoes) {
+			for(var i = 0; i < fracoes.length; i++) {
+				if(fracoes[i] >= 1) {
+					$(".res").remove();
+					$('#barra').removeClass('visivel');
+					$('#barra').addClass('oculta');
+					$(".resDTP").append('<p class="res resErro">Existem valores de fração acumulada maiores ou iguais a 1, o que impossibilita a linearização de alguns modelos. Por favor, revise os dados informados.</p>');
+					return false;
+				}
+			}
+			for(var i = 1; i < fracoes.length; i++) {
+				if(fracoes[i] > fracoes[i - 1]) {
+					$(".res").remove();
+					$('#barra').removeClass('visivel');
+					$('#barra').addClass('oculta');
+					$(".resDTP").append('<p class="res resErro">Há uma inconcistência nos valores, pois em algum momento a fração acumulada aumenta com a diminuição do diâmetro. Por favor, revise os dados informados.</p>');
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que envolve todo o conteúdo da página -->
+		<div class="section">
+		
+			<!-- Seção do cálculo dos parâmetros dos modelos cadastrados -->
+			<div class="section">
+				<div class="container animacaoPagina margemInicial">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">CÁLCULO DOS PARÂMETROS DE MODELOS PARA CURVA BINODAL</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível determinar os parâmetros de três modelos diferentes para representar o equilíbrio líquido-líquido (curva binodal), a partir de dados experimentais de concentração (porcentagem massa-massa) das fases &alpha; e &beta;. Quando digitar os valores, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel txtFormularioGeral">
+						<div class="form-inline">
+							<div class="col-md-4">
+								<div class="centralizar"><p>MODELO 1</p></div>
+								<div class="centralizar"><img width="240px" src="figuras/modelo1-ell.png"></img></div>
+							</div>
+							<div class="col-md-4">
+								<div class="centralizar"><p>MODELO 2</p></div>
+								<div class="centralizar"><img width="240px" src="figuras/modelo2-ell.png"></img></div>
+							</div>
+							<div class="col-md-4">
+								<div class="centralizar"><p>MODELO 3</p></div>
+								<div class="centralizar"><img width="240px" src="figuras/modelo3-ell.png"></img></div>
+							</div>
+						</div>
+						<div class="col-sm-12 margemSuperior">
+							<p>Informe valores de concentração (em massa) do componente &beta; (y) e do componente &alpha; (x), estes na segunda coluna e aqueles na primeira coluna. Valores não numéricos ou espaços vazios fazem o programa desconsiderar a linha em que foram encontrados.</p>
+						</div>
+						<div class="form-inline margemSuperior">
+							<div class="col-md-7 centralizar">
+								<div id="tabRegEll"></div>
+							</div>
+							<div class="col-md-5">
+								<div id="barra1" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+								<div class="text-center margemSuperior"><button class="btn btnAcao btnRegEll"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button></div>
+								<div class="text-center margemSuperior"><button class="btn btnAcao btnConfAvancadasPar"><i class="fa fa-cogs" aria-hidden="true"></i> Configurações</button></div>
+								<div class="resRegEll txtResposta2 margemSuperior"><p class="resultadoell"></p></div>
+							</div>
+						</div>
+						<div class="col-sm-12 paddingInferior">
+							<div class="resRegEllGraf txtResposta2"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Seção do estimativa das concentrações do equilíbrio a partir dos parâmetros do modelo -->
+			<div class="section fundo2">
+				<div class="container animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">ESTIMAR CONCENTRAÇÕES DAS FASES DE EQUILÍBRIO A PARTIR DE UM MODELO</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível estimar as concentrações das fases de equilíbrio a partir de uma mistura entre &alpha; e &beta;, dado os parâmetros de um dos modelos preditivos anteriores. Quando informar os valores numéricos, utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="form-inline txtFormularioGeral">
+							<div class="col-md-6">
+								<p>Informe a fração mássica da fase de topo (razão entre massa da fase de topo, rica em beta, e massa total da mistura):</p>
+								<input type="text" class="form-control dadosFormulario razaoEst">
+								<p class="margemSuperior">Escolha ao lado o modelo que será utilizado para descrever o sistema e nos espaços abaixo, informe os parâmetros necessário da equação escolhida.</p>
+							</div>
+							<div class="col-md-6">
+								<select id="listaModEst" class="form-control dadosFormulario" onchange="exibirDivParEst()">
+									<option value="equacao1">Modelo 1</option>
+									<option value="equacao2">Modelo 2</option>
+									<option value="equacao3">Modelo 3</option>
+								</select>
+								<div class="centralizar"><img class="margemElemento" id="imgModEst" width="230px" src="figuras/modelo1-ell.png"></img></div>
+							</div>
+						</div>
+						<div id="divMod1Ell" class="visivel">
+							<div class="form-inline txtFormularioGeral">
+								<div class="col-sm-4"><input type="text" class="form-control dadosFormulario a0eq1" placeholder="a0"></div>
+								<div class="col-sm-4"><input type="text" class="form-control dadosFormulario a1eq1" placeholder="a1"></div>
+								<div class="col-sm-4"><input type="text" class="form-control dadosFormulario a2eq1" placeholder="a2"></div>
+							</div>
+						</div>
+						<div id="divMod2Ell" class="oculta">
+							<div class="form-inline txtFormularioGeral">
+								<div class="col-sm-3"><input type="text" class="form-control dadosFormulario a0eq2" placeholder="a0"></div>
+								<div class="col-sm-3"><input type="text" class="form-control dadosFormulario a1eq2" placeholder="a1"></div>
+								<div class="col-sm-3"><input type="text" class="form-control dadosFormulario a2eq2" placeholder="a2"></div>
+								<div class="col-sm-3"><input type="text" class="form-control dadosFormulario a3eq2" placeholder="a3"></div>
+							</div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemSuperior tabela">
+							<div class="col-md-6 margemSuperior margemInferior">
+								<p>Utilize o formulário abaixo para adicionar pontos de mistura.</p>
+								<div class="form-inline">
+									<div class="col-md-6"><p>Concentração de Alfa</p></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario calfaEst"></div>
+								</div>
+								<div class="form-inline">
+									<div class="col-md-6"><p>Concentração de Beta</p></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario cbetaEst"></div>
+								</div>
+								<div class="text-right"><button class="btn btnSecundario margemSuperiorPequena margemDireita btnAdd"><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar</button></div>
+							</div>
+							<div class="col-md-6 margemSuperior margemInferior" id="pontMist">
+								<p class="centralizar">Pontos de Mistura Adicionados</p>
+							</div>
+						</div>
+						<div class="form-inline margemSuperiorGrande">
+							<div class="col-md-6">
+								<button class="btn btnAcao btnEstEll"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+							</div>
+							<div class="col-md-6">
+								<button class="btn btnAcao btnConfAvancadas"><i class="fa fa-cogs" aria-hidden="true"></i> Configurações</button>
+							</div>
+						</div>
+						<div class="col-sm-12 paddingInferior margemSuperior">
+							<div id="barra2" class="progress-bar progress-bar-striped progress-bar-animated bg-warning oculta" style="width: 0%;"></div>
+							<div class="resEstEll txtResposta2 margemSuperior"><p class="resultadoest"></p></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!-- Margem final da página -->
+		<div class="fundo fundo2"></div>
+		
+		<!-- Modal de configurações avançadas para determinação dos parâmetros dos modelos -->
+		<div class="modal fade" id="confAvanPar" data-backdrop="static">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p class="txtFormularioApresentacao">Configurações Avançadas de Determinação de Parâmetros dos Modelos</p>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Título do Gráfico</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario tituloPar" value="Curva de Equilíbrio (Binodal)"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Rótulo do Eixo "x"</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario rotuloXPar" value="Concentração de Alfa"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Rótulo do Eixo "y"</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario rotuloYPar" value="Concentracao de Beta"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Tipo de Escolha do Melhor Modelo</p></div>
+							<div class="col-sm-6">
+								<select class="form-control dadosFormulario" id="listaPar">
+									<option value="r2">Maior Coeficiente de Determinação</option>
+									<option value="dp">Menor Desvio dos Estimadores</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btnSecundario btnSalvarConfPar">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal de configurações avançadas de estimadores de concentração de fase -->
+		<div class="modal fade" id="confAvan" data-backdrop="static">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p class="txtFormularioApresentacao">Configurações Avançadas de Estimação de Concentrações de Equilíbrio</p>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Estimador inicial para concentração de alfa na fase rica em beta</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario estcalfa0" value="5"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Estimador inicial para concentração de alfa na fase rica em alfa</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario estcalfa1" value="60"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Título do Gráfico</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario tituloEst" value="Linhas de amarração"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Rótulo do Eixo "x"</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario rotuloXEst" value="Conc. Alfa"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Rótulo do Eixo "y"</p></div>
+							<div class="col-sm-6"><input type="text" class="form-control dadosFormulario rotuloYEst" value="Conc. Beta"></div>
+						</div>
+						<div class="form-inline txtFormularioGeral margemElemento">
+							<div class="col-sm-6"><p>Desenhar Pontos Experimentais da Seção Anterior?</p></div>
+							<div class="col-sm-6">
+								<select class="form-control dadosFormulario" id="listaEst">
+									<option value="nao">Não</option>
+									<option value="sim">Sim</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btnSecundario btnSalvarCofEsti">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+	<script>
+		// Declaração da instância responsável pelo cálculo e por armazenagem intermediária
+		var ell = new ELL();
+		var grafico = new GraficoCanvas();
+		var armazenagem = { listaId: [], indx: 0, listaAlfa: [], listaBeta: [] }
+		var configuracoesPar = { titulo: 'Curva de Equilíbrio (Binodal)', rotuloX: 'Concentração de Alfa', rotuloY: 'Concentração de Beta', escolha: 'r2' }
+		var configuracoesEst = { estC0: 5, estC1: 60, titulo: 'Linhas de amarração', rotuloX: 'Conc. Alfa', rotuloY: 'Conc. Beta', integracao: false }
+
+		// Declaração da instância do Handsontable
+		var tabela = document.getElementById("tabRegEll");
+		var dadosRegEll = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 350,
+			height: 500,
+			colWidths: 150,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["&beta; (y)", "&alpha; (x)"],
+			columns: [0, 0],
+			minSpareRows: 18
+		});
+		
+		// Botão de abertura de modal para configurações avançadas para determinação de parâmetros
+		$('.btnConfAvancadasPar').click(function() {
+			$('#confAvanPar').modal('show');
+		});
+		
+		// Ação de salvar configurações do usuário para determinação dos parâmetros
+		$('.btnSalvarConfPar').click(function() {
+			configuracoesPar.titulo = $('.tituloPar').val();
+			configuracoesPar.rotuloX = $('.rotuloXPar').val();
+			configuracoesPar.rotuloY = $('.rotuloYPar').val();
+			configuracoesPar.escolha = $('#listaPar').val();
+			$('#confAvanPar').modal('hide');
+		});
+		
+		// Botão de abertura do modal de configurações avançadas para estimativa dos parâmetros
+		$('.btnConfAvancadas').click(function() {
+			$('#confAvan').modal('show');
+		});
+		
+		// Salvamento das configurações definidas pelo usuário para seção de estimadores
+		$('.btnSalvarCofEsti').click(function() {
+			// Teste para validação dos valores informados
+			if(!valNumPos($('.estcalfa0').val()) || !valNumPos($('.estcalfa1').val()) || padraoProg($('.estcalfa0').val()) == 0 || padraoProg($('.estcalfa1').val()) == 0) {
+				alert('Valor inválido para os estimadores, por favor revise.');
+				return;
+			}
+			
+			// Armazena as informações
+			configuracoesEst.estC0 = parseFloat($('.estcalfa0').val().replace(',', '.'));
+			configuracoesEst.estC1 = parseFloat($('.estcalfa1').val().replace(',', '.'));
+			configuracoesEst.titulo = $('.tituloEst').val();
+			configuracoesEst.rotuloX = $('.rotuloXEst').val();
+			configuracoesEst.rotuloY = $('.rotuloYEst').val();
+			($('#listaEst').val() == 'nao') ? configuracoesEst.integracao = false : configuracoesEst.integracao = true;
+			$('#confAvan').modal('hide');
+		});
+
+		// Ação de clique do botão de cálculo das estimativas a partir de um modelo
+		$(".btnEstEll").click(function() {
+			// Declaração de variáveis necessárias
+			var a0, a1, a2, a3, modelo = $("#listaModEst").val(), razao = $(".razaoEst").val(), parametros, respostas = [], maxX = 0, maxY = 0, pontosX = [], pontosY = [], dimensao = 600, plotX = [], plotY = [], intervalo = 300, passo, estC0 = configuracoesEst.estC0, estC1 = configuracoesEst.estC1, estimadores, dadosGerais = [], desenharLinhas = [], corLinhas = [], corPontos = [], rotulos = [];
+			if(modelo == "equacao1")
+				a0 = $(".a0eq1").val(), a1 = $(".a1eq1").val(), a2 = $(".a2eq1").val();
+			else
+				a0 = $(".a0eq2").val(), a1 = $(".a1eq2").val(), a2 = $(".a2eq2").val(), a3 = $(".a3eq2").val();
+
+			// Estrutura de controle de erros
+			if(armazenagem.listaId.length == 0) {
+				$(".resultadoest").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resEstEll").append('<p class="resultadoest resErro">Não foram encontrados pontos de mistura para predição, por favor reveja as informações inseridas.</p>');
+				return;
+			}
+			if(!valNum(a0) || !valNum(a1) || !valNum(a2) || (modelo != "equacao1" && !valNum(a3)) || !valNumPos(razao) || padraoProg(razao) <= 0 || padraoProg(razao) >= 1) {
+				$(".resultadoest").remove();
+				$('#barra2').removeClass('visivel');
+				$('#barra2').addClass('oculta');
+				$(".resEstEll").append('<p class="resultadoest resErro">Foram encontrados parâmetros inválidos, por favor revise os dados informados.</p>');
+				return;
+			}
+			var dadosAnterior = [];
+			if(configuracoesEst.integracao) {
+				receberDados(dadosAnterior, dadosRegEll);
+				if(dadosAnterior.length == 0) {
+					$(".resultadoest").remove();
+					$('#barra2').removeClass('visivel');
+					$('#barra2').addClass('oculta');
+					$(".resEstEll").append('<p class="resultadoest resErro">A opção para desenhar também os pontos experimentais da seção acima foi selecionada, porém não foram encontrados pontos na tabela de entrada de dados. Por favor, reveja as informações dadas ou as configurações desejadas.</p>');
+					return;
+				}
+			}
+
+			// Chama a animação da barra de progresso
+			animacao("barra2");
+			$('#barra2').removeClass('oculta');
+			$('#barra2').addClass('visivel text-center');
+
+			// Prepara a execução dos cálculos
+			estimadores = [[estC0], [estC1]];
+			ell.definirEquacao(modelo);
+			ell.definirRazaoFases(padraoProg(razao));
+			if(modelo == "equacao1") {
+				parametros = [padraoProg(a0), padraoProg(a1), padraoProg(a2)];
+				modelo = "Equação 1";
+			} else {
+				parametros = [padraoProg(a0), padraoProg(a1), padraoProg(a2), padraoProg(a3)];
+				if(modelo == "equacao2") modelo = "Equação 2";
+				else modelo = "Equação 3";
+			}
+			ell.definirParametros(parametros);
+			dadosGerais.push([]);
+			var np = dadosGerais.length - 1;
+			desenharLinhas[np] = true;
+			corLinhas[np] = '#007bff';
+			corPontos[np] = '#007bff';
+			rotulos[np] = 'Predição';
+			for(var i = 0; i < armazenagem.listaId.length; i++) {
+				ell.definirConcEquilibrio(armazenagem.listaAlfa[i], armazenagem.listaBeta[i]);
+				ell.estimarFases(estimadores);
+				var alfa = ell.acessarAlfaEstimado(), beta = ell.acessarBetaEstimado();
+				if(alfa[0].toString() != 'NaN' && alfa[1].toString() != 'NaN' && beta[0].toString() != 'NaN' && beta[1].toString() != 'NaN') {
+					dadosGerais[np].push([armazenagem.listaAlfa[i], armazenagem.listaBeta[i]]);
+					dadosGerais[np].push([alfa[0], beta[0]]);
+					dadosGerais[np].push([alfa[1], beta[1]]);
+					
+				}
+				var str = "Para os valores (alfa: " + armazenagem.listaAlfa[i].toString().replace(".", ",") + " e beta: " + armazenagem.listaBeta[i].toString().replace(".", ",") + ") e " + modelo + ", foram estimados os valores de " + padraoBr(alfa[0], 4) + " de alfa e "+padraoBr(beta[0], 4)+" de beta na fase rica em beta, e " + padraoBr(alfa[1], 4) + " de alfa e " + padraoBr(beta[1], 4) + " na fase rica em alfa.";
+				respostas.push(str);
+			}
+
+			// Exibe as respostas na tela
+			$(".resultadoest").remove();
+			for(var i = 0; i < respostas.length; i++) {
+				$(".resEstEll").append('<p class="resultadoest resPrincipal">' + respostas[i] + '</p>');
+			}
+			
+			// Avalia se serão desenhados os pontos experimentais
+			if(configuracoesEst.integracao) {
+				dadosGerais.push([]);
+				var np = dadosGerais.length - 1;
+				for(var i = 0; i < dadosAnterior.length; i++) {
+					dadosGerais[np][i] = [dadosAnterior[i][1], dadosAnterior[i][0]];
+				}
+				desenharLinhas[np] = false;
+				corLinhas[np] = '#000000';
+				corPontos[np] = '#000000';
+				rotulos[np] = 'Experimentais';
+			}
+			
+			// Monta o gráfico da função escolhida
+			var maxX = 0, minX = 120;
+			for(var i = 0; i < dadosGerais.length; i++) {
+				for(var j = 0; j < dadosGerais[i].length; j++) {
+					if(dadosGerais[i][j][0] > maxX) maxX = dadosGerais[i][j][0];
+					if(dadosGerais[i][j][0] < minX) minX = dadosGerais[i][j][0];
+				}
+			}
+			dadosGerais.push([]);
+			var np = dadosGerais.length - 1;
+			desenharLinhas[np] = true;
+			corLinhas[np] = '#524958';
+			corPontos[np] = 'rgba(0,0,0,0)';
+			rotulos[np] = 'Modelo';
+			passo = (maxX - minX) / intervalo;
+			for(var i = 0; i <= intervalo; i++) {
+				dadosGerais[np][i] = [minX + i * passo, ell.calcularBetaViaAlfa(minX + i * passo)];
+			}
+
+			// Desenha o gráfico e chama a animação das respostas
+			$('.resEstEll').append('<div class="resultadoest centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf2"></canvas></div></div>');
+			graficoGeral('graf2', configuracoesEst.titulo, dadosGerais, desenharLinhas, rotulos, corLinhas, corPontos, configuracoesEst.rotuloX, configuracoesEst.rotuloY);
+			$('.resultadoest').addClass('animacaoPagina');
+		});
+
+		// Ação de clique do botão de adicionar pontos
+		$(".btnAdd").click(function() {
+			// Declaração de variáveis necessárias
+			var calfa = $(".calfaEst").val(), cbeta = $(".cbetaEst").val();
+
+			// Estrutura de controle de erros
+			if(calfa == "" || cbeta == "" || !valNumPos(calfa) || !valNumPos(cbeta)) {
+				alert("Valores inválidos encontrados, por favor reveja os dados informados.");
+				return;
+			}
+
+			// Adiciona os valores recebidos
+			calfa = padraoProg(calfa);
+			cbeta = padraoProg(cbeta);
+			var id = armazenagem.indx;
+			armazenagem.listaId.push(id);
+			$("#pontMist").append('<div id="'+id+'" class="form-inline txtResposta1"><div class="col-sm-6"><p>Concentração de Alfa de '+calfa+' e Concentração de Beta de '+cbeta+'.</p></div><div class="col-sm-6 centralizar"><button class="btn btnExcluir" onclick="excluirValorEst('+id+')"><i class="fa fa-trash-o" aria-hidden="true"></i> Excluir</button></div></div>');
+			armazenagem.listaAlfa.push(calfa);
+			armazenagem.listaBeta.push(cbeta);
+			armazenagem.indx++;
+		});
+
+		// Ação de clique do botão de cálculo da regressão dos modelos
+		$(".btnRegEll").click(function() {
+			// Declaração das variáveis utilizadas
+			var dados = [], concAlfa = [], concBeta = [], parametros = [], intervalos = [], r2, str, plotX = [], plotY1 = [], plotY2 = [], plotY3 = [], intervalo = 300, passo, limInf, limSup, dimensao = 600, melhorModelo, criterio = configuracoesPar.escolha, decisao = 0;
+			receberDados(dados, dadosRegEll);
+
+			// Estrutura de controle de erros
+			if(dados.length < 5) {
+				$(".resultadoell").remove();
+				$('#barra1').removeClass('visivel');
+				$('#barra1').addClass('oculta');
+				$(".resRegEll").append('<p class="resultadoell resErro">Não foram encontrados conjuntos de valores para &alpha; e &beta; suficientes para regressão de todos os modelos, por favor revise as informações inseridas.</p>');
+				return;
+			}
+
+			// Chama a animação da barra de progresso
+			animacao("barra1");
+			$('#barra1').removeClass('oculta');
+			$('#barra1').addClass('visivel text-center');
+
+			// Interpreta os dados recebidos do handsontable
+			for(var i = 0; i < dados.length; i++) {
+				concBeta[i] = dados[i][0];
+				concAlfa[i] = dados[i][1];
+			}
+
+			// Calcula parâmetros para a primeira equação, preparando listas valores para desenho do gráfico
+			ell.definirEquacao("equacao1");
+			ell.definirValores(concAlfa, concBeta);
+			ell.calcularParametros();
+			parametros = ell.acessarParametros();
+			intervalos = ell.acessarIntervalos();
+			r2 = ell.acessarR2();
+			limInf = menor(concAlfa);
+			limSup = maior(concAlfa);
+			passo = (limSup - limInf) / intervalo;
+			for(var i = 0; i <= intervalo; i++) {
+				plotX[i] = limInf + i * passo;
+				plotY1[i] = ell.calcularBetaViaAlfa(plotX[i]);
+			}
+			// Verifica o critério de escolha da melhor regressão
+			if(criterio == 'r2') {
+				if(r2 > decisao) {
+					decisao = r2;
+					melhorModelo = '1';
+				}
+			} else {
+				var dp = maior([intervalos[0] / parametros[0], intervalos[1] / parametros[1], intervalos[2] / parametros[2]]);
+				decisao = dp;
+				melhorModelo = '1';
+			}
+			// Atualiza a string com as respostas
+			exibir = ["Modelo 1", padraoBr(parametros[0], 4) + " &plusmn; " + padraoBr(intervalos[0],4), padraoBr(parametros[1], 4) + " &plusmn; " + padraoBr(intervalos[1],4), padraoBr(parametros[2], 4) + " &plusmn; " + padraoBr(intervalos[2],4), "-", padraoBr(r2, 6)];
+			str = '<tr><th class="celula"></th><th class="celula">a<sub>0</sub></th><th class="celula">a<sub>1</sub></th><th class="celula">a<sub>2</sub></th><th class="celula">a<sub>3</sub></th><th class="celula">r<sup>2</sup></th></tr>';
+			str += '<tr><td class="celula">' + exibir[0] + '</td><td class="celula">' + exibir[1] + '</td><td class="celula">' + exibir[2] + '</td><td class="celula">' + exibir[3] + '</td><td class="celula">' + exibir[4] + '</td><td class="celula">' + exibir[5] + '</td></tr>';
+
+			// Calcula parâmetros para a segunda equação, preparando listas com valores para desenho do gráfico
+			ell.definirEquacao("equacao2");
+			ell.calcularParametros();
+			parametros = ell.acessarParametros();
+			intervalos = ell.acessarIntervalos();
+			r2 = ell.acessarR2();
+			for(var i = 0; i <= intervalo; i++) {
+				plotY2[i] = ell.calcularBetaViaAlfa(plotX[i]);
+			}
+			// Verifica o critério de escolha da melhor regressão
+			if(criterio == 'r2') {
+				if(r2 > decisao) {
+					decisao = r2;
+					melhorModelo = '2';
+				}
+			} else {
+				var dp = maior([intervalos[0] / parametros[0], intervalos[1] / parametros[1], intervalos[2] / parametros[2], intervalos[3] / parametros[3]]);
+				if(dp < decisao) {
+					decisao = dp;
+					melhorModelo = '2';
+				}
+			}
+			// Atualiza a string com as respostas
+			exibir = ["Modelo 2", padraoBr(parametros[0], 4) +" &plusmn; " + padraoBr(intervalos[0],4), padraoBr(parametros[1], 4) + " &plusmn; " + padraoBr(intervalos[1],4), padraoBr(parametros[2], 4) +" &plusmn; " + padraoBr(intervalos[2],4), padraoBr(parametros[3], 4) + " &plusmn; " + padraoBr(intervalos[3],4), padraoBr(r2, 6)];
+			str += '<tr><td class="celula">' + exibir[0] + '</td><td class="celula">' + exibir[1] + '</td><td class="celula">' + exibir[2] + '</td><td class="celula">' + exibir[3] + '</td><td class="celula">' + exibir[4] + '</td><td class="celula">' + exibir[5] + '</td></tr>';
+
+			// Calcula parâmetros para a terceira equação, preparando listas com valores para desenho do gráfico
+			ell.definirEquacao("equacao3");
+			ell.calcularParametros();
+			parametros = ell.acessarParametros();
+			intervalos = ell.acessarIntervalos();
+			r2 = ell.acessarR2();
+			for(var i = 0; i <= intervalo; i++) {
+				plotY3[i] = ell.calcularBetaViaAlfa(plotX[i]);
+			}
+			// Verifica o critério de escolha da melhor regressão
+			if(criterio == 'r2') {
+				if(r2 > decisao) {
+					decisao = r2;
+					melhorModelo = '3';
+				}
+			} else {
+				var dp = maior([intervalos[0] / parametros[0], intervalos[1] / parametros[1], intervalos[2] / parametros[2], intervalos[3] / parametros[3]]);
+				if(dp < decisao) {
+					decisao = dp;
+					melhorModelo = '3';
+				}
+			}
+			// Atualiza a string com as respostas
+			exibir = ["Modelo 3", padraoBr(parametros[0], 4) + " &plusmn; " + padraoBr(intervalos[0],4), padraoBr(parametros[1], 4) + " &plusmn; " + padraoBr(intervalos[1],4), padraoBr(parametros[2], 4) + " &plusmn; " + padraoBr(intervalos[2],4), padraoBr(parametros[3], 4) + " &plusmn; " + padraoBr(intervalos[3],4), padraoBr(r2, 6)];
+			str += '<tr><td class="celula">' + exibir[0] + '</td><td class="celula">' + exibir[1] + '</td><td class="celula">' + exibir[2] + '</td><td class="celula">' + exibir[3] + '</td><td class="celula">' + exibir[4] + '</td><td class="celula">' + exibir[5] + '</td></tr>';
+
+			// Exibe respostas na tela
+			$(".resultadoell").remove();
+			$(".resRegEll").append('<p class="resultadoell resGeral">Na tabela abaixo estão os parâmetros encontrados (a<sub>i</sub>) para as  três equações cadastradas, juntamente com o coeficiente de determinação (r<sup>2</sup>). O melhor modelo ajustado foi o ' + melhorModelo + ' e os dados experimentais com a curva teórica estão desenhados logo abaixo da tabela.</p>');
+			$(".resRegEllGraf").append('<div class="resultadoell"><p class="margemSuperior text-center">Tabela 1. Parâmetros e coeficiente de determinação para os três modelos.</p><table class="tabela txtResposta1 margemTabela">' + str + '</table></div>');
+			
+			// Prepara os dados para alimentar o Chart.js
+			var dadosExperimentais = [], dadosFuncao = [], ponteiro = [];
+			switch(melhorModelo) {
+				case '1': ponteiro = plotY1; break;
+				case '2': ponteiro = plotY2; break;
+				case '3': ponteiro = plotY3; break;
+			}
+			for(var i = 0; i < concAlfa.length; i++) {
+				dadosExperimentais.push([concAlfa[i], concBeta[i]]);
+			}
+			for(var i = 0; i < plotX.length; i++) {
+				dadosFuncao.push([plotX[i], ponteiro[i]]);
+			}
+			
+			// Desenha o gráfico e anima as respostas
+			$('.resRegEllGraf').append('<div class="resultadoell centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="graf1"></canvas></div></div>');
+			graficoGeral('graf1', configuracoesPar.titulo, [dadosExperimentais, dadosFuncao], [false, true], ['Experimentais', 'Predição'], ['#007bff', '#000000'], ['#007bff', 'rgba(0,0,0,0)'], configuracoesPar.rotuloX, configuracoesPar.rotuloY);
+			$('.resultadoell').addClass('animacaoPagina');
+		});
+
+		// Função para excluir valores adicionados na seção de concentrações dos pontos de mistura
+		function excluirValorEst(id) {
+			var indc = armazenagem.listaId.indexOf(id);
+			armazenagem.listaId.splice(indc, 1);
+			armazenagem.listaAlfa.splice(indc, 1);
+			armazenagem.listaBeta.splice(indc, 1);
+			$("#"+id).remove();
+		}
+
+		function exibirDivParEst() {
+			var lista = document.getElementById("listaModEst").value;
+			var imagem = document.getElementById("imgModEst");
+			var div1 = document.getElementById("divMod1Ell");
+			var div2 = document.getElementById("divMod2Ell");
+			switch(lista) {
+				case "equacao1":
+					imagem.src = "figuras/modelo1-ell.png";
+					div1.style.display = "block";
+					div2.style.display = "none";
+					break;
+				case "equacao2":
+					imagem.src = "figuras/modelo2-ell.png";
+					div1.style.display = "none";
+					div2.style.display = "block";
+					break;
+				case "equacao3":
+					imagem.src = "figuras/modelo3-ell.png";
+					div1.style.display = "none";
+					div2.style.display = "block";
+					break;
+			}
+		}
+
+		function exibirAlteracaoEst() {
+			var div = document.getElementById("divest0");
+			if(div.style.display == "block") {
+				div.style.display = "none";
+				document.getElementById("linkest0").innerHTML = "Exibir Configurações Avançadas";
+			} else {
+				div.style.display = "block";
+				document.getElementById("linkest0").innerHTML = "Ocultar Configurações Avançadas";
+			}
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+
+	</script>
+
+</html>

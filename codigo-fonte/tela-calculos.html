@@ -1,0 +1,113 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	 <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+    </head>
+	
+	<body class="azulClaro semScroll">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Espaço de seleção dos procedimentos implementados -->
+		<div class="container margemInicial animacaoPagina">
+		
+			<!-- Primeira linha de cálculos -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('dtr')">
+						<p class="txtBlocoSelecao">DTR</p>
+						<p class="txtBlocoSelecaoDescricao">Distribuição de Tempo de Residência</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('dtp')">
+						<p class="txtBlocoSelecao">DTP</p>
+						<p class="txtBlocoSelecaoDescricao">Distribuição de Tamanho de Partícula</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('filtros')">
+						<p class="txtBlocoSelecao">FT</p>
+						<p class="txtBlocoSelecaoDescricao">Filtros e Aplicações</p>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Segunda linha de cálculos -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('ell')">
+						<p class="txtBlocoSelecao">ELL</p>
+						<p class="txtBlocoSelecaoDescricao">Equilíbrio Líquido-Líquido</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('elv')">
+						<p class="txtBlocoSelecao">ELV</p>
+						<p class="txtBlocoSelecaoDescricao">Equilíbrio Líquido-Vapor</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('tc')">
+						<p class="txtBlocoSelecao">TC</p>
+						<p class="txtBlocoSelecaoDescricao">Trocadores de Calor</p>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Terceira linha de cálculos -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('polinomio-interpolador')">
+						<p class="txtBlocoSelecao">PIN</p>
+						<p class="txtBlocoSelecaoDescricao">Polinômio Interpolador de Newton</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('regressao-linear')">
+						<p class="txtBlocoSelecao">RLS</p>
+						<p class="txtBlocoSelecaoDescricao">Regressão Linear Simples</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="blocoSelecao" onclick="navegar('integracao-numerica')">
+						<p class="txtBlocoSelecao">IN</p>
+						<p class="txtBlocoSelecaoDescricao">Integração Numérica</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	
+	<script>
+	
+		function navegar(destino) {
+			window.location.href = destino + '.html';
+		}
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+	
+	</script>
+	
+</html>

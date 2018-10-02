@@ -1,0 +1,103 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Texto -->
+		<div class="container margemInicial">
+			<div class="row">
+				<div class="col-sm-12"><p class="txtTitulo1">SOBRE O PROGRAMA</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Para falar um pouco sobre Zero é preciso contar uma pequena história de como tudo aconteceu, de onde surgiu a ideia maluca, inovadora, interessante ou seja lá como queira chamar, de um programa Open Source que tivesse como público principal os estudantes de engenharia. Então, senta que lá vem história.</p>
+					<p class="txtGeral">Na segunda metade de 2016 eu participei de um projeto para criação de aplicativos mobile para plataforma Android, que pudessem auxiliar o processo de ensino e aprendizado. Naquela época o que eu sabia sobre programação era o simples C++ que fiz no primeiro período da minha graduação, mas era uma oportunidade oferecida por um professor e eu aceitei. Assim, foi plantada a semente de criar uma biblioteca de procedimentos matemáticos para engenharia, capaz de atender as demandas mais comuns e estimulasse a capacidade das pessoas interagirem com ferramentas computacionais e interpretar seus dados.</p>
+					<p class="txtGeral">Não vou mentir, eu conseguia me virar de alguma forma com os códigos Java, mas meu notebook sacana não me ajudava na criação de interfaces utilizando a famosa IDE oficial para desenvolvimento Android, que apelido carinhosamente de "trava pc".</p>
+					<p class="txtGeral">Perdi as contas de quantas vezes refiz códigos, quantas vezes refiz interfaces, tudo que eu fazia parecia feio e sem graça (e eram, acredite). Porém, em determinado momento, uma ligação do meu professor, o mesmo que me ofereceu o trabalho com Android, levou-me a um lugar que foi decisivo para a criação deste programa. Um outro professor precisava de alguém para ajudar em um projeto com laboratório virtual de química, alguém que soubesse um pouco de química e um pouco de programação. Aceitei e fui para uma sala onde conheci duas pessoas que foram fundamentais para Zero.</p>
+					<p class="txtGeral">Neste lugar, comecei a trabalhar com tecnologia web e um dos supervisores me adiantou logo no primeiro dia: "Cuidado que programação web é igual cachaça, uma vez dentro você não quer voltar". Não é que ele estava certo? Me deparei com a capacidade do HTML junto do CSS de fazer coisas que eu nem sonharia com o inexistente conhecimento do XML para android que eu possuía. Desfrutei da incrível flexibilidade do JS para realizar recursos técnicos (gambiarra) e resolver problemas complexos.</p>
+					<p class="txtGeral">As duas pessoas que conheci abriram a minha mente para um mundo de programação e design que nunca imaginaria. Por causa disso é que hoje você tem este programa em mãos. O tempo que trabalhei no novo projeto foram fundamentais para que eu evoluisse de aspirante a desenvolvedor para engenheiro que acha ser desenvolvedor.</p>
+					<p class="txtGeral">Zero na verdade não é o primeiro, existiram outros dois antes dele. Seus antecessores foram afundados pela minha inexperiência, quando ocorria um problema eu tentava contorná-lo de alguma forma, mas essa solução frágil não se sustentava e logo mais o caos estava firmado. O ponto principal era que eu ainda possuía uma visão muito restrita dos procedimentos de engenharia, de cálculo e de estatística. Foi então que eu percebi que, na verdade, todo o conhedimento estava segregado, precisava ser unido, precisava interagir mais com as áreas que o compunham.</p>
+					<p class="txtGeral">Os dois programas então morreram, seus códigos eu nem possuo a audácia de rever. No final de 2017 eu comecei a criar as classes que seriam a alma de Zero. Nesse processo, fiquei atento para cada detalhe ao meu redor. Como disse, o conhecimento estava todo segregado e eu necessitava unir o possível para que a aplicação atingisse seu objetivo. E só para dar mais um exemplo do destino, uma conversa com alguém que trabalhava no mesmo lugar sobre problemas intratáveis foi responsável por um algoritmo que resolvesse um problema específico de engeharia.</p>
+					<p class="txtGeral">Nesse ponto, já tinha deixado de lado os meus códigos Java e sua interface JavaFX, pois as palavras de aviso daquela pessoa foram fatais e sua dica certeira. Era preciso desenvolver para web. E como fazer isso? Electron foi a resposta dada para minha indagação. De fato, o poder do HTML + CSS foi decisivo para a criação de uma interface aceitável, que junto com as classes JS, formaram uma aplicação desktop robusta o suficiente para resolver os principais problemas propostos.</p>
+					<p class="txtGeral">Além disso, a comunidade Open Source do JavaScript é realmente impressionante, pois situações que poderiam gerar trabalho em abordagens diferentes não foram nem um pouco preocupantes. Isso se deu pela adoção de frameworks, plugins e bibliotecas livres, como Bootstrap, JQuery e Handsontable, cujas licenças estão disponíveis no mesmo diretório de seus códigos.</p>
+					<p class="txtGeral">Gostaria de reforçar que o grande objetivo é unir o que foi aparentemente separado. Existem programas por ai que fazem integração numérica, outros interpolação polinomial e assim por diante. Mas muitas vezes esses procedimentos são uma parte de um situação maior. A interação entre cálculo, álgebra, engenharia, física e computação é capaz de resolver casos que, ao primeiro olhar, são impossíveis de serem avaliados.</p>
+					<p class="txtGeral">As classes criadas conversam entre si para fornecer um resultado e essa conversa é descrita para cada tipo de dimensionamento, pois Zero não realiza mágica com os dados informados pelo usuário, ele realiza rotinas interdisciplinares, descritas detalhadamente na seção de informações auxiliares do assunto tratado.</p>
+					<p class="txtGeral">Para finalizar essa longa exposição, reafirmo que Zero é Open Source, foi feito para que você pudesse utilizar, alterar e opinar. Fiz o possível com o tempo e conhecimento que dispunha, mas tenho a certeza de que não é o necessário. Sinta-se livre para acessar os códigos e melhorar o que souber, sinta-se livre para criticar o que está feito, sinta-se livre para utilizar o programa da forma que achar melhor. Espero que possa tornar seus estudos mais interessantes, da mesma forma que desenvolver esta ferramenta tornou os meus melhores.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+</html>

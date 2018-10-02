@@ -1,0 +1,284 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+		<nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Área de texto -->
+		<div class="container margemInicial">
+			<!-- Título -->
+			<div class="row">
+				<div class="col-sm-12"><p class="txtTitulo1">DISTRIBUIÇÃO DE TAMANHO DE PARTÍCULA</p></div>
+			</div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+
+			<!-- Seção da definição -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Compreender a granulometria de um material particulado é necessário, pois a partir dela é possível dimensionar equipamentos para tratamento ou controle de qualidade do produto em questão. Assim, é útil desenvolver uma forma de se avaliar essa característica, capaz de descrever a situação granulométrica das partículas tanto para dimensionamento quanto para garantia de critério de produção.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<p class="txtGeral">Uma técnica capaz de entregar a análise granulométrica é o Teste de Peneira (CREMASCO, 2012), que consiste na passagem de uma amostra do particulado por uma sequência de peneiras com diâmetros de furo variados, do maior no topo para o menor no fundo, como esquematizado na Figura 1. Um teste bem executado resulta na distribuição de massa em todas as peneiras do meio, com nenhuma massa no fundo ou no topo. Caso este resultado não ocorra, alteram-se as peneiras para outras com diâmetros diferentes.</p>
+					<p class="txtGeral">Por exemplo, caso seja retida massa na peneira de topo, issso é indício de que os diâmetros estão muito pequenos para as partículas existentes, então a melhor configuração é alterar as peneiras para diâmetros de furos maiores. No caso da massa transpassar pela peneira de fundo, melhor estruturação é obtida com peneiras de diâmetros de furo menores.</p>
+				</div>
+				<div class="col-sm-6">
+					<div class="centralizar"><img height="420px" src="figuras/teste-peneira.png" class="margemElemento"></img></div>
+					<div class="centralizar"><p class="txtGeral">Figura 1. Esquema do teste de peneira.</p></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Um teste de peneira bem realizado gera dados de massa em cada paneira. A interpretação é feita da seguinte forma: as partículas passaram pela peneira 1, com 2 mm de diâmetro, e foram retidas pela peneira 2, com 1,5 mm de diâmetro. Assim, assumi-se que o diâmetro médio dessa massa do material partículado é a média entre a peneira 1 e a peneira 2 (CREMASCO, 2012), ou seja, 1,75 mm. Com esse tratamento, obtem-se dados como os exemplificados na Tabela 1.</p>
+					<p class="txtGeral">Com os valores da Tabela 1 é possível executar uma regressão linear para encontrar os parâmetros da equação Distribuição de Tamanho de Partícula (DTP), que relaciona o diâmetro da partícula com a fração acumulada. Esta equação é fundamental em dimensionamento de equipamentos, como por exemplo o ciclone, com utilidade também para identificação de diâmetros máximos e mínimos, a partir da própria expressão ou do gráfico gerado pela mesma (CREMASCO, 2012).</p>
+					<div class="centralizar"><p class="txtGeral">Tabela 1. Exemplos de dados obtidos pelo teste de peneira.</p></div>
+					<div class="centralizar">
+						<table class="tabela">
+							<tr class="txtGeral">
+								<th class="celula">Diâmetro Médio (mm)</th>
+								<th class="celula">Massa Retida (g)</th>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">1,75</td>
+								<td class="celula">7</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">1,25</td>
+								<td class="celula">3</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,875</td>
+								<td class="celula">4</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,625</td>
+								<td class="celula">7</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,4</td>
+								<td class="celula">2</td>
+							</tr>
+						</table>
+					</div>
+					<p class="txtGeral margemTitulo">A regressão linear porém não é de uma equação típica de reta, pois a fração acumulada em função do diâmetro possiu comportamento de função cumulativa em forma de "S", cuja imagem se estabiliza na unidade a partir de dado valor finito do domínio. Existem modelos específicos para DTP, que podem ser linearizados para se aplicar uma regressão linear simples e estimar os parâmetros do modelo desejado, sendo três mais comuns, os modelos GGS, RRB e Sigmóide (CREMASCO, 2012), ilustrados nas Equações 1, 2 e 3, respectivamente.</p>
+					<!-- Equações dos modelos -->
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/ggs.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/rrb.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/sigmoide.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>X = fração acululada de partículas;</br>d<sub>p</sub> = diâmetro da partícula;</br>a e b = parâmetros do modelo.</p>
+					<p class="txtGeral margemTitulo">A linearização dos modelos envolve operações com logaritmo natual, que não recebe como argumento valores menores ou iguais a zero. Porém, a própria definição de diâmetro e fração acumulada impede a existência desses valores, de modo que esta excessão não representa nenhum problema para o procedimento. Outra particularidade da linearização é que para os modelos RRB e Sigmóide não é adimitido um valor de fração acumulada igual a 1, pois isso resulta em um argumento inválido no logaritmo natural.</p>
+					<p class="txtGeral">Para converter os valores de massa em fração acumulada é preciso escolher uma convenção para cálculo entre as duas opções disponíveis: considerar que a massa no diâmetro médio toda está abaixo do mesmo, ou considerar que toda a massa no diâmetro médio está acima do mesmo (CREMASCO, 2012). A fração acumulada no diâmetro médio é calculada a partir da razão entre toda a massa abaixo do diâmetro e a massa total empregada no teste. Para os valores do exemplo anterior, obtem-se os resultados exibidos na Tabela 2.</p>
+					<div class="centralizar"><p class="txtGeral">Tabela 2. Conversão dos valores de massa em fração acumulada.</p></div>
+					<div class="centralizar">
+						<table class="tabela">
+							<tr class="txtGeral">
+								<th class="celula">Diâmetro Médio (mm)</th>
+								<th class="celula">Fração Acumulada</th>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">1,75</td>
+								<td class="celula">0,84375</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">1,25</td>
+								<td class="celula">0,625</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,875</td>
+								<td class="celula">0,53125</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,625</td>
+								<td class="celula">0,40625</td>
+							</tr>
+							<tr class="txtGeral">
+								<td class="celula">0,4</td>
+								<td class="celula">0,1875</td>
+							</tr>
+						</table>
+					</div>
+					<p class="txtGeral margemTitulo">Com os valores de diâmetro e fração acumulada, é preciso realizar as mudanças de variáveis necessárias para cada modelo e então executar a regressão linear simples. As expressões da linearização dos modelos GGS, RRB e Sigmóide são mostradas nas Equações 4, 5 e 6, respectivamente. Ao se obter os valores das estimativas dos parâmetros dos modelos, encontra-se então a equação que define a DTP. Uma forma de escolher qual o melhor modelo é executar a regressão para os três e avaliar qual possui o maior coeficiente de determinação (r<sup>2</sup>).</p>
+					<!-- Equações dos modelos linearizados -->
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/linearizacao-ggs.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 4</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/linearizacao-rrb.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 5</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/linearizacao-sigmoide.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 6</p></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção para explicação do método utilizado por Zero -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="2">2. EXTRATÉGIA DE RESOLUÇÃO UTILIZADA</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">A função principal de Zero é realizar o trabalho pesado do procedimento de determinação dos parâmetros dos modelos de DTP, que são as mudanças de variáveis para regressão linear simples. A aplicação recebe como entrada o diâmetro, a fração acumulada (ou massas retidas) e a massa total, no caso de dados de massas, para trabalhar sobre eles e realizar três regressões, com armazenamento dos valores dos parâmetros encontrados e também do coeficiente de determinação.</p>
+					<p class="txtGeral">Adicionamente, o programa também calcula os diâmetros médios volumétrico, superficial e de Sauter, calculados de acordo com as Equações 7, 8 e 9, caso a entrada de dados informada pelo usuário for massa retida em função do diâmetro.</p>
+					<!-- Equações dos modelos linearizados -->
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/dm-volumetrico.png" width="250px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 7</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/dm-superficial.png" width="250px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 8</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/dm-sauter.png" width="250px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 9</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>m<sub>i</sub> = massa retida no ponto i;</br>d<sub>i</sub> = diâmetro da partícula no ponto i;</br>m<sub>total</sub> = massa total da amostra utilizada;</br>d<sub>m,vol</sub> = diâmetro médio volumétrico;</br>d<sub>m,sup</sub> = diâmetro médio superficial;</br>d<sub>m,sauter</sub> = diâmetro médio de Sauter.</br></p>
+				</div>
+			</div>
+
+			<!-- Seção para explicação do procedimento experimental -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL DISPONÍVEL</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">O procedimento de determinação da função DTP é puramente experimental, de modo que sua execução necessita de módulo de teste de peneira (ou estratégia similar) para recolhimento de dados experimentais.</p>
+					<p class="txtGeral">A utilização de Zero permite que sejam executados vários testes de peneira, com a alteração da amostra utilizada ou da sequência de peneiras, para averiguar a influência dessas mudanças sobre os resultados. Além disso, o programa gera automaticamente gráficos com os pontos, para que o usuário possa visualizar a qualidade dos dados experimentais informados.</p>
+				</div>
+			</div>
+
+			<!-- Seção para explicação do modo de utilizar -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="4">4. MODO DE UTILIZAÇÃO DO PROCEDIMENTO DISPONÍVEL</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">A seção de cálculo DTP é bem simples e intuitiva. O usuário precisa escolher primeiro o tipo de entrada de dados entre os dois disponíveis na lista: fração acumulada versus diâmetro ou massa retida versus diâmetro. Caso este seja selecionado, logo abaixo da seleção aparecerá uma caixa para que se informe a massa total da amostra utilizada. Depois, o usuário escolhe a unidade do diâmetro de partícula. Esta escolha não tem interferência no cálculo da DTP, serve para deixar a resposta mais amigável, pois as equações envolvem unicamente diâmetro e retornam valores com a unidade original do diâmetro utilizado.</p>
+					<p class="txtGeral">Após selecionar o tipo de entrada e o diâmetro, basta inserir os dados experimentais nos espaços adequados, semelhantes aos de planilhas eletrônicas. Por fim, quando todos os dados forem informados, é só clicar no botão "Executar Cálculos", que irá exibir a tebela com o resultado da regressão para os três modelos, o gráfico dos pontos experimentais e uma tabela com os diâmetros médios, caso a entrada de dados seja massas retidas em função do diâmetro.</p>
+				</div>
+			</div>
+
+			<!-- Seção para referências -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="5">5. REFERÊNCIAS</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">CREMASCO, Marco Aurélio. Operações unitárias em sistemas particulados e fluidomecânicos. São Paulo: Blucher, 2012. 423 p. ISBN 9788521205937.</p>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+	
+	<script>
+	
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000; 
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+	
+	</script>
+
+</html>

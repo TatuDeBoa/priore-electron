@@ -1,0 +1,200 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Início do texto, título -->
+		<div class="container margemInicial">
+			<div class="row"><div class="col-sm-12"><p class="txtTitulo1">FILTROS - FILTRO PRENSA</p></div></div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção do texto de definição -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Filtrar é separar sólidos de uma corrente líquida e esta operação é uma das mais conhecidas. Um exemplo clássico é o processo de tratamento de água, que envolve um filtro de areia em uma das etapas. Um esquema de como ocorre o processo de filtragem está representado na Figura 1.</p>
+					<div class="text-center"><img class="margemElemento" src="figuras/esquema-filtro.png"></img></div>
+					<p class="txtGeral text-center">Figura 1. Esquema de filtração simples, com queda de pressão constante.</p>
+					<p class="txtGeral margemTitulo">Existem duas formas de se conduzir a filtração, a primeira é manter a queda de pressão aplicada sobre o meio filtrante constante e a outra é manter a vazão de filtrado recolhido constante (CREMASCO, 2012). Com o desenvolvimento do tempo de operação, o sólido contido na alimentação é retido e forma a Torta de Filtro. Por causa de tal fato é que o processo de filtragem é em batelada, pois o acúmulo de particulados dificulta cada vez mais a passagem do líquido.</p>
+					<p class="txtGeral">Na operação com queda de pressão constante, a formação da torta provoca uma diminuição da vazão de filtrado recolhido, já para o modo de operação com vazão de filtrado constante, o acúmulo de torta exige que seja aplicada uma maior pressão sobre o meio filtrante, o que faz com que a queda de pressão aumente com o tempo.</p>
+					<p class="txtGeral">O equacionamento do processo de filtragem é desenvolvido a partir da equação base da filtração, a Equação 1 (CREMASCO, 2012). De acordo com o modo de operação, a diferencial é avaliada de forma diferente. A Equação 2 representa o procedimento com queda de pressão constante e a Equação 3 o com vazão de filtrado constante (COULSON, 2012).</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-geral-filtracao.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-filtracao-pressao-constante.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-filtracao-vazao-constante.png" width="300px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>V = volume de filtrado (m<sup>3</sup>);</br>t = tempo de filtração (s);</br>A = área de filtração (m<sup>2</sup>);</br>(-&Delta;P) = queda de pressão (Pa);</br>&mu; = viscosidade dinâmica (Pa s);</br>&alpha; = resistência específica da torta (m kg<sup>-1</sup>);</br>C = razão entre massa de torta seca e volume de filtrado (kg m<sup>-3</sup>);</br>Rm = resistência do meio filtrante (m<sup>-1</sup>);</br>Q = vazão de filtrado (m<sup>3</sup>).</p>
+					<p class="txtGeral margemTitulo">Para dimensionamento de filtros, devem de ser conhecidos os valores das propriedades da torta (&alpha;) e do meio filtrante (Rm). Ambos parâmetros podem ser estimados experimentalmente, através de um teste laboratorial, com a mesma substância a ser filtrada e o mesmo meio filtrante, a partir da regressão linear dos dados encontrados (CREMASCO, 2012).</p>
+					<p class="txtGeral">Em casos industriais, o filtro clássico (um recipiente com uma membrana) pode não ser muito eficiente, pois ocuparia muito espaço e seriam necessários vários equipamentos em paralelo para executar o trabalho em alta vazão. Uma configuração mais interessante é a de placas e quadros, o chamado Filtro Prensa, desenvolvido para operar com vazões elevadas e em espaços compactos quando comparado com o filtro comum (COULSON, 2011). Nele, o meio filtrante fica entre as placas e o fluido a ser filtrado percorre as mesmas, de modo que a torta é formada dentro filtro, o que facilita a remoção ou recuperação dela. A Figura 2 é um desenho esquemático do funcionamento de um filtro prensa. As placas (parte sólida) e os quadros (parte com o meio filtrante) são prensadas sucessivamente e formam o filtro prensa.</p>
+					<div class="text-center"><img src="figuras/esquema-filtro-prensa.png" class="margemElemento"></img></div>
+					<p class="txtGeral text-center">Figura 2. Esquema do funcionamento do filtro prensa.</p>
+					<p class="txtGeral margemTitulo">Filtros prensas são dimensionados, frequentemente, por meio da produção dele, representada pela Equação 4 (COULSON, 2011). Também, sua operação mais comum é com queda de pressão constante e a área de filtragem é determinada pela quantidade de quadros que compõem o filtro.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-filtracao-producao.png" width="200px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 4</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>prod = produção do filtro (m<sup>3</sup> s<sup>-1</sup>);</br>t<sub>total</sub> = tempo de operação somado com o tempo não operacional (s).</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção da explicação da extratégia de solução -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="2">2. ESTRATÉGIA DE RESOLUÇÃO UTILIZADA</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Existem dois procedimentos disponíveis em Zero para filtração. O primeiro é a determinação dos parâmetros da torta e do meio filtrante e o segundo é o dimensionamento de filtro prensa. Para o primeiro, o processo é simples, após receber os dados informados pelo usuário, é feita a regressão linear simples e então são estimados os valores para &alpha; e Rm.</p>
+					<p class="txtGeral">O dimensionamento do filtro prensa é um pouco mais complexo. Estão disponíveis 5 modos de dimensionamento, em que cada um possui uma forma de cálculo diferente, detalhados abaixo.</p>
+					<p class="txtGeral">Método 1) Determinar o número de quadros para um volume de filtrado específico: Neste dimensionamento o objetivo é encontrar o número de quadros, em outras palavras a área de filtragem ou tamanho do filtro, necessário para se atingir a produção e volume de filtrado recolhido especificado como critérios de projeto. Como a área não está definida, é acionada uma rotina numérica iterativa semelhante ao método de aproximação por intervalos, que itera sobre um limite inferior e um superior de número de quadros (definidos dinâmicamente pelo algoritmo) para calcular um tempo de operação. Quando o tempo de operação encontrado gera a produção informada, tem-se a resposta para o número de quadros necessários.</p>
+					<p class="txtGeral">Método 2) Determinar o número de quadros para um tempo específico de filtração: Este dimensionamento é parecido com o anterior, com a troca da iteração sobre o tempo para a iteração sobre o volume. Uma rotina numérica semelhante é acionada e quando o volume de filtrado gera a produção informada como critério de projeto, encontra-se o número de quadros necessários.</p>
+					<p class="txtGeral">Método 3) Determinar produção para um tempo específico de filtração: Para este dimensionamento, a área é conhecida, ou seja, o tamanho do filtro é definido, o necessário é avaliar a produção, por meio do tempo de filtração como critério de projeto. Tal procedimento é mais simples, pois a avaliação da raíz da Equação 2 permite o cálculo do volume de filtrado e posteriormente a produção, pela Equação 4.</p>
+					<p class="txtGeral">Método 4) Determinar produção para um volume de filtrado específico: Processo semelhante ao anterior, porém o critério de projeto deixa de ser o tempo de operação e se torna o volume de filtrado recolhido em cada batelada. Os cálculos são mais diretos, pois a Equação 2 já fornece o tempo de operação do filtro. Por fim, a produção é calculada.</p>
+					<p class="txtGeral">Método 5) Otimização: Este processo otimiza a produção através da derivação da Equação 4 em função do volume. Com o número de quadros definidos (tamanho do filtro), encontra-se as condições de produção máxima, com o tempo de operação e volume de filtrado recolhido em cada batelada.</p>
+					<p class="txtGeral">Os processos ainda incluem nas suas rotinas o tempo de lavagem da torta, somado ao tempo não operacional informado pelo usuário.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção do procedimento experimental possível -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL POSSÍVEL</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">É relativamente simples realização do teste experimental para determinação da resistência da torta (&alpha;) e do meio filtrante (Rm), principalmente na operação com queda de pressão constante. Neste caso, são recolhidos dados de volume de filtrado recolhido em função do tempo de filtragem. Esses valores são utilizados para regressão linear da Equação 2 (com uma pequena mudança de variável).</p>
+					<p class="txtGeral">Porém, há uma consideração a ser feita. Os pontos iniciais e finais da filtração podem ser distoantes, pois a inexistência da torta no primeiro caso e o acúmulo de torta no segundo caso, podem provocar situações de vazão constante. Assim, é bom avaliar também o gráfico gerado pelos pontos experimentais e caso existam situações que representem comportamento de vazão constante, é melhor removê-los para evitar erros na estimativa dos parâmetros (CREMASCO, 2012).</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção de explicação do modo de utilização dos procedimentos disponíveis -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2"id="4">4. MODO DE UTILIZAÇÃO DOS PROCEDIMENTOS DISPONÍVEIS</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Devido a grande quantidade de variáveis e com elas várias unidades, Zero não fixa uma unidade padrão na seção de filtros. Assim que o usuário informar o valor de um parâmetro, poderá escolher a unidade do parâmetro informado na lista disponível. Isso permite uma maior flexibilidade de uso, já que existem casos de que o sistema internacional não é utilizado.</p>
+					<p class="txtGeral">Para utilização do procedimento de determinação de parâmetros da torta e do filtro, são necessários dados numéricos de volume em função do tempo ou queda de pressão em função do tempo, de acordo com o modo de operação do filtro. Primeiramente é necessário que o usuário descreva o sistema, ou seja, informe a viscosidade dinâmica, massa de torta por volume de filtrado, área de filtração e o modo de operação, junto com o parâmetro fixado (queda de pressão ou vazão de filtração).</p>
+					<p class="txtGeral">Determinado o sistema, procede-se com a inserção dos dados experimentais nos espaços apropriados, semelhantes aos de planilhas eletrônicas. Também é preciso que sejam escolhidas as unidades dos dados experimentais, nas listas acima da tabela de entrada de valores.</p>
+					<p class="txtGeral">Finalizado o processo de entrada de valores, o resultado é exibido ao clicar no botão "Executar Cálculos" e é desenhado um gráfico com os pontos experimentais. Este é útil para se avaliar a qualidade dos pontos, principalmente na operação com queda de pressão constante, que pode apresentar comportamento anômalo no início e no final da filtração. Caso o usuário entenda que é preciso remover alguns pares de valores, é só apagá-los na tabela e clicar novamente no botão, para novo cálculo.</p>
+					<p class="txtGeral">No dimensionamento do filtro prensa existem dois tipos de entrada de dados: um genérico para todos os tipos de dimensionamento e outro específico. O primeiro diz respeito ao sistema de filtração, viscosidade, massa de torta por volume de filtrado, queda de pressão, volume de lavagem, tempo não operacional (lavagem, desmonte e etc.), área do quadro, resistência específica da torta e resistência do meio filtrante. Já o segundo tipo varia de acordo com o tipo de dimensionamento, ou seja, de acordo com o critério de projeto escolhido.</p>
+					<p class="txtGeral">Existem 5 métodos de dimensionamento possíveis e de acordo com cada um deles é necessário que o usuário informe um critério de projeto diferente. Por exemplo, para determinar o número de quadros (tamanho) do filtro para um tempo de operação, devem ser informadas a produção desejada e o tempo de cada batelada como critério de projeto. Ao selecionar um modo de dimensionamento, aparecerão abaixo caixas com o nome das informações necessárias e as unidades disponíveis para escolha.</p>
+					<p class="txtGeral">Após preencher todas os dados necessários, os cálculos serão executados após clicar no botão "Dimensionar". A resposta será exibida em forma de texto, logo abaixo do botão.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção das referências consultadas -->
+		<div class="container">
+			<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="5">5. REFERÊNCIAS</p></div></div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">CREMASCO, Marco Aurélio. Operações unitárias em sistemas particulados e fluidomecânicos. São Paulo: Blucher, 2012, 423 p. ISBN 9788521205937.</p>
+					<p class="txtGeral">COULSON, J. M.; RICHARDSON, J.F. Chemical engineering: J.F. Richardson, J.M. Coulson. New York: Pergamon Press, 2011, ISBN 0080379508.</p>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+	
+	<script>
+	
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000; 
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+	
+	</script>
+
+</html>

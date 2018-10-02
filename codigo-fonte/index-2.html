@@ -1,0 +1,65 @@
+<!DOCTYPE>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+    </head>
+	
+    <body class="azul">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Corpo do texto -->
+		<div class="container margemInicial animacaoPagina">
+			<div class="row margemSuperiorGrande">
+				<!-- Texto de apresentação -->
+				<div class="col-sm-5 ">
+					<!--<img src="figuras/logo-preto-branco.png" width="300px" class="margemInferior"></img> -->
+					<p class="txtSobre">Olá, bem-vindo(a) ao programa Priore, um projeto Open Source com o objetivo de unir programação, métodos numéricos e engenharia, sem esconder do usuário o que é feito. Aqui você encontrará vários procedimentos corriqueiros da engenharia, assim como as explicações de como são realizados.</p>
+					<p class="txtSobre">Já "bati cabeça" muitas vezes durante meus estudos e me frustei algumas vezes ao escutar que parte do que eu estudava deveria de ser resolvido com ajuda de um programa, que não raramente era pago e não possuía versão de estudante. Por isso resolvi aprender a programar e montar uma aplicação livre com tudo que eu pudesse. Você está diante do resultado do meu trabalho, espero que este aplicativo possa ser útil para seu crescimento acadêmico ou pessoal. Sinta-se a vontade, Priore é um software livre e de código aberto e, caso se sinta interessado, contribua com o desenvolvimento dele. Nos vemos por aí.</p>
+					<p class="txtAssinatura">Bruno de Lima</p>
+				</div>
+				<!-- Texto de agradecimentos -->
+				<div class="col-sm-7">
+					<p class="txtSobre margemEsquerda">Gostaria de aproveitar este espaço para agradecer algumas pessoas muito importantes para que Priore se tornasse possível.</p>
+					<p class="txtSobre margemEsquerda">Primeiro agradeço minha mãe, Neuza, e minhas irmãs Lucélia e Joana, que acreditaram em mim e me apoiaram nos meus projetos.</p>
+					<p class="txtSobre margemEsquerda">Agradeço aos professores André Sato e André Fernando, que além de me ensinarem muitas coisas também foram o estopim para que eu encontrasse outras pessoas importantes.</p>
+					<p class="txtSobre margemEsquerda">Agradeço ao Pedro Sacramento e Edson Ney, que me apresentaram um mundo diferente de programação. Sem os seus ensinamentos e conselhos, é provável que não conseguiria chegar até aqui.</p>
+					<p class="txtSobre margemEsquerda">Agradeço ao grande amigo Antônio Marcos, que ajudou na construção de todo o design de Priore. A beleza e harmonia dessa interface é devido à ele.</p>
+					<p class="txtSobre margemEsquerda">Agradeço aos amigos Marcos Passos, Angélica Lorena e Jean Lucas. As conversar e apoio que me deram foi muito importante, principalmente para não desistir.</p>
+					<p class="txtSobre margemEsquerda">Por fim, mas não menos importante, deixo meu agradescimento aos anônimos do Stack Overflow. Quando eu estava sozinho e com problemas que pareciam impossíveis de serem resolvidos, a ajuda deles se fez presente.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+    </body>
+	
+	<script>
+	
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+	
+	</script>
+
+</html>

@@ -1,0 +1,122 @@
+/* Fontes importadas */
+@font-face { font-family: abel; src: url('fontes/Abel-Regular.ttf'); }
+@font-face { font-family: aclonica; src: url('fontes/Aclonica.ttf'); }
+@font-face { font-family: acme; src: url('fontes/Acme-Regular.ttf'); }
+@font-face { font-family: aguafina; src: url('fontes/AguafinaScript-Regular.ttf'); }
+@font-face { font-family: aladin; src: url('fontes/Aladin-Regular.ttf'); }
+@font-face { font-family: aldrich; src: url('fontes/Aldrich-Regular.ttf'); }
+@font-face { font-family: alex; src: url('fontes/AlexBrush-Regular.ttf'); }
+@font-face { font-family: allan; src: url('fontes/Allan-Regular.ttf'); }
+@font-face { font-family: allerta; src: url('fontes/allerta_medium.ttf'); }
+@font-face { font-family: allura; src: url('fontes/Allura-Regular.ttf'); }
+@font-face { font-family: amaranth; src: url('fontes/Amaranth-Regular.ttf'); }
+@font-face { font-family: andada; src: url('fontes/Andada-Regular.otf'); }
+@font-face { font-family: arbutus; src: url('fontes/ArbutusSlab-Regular.ttf'); }
+@font-face { font-family: architects; src: url('fontes/ArchitectsDaughter.ttf'); }
+@font-face { font-family: armata; src: url('fontes/Armata-Regular.ttf'); }
+@font-face { font-family: artifika; src: url('fontes/Artifika-Regular.ttf'); }
+@font-face { font-family: baumans; src: url('fontes/Baumans-Regular.ttf'); }
+@font-face { font-family: berkshire; src: url('fontes/BerkshireSwash-Regular.ttf'); }
+@font-face { font-family: rele; src: url('fontes/Raleway-Regular.ttf'); }
+@font-face { font-family: ibm; src: url('fontes/IBMPlexSans-Regular.ttf'); }
+@font-face { font-family: ibm-bi; src: url('fontes/IBMPlexSans-BoldItalic.ttf'); }
+@font-face { font-family: ibm-b; src: url('fontes/IBMPlexSans-Bold.ttf'); }
+@font-face { font-family: ibm-i; src: url('fontes/IBMPlexSans-Italic.ttf'); }
+@font-face { font-family: nd; src: url('fontes/DawningofaNewDay.ttf'); }
+
+/* Classes de textos de exibição */
+.txtGeral { font-family: amaranth; font-size: 20px; text-align: justify; margin: 10px; }
+.txtApresentacao { font-family: rele; font-size: 25px; text-align: justify; margin-bottom: 15px; color: #464748; }
+/*.txtAssinatura { font-family: alex; font-size: 35px; text-align: right; margin-top: 100px; text-shadow: 1px 1px gray; }*/
+.txtTitulo1 { font-family: ibm; font-size: 35px; text-align: center; margin-bottom: 15px; }
+.txtTitulo2 { font-family: baumans; font-size: 25px; text-align: justify; margin-left: 15px; }
+.txtIcone { font-family: aladin; font-size: 35px; }
+.txtFormulario { font-family: arbutus; font-size: 17px; margin-left: 15px; margin-right: 15px; text-align: justify; }
+.txtLink { font-family: acme; font-size: 17px; color: #007bff; text-decoration: underline; }
+.txtLink:hover { color: black; cursor: pointer; }
+.txtResposta1 { font-family: abel; font-size: 18px; margin: 20px; text-align: justify; }
+.txtProgress { font-family: amaranth; font-size: 20px; text-align: center; margin: 15px; color: #03c148; }
+
+.txtSeletores { font-family: ibm; color: #ffffff; font-size: 17px; }
+.txtSobre { font-family: ibm; color: #ffffff; font-size: 15px; text-align: justify; margin: 7px; }
+.txtAssinatura { font-family: nd; color: #ffffff; font-size: 30px; text-align: center; margin-top: 30px; }
+.txtBlocoSelecao { font-family: ibm; font-size: 60px; text-align: center; margin: -5px; }
+.txtBlocoSelecaoDescricao { font-family: ibm; font-size: 15px; text-align: center; }
+.txtTituloMetodo { font-family: ibm-b; font-size: 25px; text-align: justify; padding-top: 60px; }
+.txtTituloSecao1 { font-family: ibm-b; font-size: 25px; text-align:justify; }
+.txtTituloSecao2 { font-family: rele; font-size: 23px; text-align: justify; }
+.txtConteudo { font-family: rele; font-size: 17px; text-align: justify; }
+.txtFormularioApresentacao { font-family: rele; font-size: 20px; text-align: justify; }
+.txtFormularioGeral { font-family: rele; font-size: 17px; text-align: justify; }
+.txtResposta2 { font-family: rele; font-size: 15px; text-align: justify; }
+
+/* Classes de margem */
+.margemInicial { margin-top: 90px; }
+.margemElemento { margin: 30px; }
+.margemTitulo { margin-top: 40px; }
+.margemInferior { margin-bottom: 30px; }
+.margemSuperior { margin-top: 30px; }
+.margemSuperiorPequena { margin-top: 15px; }
+.margemSuperiorGrande { padding-top: 50px; }
+.margemEsquerda { margin-left: 30px; }
+.margemDireita { margin-right: 30px; }
+.margemTabela { margin-top: -15px; width: 100%; }
+.paddingInferior { padding-bottom: 15px; }
+
+/* Classes de componentes */
+.celula { width: 200px; text-align: center; height: 60px }
+.dadosFormulario { width: 100% !important; }
+.btn25 { width: 25% !important; }
+.btnAcao { font-family: ibm; font-size: 20px; background-color: #000000; color: #ffffff; border-radius: 10px; width: 100%; }
+.btnAcao:hover { background-color: #ffffff; color: #000000; cursor: pointer; border: #f1f1f1 solid 1px; }
+.btnSecundario { font-family: ibm; font-size: 18px; background-color: #ffffff; color: #000000; border-radius: 10px; }
+.btnSecundario:hover { background-color: #000000; color: #ffffff; cursor: pointer; }
+.btnExcluir { font-family: artifika; font-size: 14px; background-color: #b91616; color: ffffff; border-radius: 5px; }
+.btnExcluir:hover { background-color: #f90230; cursor: pointer; }
+.tabela { border-bottom: 1px solid; border-top: 1px solid; }
+
+/* Classes de container */
+.bordaSecao { border: 2px solid; border-radius: 15px; margin-top: 30px; background-color: #f0f7fe; }
+.oculta { display: none; }
+.visivel { display: block; }
+.geral { margin: 30px; }
+.fundo { height: 50px; }
+.blocoSelecao { margin: 15px; padding: 5px; height: 150px; background-color: #ffffff; align-items: center; justify-content: center; display: block; color: #4ac1ee; }
+.blocoSelecao:hover { background-color: #ffffffcc; cursor: pointer; }
+.bordaAlgoritmoELV { border: 1px solid #000000; margin: 15px; padding-top: 20px; padding-left: 20px; padding-right: 20px; }
+.sumarioAjuda { list-style-type: none; font-family: ibm-b; font-size: 16px; text-align: justify; color: #6d6969; cursor: pointer; }
+.indiceAtivoSumario { color: #000000; }
+
+/* Classes de transição de página */
+@keyframes animacaoPagina { from { opacity: 0; transform: scale(.8); } }
+.animacaoPagina { animation: animacaoPagina .7s ease both; }
+
+/* Classes de cores de elementos */
+.preto { background-color: #1d1d1b; }
+.vermelho { background-color: #ea4e4d; }
+.branco { color: #ffffff; }
+.azul { background-color: #41488c; }
+.azulClaro { background-color: #4ac1ee; }
+.roxo1 { background-color: #dac8be; }
+.roxo2 { background-color: #ccbcb3; }
+.fundo1 { background-color: #ffffff; }
+.fundo2 { background-color: #f1f1f1; }
+.fundoAjuda { background-color: #000000; }
+.marrom { background-color: #d6c99c; }
+.linkAmarelo:hover { color: #ead934; text-decoration: none; }
+
+/* Classes de posicionamento */
+.alturaTotal { height: 100%; }
+.centralizar { display: flex; align-items: center; justify-content: center; }
+.posicionarCentro { display: flex; align-items: center; justify-content: center; height: 100%; }
+.centralizarVertical { position: relative; top: 50%; transform: translateY(-50%); }
+.listaConteudoAjuda { height: 500px; position: relative; overflow: auto; }
+
+/* Classe para esconder barra de rolagem */
+::-webkit-scrollbar { display: none; }
+
+/* Classes de exibição dos resultados */
+.resErro { background-color: transparent; margin-top: 10px; padding: 10px; color: #f70404; }
+.resPrincipal { background-color: #28a745; margin-top: 10px; padding: 8px; color: #ffffff; text-align: center; border-radius: 5px; }
+.resGeral { background-color: transparent; margin-top: 10px; padding: 10px; color: #000000; }
+.resAviso { background-color: #ffc107; margin-top: 10px; padding: 8px; color: #ffffff; text-align: center; border-radius: 5px; }

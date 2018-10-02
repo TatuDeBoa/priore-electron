@@ -1,0 +1,194 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>PRIORE</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css"/>
+		<link rel="icon" type="imagem/png" href="figuras/logo-vermelha.png" />
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<script src="bbt-js/Chart.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+		<link rel="stylesheet" href="bbt-js/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+	
+	<body class="fundo1">
+	
+		<!-- Barra de início de página -->
+		<nav class="navbar navbar-expand-lg fixed-top preto">
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index.html">INÍCIO</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="tela-calculos.html">CÁLCULOS</a></div>
+			<div class="col-sm-4 text-center"><img src="figuras/tipo-branco.png" width="50px" id="tipo"></img></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="index-2.html">SOBRE</a></div>
+			<div class="col-sm-2 text-center"><a class="txtSeletores linkAmarelo" href="ajuda.html">AJUDA</a></div>
+		</nav>
+		
+		<!-- Seção que envolve todo o texto da tela -->
+		<div class="section">
+		
+			<!-- Seção para cálculo do polinômio interpolador de Newton -->
+			<div class="section">
+				<div class="container margemInicial animacaoPagina">
+					<div class="row margemInferior">
+						<div class="col-sm-12">
+							<p class="txtTituloMetodo">POLINÔMIO INTERPOLADOR DE NEWTON</p>
+							<p class="txtFormularioApresentacao">Nesta seção é possível realizar a interpolação polinomial de dados de uma função a partir do polinômio interpolador de Newton, com a exibição da equação encontrada na tela. Existe a opção de estimar o valor da função ou da sua derivada em um ponto qualquer informado. Utilize a vírgula como separador decimal.</p>
+						</div>
+					</div>
+					
+					<!-- Formulário de entrada de dados -->
+					<div class="row visivel">
+						<div class="col-sm-12">
+							<p class="txtFormularioGeral">No espaço abaixo, informe os valores de uma função f(x) em seus respectivos valores de x, estes na segunda coluna e aqueles na primeira. Valores não numéricos ou espaços vazios fazem com que o programa ignore a linha em que forem encontrados. Caso deseje também estimar valores de f(x) ou da derivada da mesma em um x qualquer, basta informar o respectivo valor x nos espaços ao lado da tabela.</p>
+						</div>
+						<div class="form-inline">
+							<div class="col-md-7 centralizar"><div id="tabintpol"></div></div>
+							<div class="col-md-5 txtFormularioGeral margemSuperior">
+								<div class="form-inline">
+									<div class="col-md-6"><p>Estimar valor de f(x) em:</p></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario xintpol"></div>
+								</div>
+								<div class="form-inline">
+									<div class="col-md-6"><p>Estimar derivada de f(x) em:</p></div>
+									<div class="col-md-6"><input type="text" class="form-control dadosFormulario xlinhaintpol"></div>
+								</div>
+								<div id="barra" class="progress-bar progress-bar-striped progress-bar-animated bg-warning margemSuperior oculta" style="width: 0%;"></div>
+								<button class="btn btnAcao margemSuperior btnIntPol"><i class="fa fa-calculator" aria-hidden="true"></i> Calcular</button>
+								<p class="resIntPol txtResposta2 margemSuperior"><p class="resultadointpol"></p></p>
+							</div>
+						</div>
+						<div class="col-sm-12"><div class="resIntPolGraf margemSuperior"></div></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+	
+	</body>
+	
+	<script>
+	
+		// Declaração das instâncias utilizadas nos cálculos
+		var grafico = new GraficoCanvas();
+		var intpol = new PolinomioInterpolador();
+		
+		// Declaração de instância do handsontable para interpolação polinomial
+		var tabela = document.getElementById("tabintpol");
+		var dadosIntPol = new Handsontable(tabela, {
+			data: Handsontable.helper.createSpreadsheetData(0, 2),
+			width: 400,
+			height: 410,
+			colWidths: 150,
+			rowHeights: 23,
+			rowHeaders:true,
+			colHeaders: ["f(x)", "x"],
+			columns: [0, 0],
+			minSpareRows: 17
+		});
+		
+		// Ação de clique do botão de interpolação polinomial
+		$(".btnIntPol").click(function() {
+			// Declaração de variáveis necessárias
+			var dados = [], valoresX = [], valoresY = [], x = $(".xintpol").val(), xlinha = $(".xlinhaintpol").val(), estimarFuncao = false, estimarDerivada = false, funcao, derivada, dimensao = 600, intervalo = 600, limInf, limSup, passo, dadosPlot = [], dadosOriginais = [];;
+			receberDados(dados, dadosIntPol);
+
+			//Estrutura de controle de erros
+			if(dados.length < 2) {
+				$(".resultadointpol").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntPol").append('<p class="resultadointpol resErro">Não foram encontrados valores suficientes para realizar a interpolação polinomial, por favor revise os dados informados.</p>');
+				return;
+			}
+			if(x != "" && !valNum(x)) {
+				$(".resultadointpol").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntPol").append('<p class="resultadointpol resErro">Foi informado um dado não numérico para estimar f(x), reveja por favor.</p>');
+				return;
+			}
+			if(xlinha != "" && !valNum(xlinha)) {
+				$(".resultadointpol").remove();
+				$('#barra').addClass('oculta');
+				$('#barra').removeClass('visivel');
+				$(".resIntPol").append('<p class="resultadointpol resErro">Foi informado um dado não numérico para estimar a derivada de f(x), reveja por favor.</p>');
+				return;
+			}
+
+			// Inicia a barra de progresso
+			animacao("barra");
+			$('#barra').addClass('visivel text-center');
+			$('#barra').removeClass('oculta');
+
+			// Realiza os cálculos
+			if(x != "") {
+				estimarFuncao = true;
+				x = interpretar(x);
+			}
+			if(xlinha != "") {
+				estimarDerivada = true;
+				xlinha = interpretar(xlinha);
+			}
+			for(var i = 0; i < dados.length; i++) {
+				valoresX[i] = dados[i][1];
+				valoresY[i] = dados[i][0];
+				dadosOriginais[i] = [valoresX[i], valoresY[i]];
+			}
+			intpol.definirValores(valoresX, valoresY);
+			intpol.montarPolinomio();
+			if(estimarFuncao)
+				funcao = intpol.estimarValorEm(x).toString().replace(".", ",");
+			if(estimarDerivada)
+				derivada = intpol.estimarDerivadaEm(xlinha).toString().replace(".", ",");
+
+			// Prepara a resposta para exibição
+			$(".resultadointpol").remove();
+			var str = '<p class="resultadointpol resGeral">Para os dados informados, foi encontrado o sequinte polinômio interpolardor de Newton:</p><p class="resultadointpol resPrincipal">' + intpol.acessarString() + '</p>';
+			$(".resIntPol").append(str);
+			if(estimarFuncao) {
+				$(".resIntPol").append('<p class="resultadointpol resPrincipal">O valor estimado para função em ' + x.toString().replace(".", ",") + ' é ' + funcao + '.</p>');
+			}
+			if(estimarDerivada) {
+				$(".resIntPol").append('<p class="resultadointpol resPrincipal">O valor estimado para derivada da função em ' + xlinha.toString().replace(".", ",") + ' é ' + derivada + '.</p>');
+			}
+			$(".resIntPolGraf").append('<div class="resultadointpol centralizar"><div class="margemElemento" style="height:70vh; width:70vw"><canvas id="grafico"></canvas></div></div>');
+
+			// Prepara os pontos para desenhar o polinômio interpolador
+			limInf = menor(valoresX);
+			limSup = maior(valoresX);
+			passo = (limSup - limInf) / intervalo;
+			for(var i = 0; i <= intervalo; i++) {
+				dadosPlot[i] = [(limInf + i * passo), intpol.estimarValorEm(limInf + i * passo)];
+			}console.log(valoresX)
+			
+			// Desenha o gráfico na tela e realiza a animação
+			graficoGeral('grafico', 'Polinômio Interpolador de Newton', [dadosPlot, dadosOriginais], [true, false], ['Polinômio', 'Pontos'], ['#000000', '#007bff'], ['rgba(0,0,0,0)', '#007bff'], 'x', 'f(x)');
+			$('.resultadointpol').addClass('animacaoPagina');
+		});
+		
+		$('#tipo').mouseenter(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-amarelo.png';
+		}).mouseleave(function() {
+			document.getElementById('tipo').src = 'figuras/tipo-branco.png';
+		});
+	
+	</script>
+
+</html>

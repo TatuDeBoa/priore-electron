@@ -1,0 +1,231 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+        <!-- JQuery e Bootstrap -->
+        <script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+        <!-- Arquivos próprios -->
+        <link rel="stylesheet" href="estilos.css">
+        <script src="funcoes-js/Calculo.js"></script>
+        <script src="funcoes-js/funcoes-gerais.js"></script>
+        <script src="funcoes-js/OperacoesUnitarias.js"></script>
+        <script src="funcoes-js/Termodinamica.js"></script>
+        <script src="funcoes-js/conversor.js"></script>
+        <script src="funcoes-js/GraficosCanvas.js"></script>
+        <!-- Arquivos de terceiros -->
+        <script src="bbt-js/handsontable.js"></script>
+        <link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+                            <a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+                            <a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Conteúdo da página -->
+		<div class="container margemInicial">
+
+			<!-- Título e índice -->
+			<div class="row">
+				<div class="col-sm-12"><p class="txtTitulo1">EQUILÍBRIO LÍQUIDO-VAPOR</p></div>
+			</div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+
+			<!-- Seção de definição -->
+			<div class="section">
+				<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div></div>
+				<!-- Texto -->
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="txtGeral">No simples ato de posicionar um copo com água sobre uma mesa está presente equilíbrio líquido-vapor (ELV). Este tópico além de muito comum, também possui aplicações tecnológicas importantes, como por exemplo, a Destilação, operação unitária responsável pelo refino do álcool, separando-o da água.</p>
+						<p class="txtGeral">O ELV trata de situações em que uma mistura líquida está em equilíbrio com o vapor da mesma, sendo o objetivo da aplicação da termodinâmica predizer as composições em uma fase a partir da definição da outra. O equacionamento do ELV nasce do conceito de isofugacidade, de onde é possível obter a Equação 1, que representa a equação geral na abordagem gama-fi (KORETSKY, 2007).</p>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-geral-elv.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+						</div>
+						<p class="txtGeral">Em que,</br>y<sub>i</sub> = fração molar na fase gás do componente i;</br>&Phi;<sub>i</sub> = razão entre coeficientes de fugacidade em mistura e de saturação;</br>P = pressão do sistema;</br>x<sub>i</sub> = fração molar na fase líquida do componente i;</br>&gamma;<sub>i</sub> = coeficiente de atividade do componente i;</br>P<sub>i</sub><sup>sat</sup> = pressão de saturação do componente i.</p>
+						<p class="txtGeral margemTitulo">Na Equação 1, o lado direito representa a fase líquida e o lado esquerdo a fase gás. Dois parâmetros são importantes de serem detalhados, o coeficiente de atividade (&gamma;<sub>i</sub>), obtido por meio de um modelo termodinâmico para Energia de Gibbs em Excesso, e a razão entre coeficientes de fugacidade (&Phi;<sub>i</sub>), calculado, por exemplo, a partir de uma Equação de Estado capaz de descrever a fase vapor (SMITH, 2007).</p>
+						<p class="txtGeral">Para ilustrar o ELV é útil avaliar o caso da composição binária. Na Figura 1 se encontram dois gráficos para tal sistema, um com a temperatura em função da fração do componente 1 e o outro com a pressão em função da fração do componente 2. A área interna definida pelas curvas, representa uma região em que estão presentes as fases gás e líquido em equilíbrio termodinâmico.</p>
+						<p class="txtGeral">As linhas de orvalho e de bolha representam os limites da região de equilíbrio e são fundamentais para processos de separação, pois em uma determinada temperatura e pressão dentro desta zona, uma fase (líquida ou gasosa) pode ser mais rica em um componente, de modo que equipamentos capazes de manipular uma mistura dentro deste intervalo são capazes de separar um componente do outro, ou pelo menos enriquecer uma fase até um valor mínimo do componente desejado.</p>
+						<p class="txtGeral">Linhas de orvalho de temperatura são compostas pelas Temperaturas de Orvalho (ORVT) e as de pressão são compostas pelas Pressões de Orvalho (ORVP). De modo análogo, as linhas de bolha são compostas por Temperaturas de Bolha (BOLT) ou Pressões de Bolha (BOLP), de acordo com o parâmetro desejado ou fixado.</p>
+						<p class="txtGeral">Executar cálculos de ELV são encontrar temperaturas ou pressão de bolha e orvalho, ou seja,  para uma situação específica de fração em uma fase e pressão ou temperatura, deseja-se predizer as frações na outra fase e a temperatura ou pressão do sistema. De modo geral, existem quatro tipos de problemas (SANDLER, 2006):</p>
+						<p class="txtGeral">1) ORVT: são conhecidas as frações na fase gasosa e a pressão do sistema, deseja-se encontrar as frações na fase líquida e a temperatura do sistema.</p>
+						<p class="txtGeral">2) ORVP: são conhecidas as frações na fase gasosa e a temperatura do sistema, deseja-se encontrar as frações na fase líquida e a pressão do sistema.</p>
+						<p class="txtGeral">3) BOLT: são conhecidas as frações na fase líquida e a pressão do sistema, deseja-se encontrar as frações na fase gasosa e a temperatura do sistema.</p>
+						<p class="txtGeral">4) BOLP: são conhecidas as frações na fase líquida e a temperatura do sistema, deseja-se encontrar as frações na fase gasosa e a temperatura do sistema.</p>
+						<p class="txtGeral">Os quatro tipos de procedimentos são iterativos, ou seja, a partir de um estimador inicial, este sofre recursivas operações até a convergência. Além dessa peculiaridade, avaliar &Phi;<sub>i</sub> e &gamma;<sub>i</sub> pode ser um trabalho árduo, de acordo com o tipo de modelo utilizado para o cálculo deles. Para baixas e moderadas pressões, vale supor que a fase gás se comporta idealmente (&Phi;<sub>i</sub> = 1) e a fase líquida é não-ideal, fundamento da chamada Lei de Raoult Modificada.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção de estratégia de resolução -->
+			<div class="section">
+				<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="2">2. EXTRATÉGIA DE RESOLUÇÃO UTILIZADA</p></div></div>
+				<!-- Texto -->
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="txtGeral">Existem três seções de cálculo para equilíbrio líquido-vapor, a saber Método UNIFAC, Ponto de Bolha e Orvalho e Desenho de Diagramas Binários. Este é na verdade uma aplicação dos dois primeiros, pois a partir da predição do coeficiente de atividade (UNIFAC) e do cálculo iterativo das temperaturas ou pressões de bolha e orvalho, é possível desenhar um gráfico com estes valores, de modo que fique mais perceptível visualmente a influência da fração molar de um determinado componente sobre a zona de equilíbrio.</p>
+						<p class="txtGeral">O cálculo do coeficiente de atividade pelo método UNIFAC não difere muito do procedimento detalhado em Smith et al., 2007. Os parâmetros necessários são lidos a partir de um arquivo .txt alocado em um dos diretórios do programa, e estes dados foram obtidos do mesmo autor. Este método é um modelo preditivo fundamentado na teoria de grupos, diferente dos modelos clássicos para Energia de Gibbs em Excesso, escolhido justamente por não necessitar de dados experimentais para parâmetros de interação binária entre as substâncias.</p>
+						<p class="txtGeral">Na seção de Ponto de Bolha e Orvalho são implementados quatro algoritmos numéricos iterativos, que utilizam o procedimento UNIFAC em determinados momentos, juntamente com outro algoritmo para cálculo da pressão de saturação por meio da Equação de Antoine, representada na Equação 2, cujos parâmetros também foram obtidos de Smith et al., 2007. No processo iterativo também são necessárias variáveis de iterações e modificações da lei geral do ELV, obtidas pelas Equações 3, 4, 5 e 6.</p>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-antoine.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+						</div>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-3.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+						</div>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-4.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 4</p></div>
+						</div>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-5.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 5</p></div>
+						</div>
+						<div class="form-group form-inline margemElemento">
+							<div class="col-sm-6"><img src="figuras/equacao-iteracao-elv-6.png" width="300px"></img></div>
+							<div class="col-sm-6"><p class="txtGeral text-right">Equação 6</p></div>
+						</div>
+						<p class="txtGeral">Em que,</br>A, B e C = parâmetros da Equação de Antoine para o componente;</br>P<sub>it</sub> = pressão de iteração.</p>
+						<p class="txtGeral margemTitulo">A pressão de iteração utilizada nas equações 3 e 4 são estimadas, inicialmente, como a pressão de saturação de um componente i qualquer, como por exemplo, o primeiro componente. Os algoritmos recursivos estão detalhados em alto nível abaixo e para melhor observação não foram colocados juntos, podem ser visualizados independentemente ao clicar no botão com o nome do mesmo.</p>
+						<div class="text-center margemElemento">
+							<div class="btn-group" role="group">
+								<button style="font-size: 17px;" class="btn btnAcao" onclick="alteraImagem('orvt')">Temperatura de Orvalho</button>
+								<button style="font-size: 17px;" class="btn btnAcao" onclick="alteraImagem('bolt')">Temperatura de Bolha</button>
+								<button style="font-size: 17px;" class="btn btnAcao" onclick="alteraImagem('orvp')">Pressão de Orvalho</button>
+								<button style="font-size: 17px;" class="btn btnAcao" onclick="alteraImagem('bolp')">Pressão de Bolha</button>
+							</div>
+						</div>
+						<div class="text-center">
+							<img class="margemElemento" id="imagemAlgoritmo" src="figuras/orvt.png" width="800px"></img>
+						</div>
+						<p class="txtGeral">Para desenhar o diagrama, Zero utiliza os algoritmos de ponto de bolha e orvalho e calcula um conjunto de pontos que definem as curvas de equilíbrio. De posse dos dados, faz o desenho na tela ao ligar os valores.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção de procedimento experimental -->
+			<div class="section">
+				<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL POSSÍVEL</p></div></div>
+				<!-- Texto -->
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="txtGeral">Infelizmente não há uma proposta de atividade experimental em que a seção de ELV de Zero possa ser aplicada, porém ainda existem outras possibilidades. Como o processo é preditivo, fundamentado na teoria de grupos para o coeficiente de atividade e a Lei de Raoult Modifica para descrever o equilíbrio, há viabilidade de experimentação livre por parte do usuário, principalmente no desenho de diagramas de equilíbrio.</p>
+						<p class="txtGeral">Utilizar a metodologia desta aplicação permite que o estudante visualize o comportamento do equilíbrio líquido-vapor, de um sistema binário arbitrário definido por ele. Avaliações como aproximação com a idealidade e existência ou não de azeótropos são exemplos de discussões e críticas, passíveis de serem feitas pelo usuário de posse do gráfico gerado pelo programa. Assim, a contribuição maior não está na eventualidade de uso em procedimentos experimentais, mas sim na contribuição de um melhor entendimento teórico sobre o assunto.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção de modo de utilização -->
+			<div class="section">
+				<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="4">4. MODO DE UTILIZAÇÃO DOS PROCEDIMENTOS DISPONÍVEIS</p></div></div>
+				<!-- Texto -->
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="txtGeral">Para executar o cálculo dos coeficientes de atividade por meio do modelo preditivo UNIFAC, o usuário precisa informar a temperatura e sua unidade e definir o sistema componente a componente utilizando um formulário, composto por uma lista e um local de digitação. Na lista de substâncias cadastradas, escolhe-se uma e na caixa ao lado se informa o valor da fração molar da substância selecionada. Feito isso, a informação é gravada pelo programa ao clicar no botão "Adicionar", sendo os dados exibidos no espaço em branco ao lado do formulário de entrada de dados. Zero interpreta que, quando a soma das frações molares informadas for igual a 1, o sistema está definido. Caso seja da vontade do usuário excluir um dado informado anteriormente, há um botão "Excluir" junto da referência gerada pelo botão "Adicionar".</p>
+						<p class="txtGeral">Ao final da definição do sistema, clicar no botão "Executar Cálculos" fez com que o programa utilize os dados provenidos pelo usuário para predizer os coeficientes de atividade de todas as substâncias do sistema. O resultado é exibido em texto logo abaixo do botão.</p>
+						<p class="txtGeral">A seção de Ponto de Bolha e Orvalho possui a função de calcular a temperatura ou pressão de bolha ou orvalho, de acordo com a escolha do usuário. De modo análogo ao procedimento anterior, também há a definição do sistema, realizado exatamente da mesma forma que no método UNIFAC. Posteriormente, é necessário escolher o tipo de cálculo (pressão de bolha, temperatura de bolha, pressão de orvalho e temperatura de orvalho) e a temperatura ou pressão (varia de acordo com o tipo de cálculo) com a sua unidade, escolhida na lista ao lado da caixa utilizada para informar o valor numérico.</p>
+						<p class="txtGeral">Igual à seção do método UNIFAC, o resultado do cálculo é mostrado logo abaixo do botão "Executar Cálculos", assim que este for acionado pelo usuário.</p>
+						<p class="txtGeral">Por fim, a seção destinada para desenho de diagramas de equilíbrio possui interface mais simplificada. O usuário precisa preencher um formulário rápido, para informar os dois componentes do sistema, através de uma lista de substâncias cadastradas, o tipo de diagrama (pressão, temperatura ou fração molar de gás em função da fração molar de líquido), a temperatura ou pressão (varia de acordo com o tipo de diagrama) com sua unidade e, caso desejar, escolher cores diferentes para as curvas de bolha e orvalho. Completada a inserção das instruções necessárias, o diagrama é gerado ao clicar no botão "Desenhar Gráfico". O programa desenha o gráfico com referência ao Componente 1 informado no formulário, ou seja, as frações são relativas ao primeiro componente selecionado.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção de referências -->
+			<div class="section">
+				<div class="row margemTitulo"><div class="col-sm-12"><p class="txtTitulo2" id="5">5. REFERÊNCIAS</p></div></div>
+				<!-- Texto -->
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="txtGeral">KORETSKY, M. D. Termodinâmica para engenharia química. Rio de Janeiro: LTC Ed., 2007, 502 p. ISBN 9788521615309.</p>
+						<p class="txtGeral">SMITH, J. M.; ABBOTT, M. M.; VAN NESS, H. C. Introdução à termodinâmica da engenharia química. Rio de Janeiro: LTC Ed., 2007, 626 p. ISBN 9788521615538.</p>
+						<p class="txtGeral">SANDLER, S. I. Chemical, biochemical and engineering thermodynamics. Nova Delhi: Wiley, 2006, 912 p. ISBN 9788126526437.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+
+	<script>
+
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000;
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+
+		function alteraImagem(modelo) {
+			document.getElementById('imagemAlgoritmo').src = 'figuras/' + modelo + '.png';
+		}
+
+	</script>
+
+</html>

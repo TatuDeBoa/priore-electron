@@ -1,0 +1,234 @@
+<!DOCTYPE>
+<html lang="pt-br">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ZERO</title>
+		<!-- JQuery e Bootstrap -->
+		<script>window.$ = window.jQuery = require('./bootstrap/jquery-3.2.1.js');</script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script src="bootstrap/jquery-3.2.1.js"></script>
+        <script src="bootstrap/popper.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+		<!-- Arquivos próprios -->
+		<link rel="stylesheet" href="estilos.css">
+		<script src="funcoes-js/Calculo.js"></script>
+		<script src="funcoes-js/funcoes-gerais.js"></script>
+		<script src="funcoes-js/OperacoesUnitarias.js"></script>
+		<script src="funcoes-js/Termodinamica.js"></script>
+		<script src="funcoes-js/conversor.js"></script>
+		<script src="funcoes-js/GraficosCanvas.js"></script>
+		<!-- Arquivos de terceiros -->
+		<script src="bbt-js/handsontable.js"></script>
+		<link rel="stylesheet" href="bbt-js/handsontable.css">
+    </head>
+
+	<body>
+
+		<!-- Barra inicial de navegação -->
+		<nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <span class="navbar-brand txtIcone" href="#">ZERO</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dimensionamentosDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cálculos</a>
+                        <div class="dropdown-menu" aria-labelledby="dimensionamentosDrop">
+							<a class="dropdown-item" href="dtr.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informacoesDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material de Auxílio</a>
+                        <div class="dropdown-menu" aria-labelledby="informacoesDrop">
+							<a class="dropdown-item" href="dtr-info.html">Distribuição de Tempo de Residência</a>
+							<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="dtp-info.html">Distribuição de Tamanho de Partícula</a>
+                            <a class="dropdown-item" href="filtros-info.html">Filtros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="tc-info.html">Trocadores de Calor</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ell-info.html">Equilíbrio Líquido-Líquido</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="elv-info.html">Equilíbrio Líquido-Vapor</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="funcoesextras.html">Funções Extras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="agradecimentos.html">Agradecimentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre o Programa</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<!-- Texto -->
+		<div class="container margemInicial">
+			<div class="row">
+				<div class="col-sm-12"><p class="txtTitulo1">DISTRIBUIÇÃO DE TEMPO DE RESIDÊNCIA</p></div>
+			</div>
+			<div class="row bordaSecao">
+				<div class="col-sm-12">
+					<p class="txtGeral">Índice</p>
+					<span class="txtLink link" topico="1">1. Definição</span></br>
+					<span class="txtLink link" topico="2">2. Estratégia de Resolução Utilizada</span></br>
+					<span class="txtLink link" topico="3">3. Procedimento Experimental Possível</span></br>
+					<span class="txtLink link" topico="4">4. Modo de Utilização dos Procedimentos Disponíveis</span></br>
+					<span class="txtLink link" topico="5">5. Referências</span>
+				</div>
+			</div>
+
+			<!-- Seção de definição de DTR -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12"><p class="txtTitulo2" id="1">1. DEFINIÇÃO</p></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Em dimensionamentos é muito útil utilizar definições de idealidade para se avaliar de forma inicial e rápida um problema determinado. Após essa análise, faz-se necessário o estudo mais aprofundado do caso, para determinar se o sistema pode ser considerado ideal ou não. Caso não, segue-se para o processo de avaliação da não-idealidade. Para reatores, um modo de realizar tal procedimento é através de um teste com traçador, capaz de fornecer a Distribuição de Tempo de Residência (DTR) do fluido dentro da unidade.</p>
+					<p class="txtGeral">O teste com traçador pode ser realizado de duas formas distintas: pertubação pulso ou pertubação degrau (FOGLER, 2009). No caso de perturbação degrau, junto com a alimentação é injetada uma vazão constante de traçador, medida na corrente de saída com o tempo. Para a perturbação pulso o procedimento se dá pela adição de uma quantidade finita do traçador na corrente de entrada do reator, com a obtenção de medidas de concentração de traçador na saída em função do tempo.</p>
+					<p class="txtGeral">Cada conjunto de medidas gera um tipo de função de distribuição de tempo de residência diferente. A perturbação degrau resulta em uma distribuição cumulativa, que estabilida na unidade, chamada F<sub>(t)</sub>, uma perturbação do tipo pulso origina uma distribuição normal em forma de sino (gaussiana), chamada E<sub>(t)</sub>. F<sub>(t)</sub> e E<sub>(t)</sub> são definidas em função das concentrações na corrente de saída do reator e suas expressões matemáticas são mostradas nas Equações 1 e 2 (FOGLER, 2009). Nas Figuras 1 e 2 estão exemplos de gráficos resultantes de cada tipo de teste.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-ft.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 1</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-et.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 2</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>C<sub>(t)</sub> = concentração na corrente de saída em função do tempo;</br>C<sub>T,0</sub> = concentração total em uma perturbação degrau.</br></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 text-center">
+					<img src="figuras/grafico-ft.png" class="margemElemento" width="200px"></img>
+					<p class="txtGeral">Figura 1. Distribuição de Tempo de Residência para perturbação degrau.</p>
+				</div>
+				<div class="col-sm-6 text-center">
+					<img src="figuras/grafico-et.png" class="margemElemento" width="200px"></img>
+					<p class="txtGeral">Figura 2. Distribuição de Tempo de Residência para perturbação pulso.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Com a determinação da DTR, esta passa a representar o reator, ou seja, não é feita a distinção entre reator de mistura perfeita (CSTR) e reator de fluxo axial (PFR), ambos recebem o nome de vaso reacional (LEVENSPEIL, 2007). Assim, é preciso utilizar uma modelagem matemática sobre os dados da DTR para avaliar o desempenho da unidade, sem conhecer as configurações específicas da mesma. Dentre os modelos existentes, o Modelo de Segregação é particularmente interessante por ser aplicável em qualquer situação, sem restrições de operação ou configuração (FOGLER, 2009). A Equação 3 representa a expressão utilizada pelo modelo para avaliação da conversão.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-segregacao.png" width="250px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 3</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>X<sub>(t)</sub> = conversão em função do tempo no reator batelada;</br>E<sub>(t)</sub> = distribuição de tempo de residência para perturbação pulso;</br>X<sub>m</sub> = conversão média do vaso.</p>
+				</div>
+			</div>
+
+			<!-- Seção de explicação para estratégia de cálculo -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12">
+					<p class="txtTitulo2" id="2">2. ESTRATÉGIA DE RESOLUÇÃO UTILIZADA</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">De acordo com a Equação 3, para calcular a conversão é preciso avaliar uma integral, cujo argumento é uma multiplicação de funções que variam no tempo, a DTR gerada por um pulso e a conversão em um reator batelada. Esta pode ser obtida por meio de resolução analítica das equações características do reator batelata, porém a sua manipulação varia de acordo com a expressão de taxa e a ordem da reação. Para a função DTR em perturbação pulso há um agravante, pois o teste de traçador resulta em um conjunto de valores concentração em função do tempo.</p>
+					<p class="txtGeral">Em um primeiro momento, para resolução manual do problema, a integração numérica do conjunto de valores por meio de um método (trapézios, 1/3 de Simpson ou 3/8 de Simpson) pode fornecer uma resposta satisfatória. Mas, com a potência de processamento computacional, tal método poderia se substituído por outro mais eficiente.</p>
+					<p class="txtGeral">Com os dados de concentração do traçador em função do tempo, Zero executa a interpolação polinomial pelo método de Newton para o conjunto de valores (ARENALES e DAREZZO, 2008). Com a expressão do polinômio interpolador, calcula-se a integral do denominador da Equação 2 e com ela, obtêm-se uma expressão que aproxima E<sub>(t)</sub>, através de uma segunda interpolação. Dados adicionais sobre o sistema são informados pelo usuário, que permite a avaliação da Equação 3.</p>
+					<p class="txtGeral">Todavia, existem comentários importantes sobre o processo numérico realizado pela aplicação. A confiabilidade da resposta é totalmente dependente da qualidade dos dados informados, pois o programa não realiza extrapolação do polinômio interpolador para calcular as integrais, por não ser uma prática recomendada (ARENALES e DAREZZO, 2008), já que a aproximação não é garantida fora do intervalo informado, de modo que todos os cálculos executados são realizados dentro dos intervalos limitados pelos conjuntos de valores informados. De fato, se o teste for bem feito, seja uma perturbação tipo pulso ou tipo degrau, o valor final se estabilida e a função E<sub>(t)</sub> resultante assume o valor de 0 em um tempo finito, que reduz a multiplicação dentro da integral da Equação 3 a zero no mesmo tempo e garante que o resultado da integração até tal número finito seja igual a integração até o infinito.</p>
+					<p class="txtGeral">Outra característica é o caso do teste não for do tipo pulso. Existes relações entre E<sub>(t)</sub> e F<sub>(t)</sub>, expressas nas Equações 4 e 5 (FOGLER, 2009), que podem ser utilizadas para converter os resultados de um teste com perturbação pulso em resultados para um teste com perturbação degraus, e vice e versa.</p>
+					<p class="txtGeral">Para conversão de dados da DTR E<sub>(t)</sub> em F<sub>(t)</sub>, Zero realiza a sua rotina numérica de integração do tempo zero até o tempo de cada medida, utilizando o polinômio interpolador. Nessa conversão podem ocorrer certos desvios, mais especificamente nos valores iniciais de tempo. A definição do polinômio interpolador é de aproximar a função avaliada, sendo que seus valores são identicos nos pontos utilizados para a interpolação (ARENALES e DAREZZO, 2008). Porém, o formato do polinômio entre os pontos não é exatamente igual ao da função, mas no todo a área abaixo da curva se aproxima à da função desconhecida.</p>
+					<p class="txtGeral">Por outro lado, a conversão de um teste tipo degrau para um tipo pulso é feita por intermédio do polinômio interpolador obtido para a DTR F<sub>(t)</sub>, pois as derivadas em cada valor de tempo geram o conjunto de E<sub>(t)</sub> versus tempo. Isso é possível porque a derivação de expressões polinomiais é de fácil obtenção, de forma que o polinômio permite este cálculo de forma simples e com boa aproximação (FRANCO, 2011).</p>
+					<p class="txtGeral">De modo geral, o sucesso do procedimento numérico realizado por Zero na seção de Distribuição de Tempo de Residência é extremamente influenciado pela qualidade dos dados informados, devido às peculiaridades de interpolação polinomial e ao fato de não ser realizada extrapolação. Caso seja do interesse do usuário observar as particularidades desse procedimento numérico, existe um espaço adequado na aba "Funções Extras". Lá há uma seção destinada a isso, que recebe um conjunto de valores e desenha o gráfico com os pontos informados e a função do polinômio e permite a realização de testes com os pontos, para percepção da influência deles sobre o gráfico. Nesta seção também é informada a expressão do polinômio e permite estimar o valor da função ou da derivada em um dado valor do domínio.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-et-para-ft.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 4</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-ft-para-et.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 5</p></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção para detalhamento experimental -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12">
+					<p class="txtTitulo2" id="3">3. PROCEDIMENTO EXPERIMENTAL POSSÍVEL</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">Zero possui duas seções de cálculo para DTR, independentes entre si. Uma delas é destinada ao cálculo da conversão por meio do modelo de segregação e a outra é destinada para avaliação de testes com perturbação degrau ou pulso, com desenho dos gráficos de cada distribuição para os dados informados e cálculo de alguns parâmetros estatísticos, o tempo médio de residência e a variância dos dados, cujas expressões estão nas Equações 6 e 7, respectivamente (SCHMAL, 2010).</p>
+					<p class="txtGeral">A seção destinada para desenho de curvas pode ser utilizada em procedimentos experimentais de cunho educacional com testes de traçador. Com o recolhimento de dados experimentais, o usuário pode perceber os resultados de forma visual, por causa dos gráficos, sem a necessidade de trabalhar muito sobre os valores obtidos ou utilizar uma planilha eletrônica e realizar várias definições sobre o desenho e tratamento de valores, para então visualizar o resultado. Com o mesmo clique, Zero também calcula o tempo médio de residência e a variância, que possibilita uma avaliação mais completa e rápida, com maior precisão do que integração numérica via outras ferramentas de cálculo.</p>
+					<p class="txtGeral">Outra vantagem de se utilizar esta aplicação para fins educacionais está no fato de que é uma ferramenta eficiente e rápida, capaz de entregar respostas e gráficos sem muito esforço por parte do usuário, otimizando o tempo disponível e gerando respostas mais precisas, além da facilidade e velocidade de apreciação de mudanças no procedimento que podem ser realizadas pelo estudante.</p>
+					<p class="txtGeral">De fato, existem várias ferramentas numéricas que podem ser empregadas, porém a maioria delas ou possui licença paga ou não possuiu interface muito amigável e intuitiva, sem mencionar que não são específicas para o cálculo de DTR e sim atuam na resolução de procedimentos numéricos existentes. Porém, Zero é fundamentado sobre a filosofia Open Source, de modo que pode ser alterado de acordo com as críticas dos usuários ou pelos próprios.</p>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-tm.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 6</p></div>
+					</div>
+					<div class="form-group form-inline margemElemento">
+						<div class="col-sm-6"><img src="figuras/equacao-variancia.png" width="150px"></img></div>
+						<div class="col-sm-6"><p class="txtGeral text-right">Equação 7</p></div>
+					</div>
+					<p class="txtGeral">Em que,</br>t<sub>m</sub> = tempo de residência médio do fluido;</br>&sigma;<sup>2</sup> = variância do tempo de residência.</p>
+				</div>
+			</div>
+
+			<!-- Seção para explicação da utilização de Zero -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12">
+					<p class="txtTitulo2" id="4">4. MODO DE UTILIZAÇÃO DOS PROCEDIMENTOS DISPONÍVEIS</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">As duas seções disponíveis para DTR possuem modo de interação semelhante e bem intuitivo. Ambas são feitas para análise de dados, que são inseridos em espaços iguais aos das planilhas eletrônicas, o que facilita a utilização e também permite cópia e cola de uma planilha eletrônica. Para desenho dos gráficos de E<sub>(t)</sub> e de F<sub>(t)</sub>, junto do cálculo dos parâmetros estatísticos, é necessáro que o usuário selecione o tipo de perturbação e a unidade de tempo utilizado, para melhor apresentação dos resultados, e informe os valores de concentração e tempo nos locais adequados, as duas colunas dispostas abaixo das caixas de selação.</p>
+					<p class="txtGeral">Na seção de cálculo de conversão pelo modelo de segregação o procedimento é semelhante, com a seleção do tipo de perturbação e inserção dos dados de concentração e tempo. Adicionamente é preciso que o usuário informe a velocidade específica da reação e escolha a ordem da mesma. Caso seja escolhida reação de segunda ordem, aparecerá uma caixa extra para informar a concentração inicial do reagente limitante.</p>
+					<p class="txtGeral">É importante reforçar dois fatores importantes. Em primeiro lugar, todo o equacionamento é feito em função do reagente limitante, ou seja, a conversão apresentada como resposta pelo programa é a conversão média do reagente limitante. Outro fator é a problemática de unidades. Enquanto outros tipos de dimensionamento de Zero possuem seleção de unidades, como a seção destinada a filtração, em DTR fica a cargo do usuário informar a velocidade específica condizente com os dados de tempo e de concentração. Isso foi feito para facilitar o uso e diminuir a poluição visual do formulário de inserção de informações, com a finalidade de deixar a interface mais direta e simples.</p>
+				</div>
+			</div>
+
+			<!-- Seção de referências utilizadas -->
+			<div class="row margemTitulo">
+				<div class="col-sm-12">
+					<p class="txtTitulo2" id="5">5. REFERÊNCIAS</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="txtGeral">ARENALES, Selma; DAREZZO, Artur. Cálculo numérico: aprendizagem com apoio de software. São Paulo: Thomson, 2008, 364 p. ISBN 9788522106028.</p>
+					<p class="txtGeral">FOGLER, H. Scott. Elementos de engenharia das reações químicas. Rio de Janeiro: LTC, 2009, 892 p. ISBN 9788521617167.</p>
+					<p class="txtGeral">FRANCO, Neide Bertoldi. Cálculo numérico. São Paulo: Pearson Prentice Hall, 2011. 505 p. ISBN 9788576050872.</p>
+					<p class="txtGeral">LEVENSPIEL, Octave. Engenharia das reações químicas. São Paulo: Blucher, 2007, 563 p. ISBN 852120275.</p>	
+					<p class="txtGeral">SCHMAL, Martin. Cinética e reatores: aplicação na engenharia química, teoria e exercícios. Rio de Janeiro: Synergia, FAPERJ, 2010, 572 p. ISBN 9788561325411.</p>
+					
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Margem final da página -->
+		<div class="fundo"></div>
+
+	</body>
+	
+	<script>
+	
+		$('.link').click(function() {
+			var topico = $(this).attr('topico');
+			var tempo;
+			(topico == '1') ? tempo = 500 : tempo = 2000; 
+			var posicao = $('#'+topico).offset().top;
+			$('html, body').animate({
+				scrollTop: posicao - 100
+			}, tempo);
+		});
+	
+	</script>
+
+</html>
