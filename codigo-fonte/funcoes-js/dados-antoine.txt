@@ -1,0 +1,23 @@
+﻿Água/kPa/°C/16.3872/3885.7/230.17
+Acetona/kPa/°C/14.3145/2756.22/228.06
+Ácido Acético/kPa/°C/15.0717/3580.8/224.65
+Acetonitrila/kPa/°C/14.895/3413.1/250.523
+Benzeno/kPa/°C/13.7819/2726.81/217.572
+n-Butano/kPa/°C/13.6608/2154.7/238.789
+Isobutano/kPa/°C/14.6047/2740.95/166.67
+1-Butanol/kPa/°C/15.3144/3212.43/182.739
+Tetracloreto de Carbono/kPa/°C/14.0572/2914.23/232.148
+Clorobenzeno/kPa/°C/13.8635/3174.78/211.7
+Ciclo-hexano/kPa/°C/13.6568/2723.44/220.618
+Ciclopentano/kPa/°C/13.9727/2653.9/234.51
+Éter Dietílico/kPa/°C/14.0735/2511.29/231.2
+Etanol/kPa/°C/16.8958/3795.17/230.918
+Etilbenzeno/kPa/°C/13.9726/3259.93/212.3
+n-Heptano/kPa/°C/13.8622/2910.26/216.432
+n-Hexano/kPa/°C/13.8193/2696.04/224.317
+Metanol/kPa/°C/16.5785/3638.27/239.5
+Fenol/kPa/°C/14.4387/3507.8/175.4
+1-Propanol/kPa/°C/16.1154/3483.67/205.807
+2-Propanol/kPa/°C/16.6796/3640.2/219.61
+Tolueno/kPa/°C/13.932/3056.96/217.625
+Acetato de Metila/kPa/°C/14.2456/2662.78/219.690
